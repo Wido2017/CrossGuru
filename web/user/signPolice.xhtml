@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!--普通用户（交警）登录注册-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+            <link href="../resources/css/login.css"
+                  rel= "stylesheet" type="text/css"></link>  
+        </h:head>
+
+        <h:body style="background-image: url(../resources/images/封面.png);background-size:100% 650px;background-repeat: no-repeat">
+            <div class="index_left">
+                <div class="text_">
+                    <div id="tip">
+                        <h:outputLabel style="font-size: 30px">CrossGuru,</h:outputLabel><br/>
+                        <h:outputLabel style="font-size: 30px">值得您放心的路口专家~</h:outputLabel>
+                    </div>
+                    <div id="zhinenengtiaokong" style="margin-top:20px;margin-left: 50px;">
+                        <!--<i class="zhinengtiaokong_icon"></i>-->
+                        <p:graphicImage value="../resources/images/智能.png" height="40px" width="40px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                        <h:outputLabel style="margin-top:-100px;margin-left: 20px;">智能调控与分析</h:outputLabel>
+                    </div>
+                    <div id="shujushishifankui" style="margin-top:20px;margin-left: 50px;">
+                        <!--<i class="shujushishifankui_icon"></i>-->
+                        <p:graphicImage value="../resources/images/数据.png" height="40px" width="40px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                        <h:outputLabel style="margin-top:-100px;margin-left: 20px;">数据实时反馈</h:outputLabel>
+                    </div>
+                </div>
+
+            </div>
+            <div class="index_right">
+                <!--<h:outputText value="交警登录/注册"></h:outputText>-->
+                <h:form class="index_right_form">
+                    <p:tabView>
+                        <p:tab title="登录">
+                            <div class="name">
+                                <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                <p:inputText id="name_" style="margin-left:20px"></p:inputText>
+                                <p:watermark class="watermark" for="name_" value="输入账号" />
+                            </div>
+                            <br/>
+                            <div class="pwd">
+                                <p:graphicImage value="../resources/images/密码.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                <p:password id="nonfeedback"  style="margin-left:20px;margin-right: 3px"/>
+                                <p:watermark class="watermark" for="nonfeedback" value="5-20位，数字、字母组成" />
+                            </div>
+                            <div class="btn">
+                                <p:commandButton value="登录" id="nonAjax" action="home.xhtml" ajax="false" style="margin-top: 20px;margin-left:-70px" />
+                            </div>
+                            <br/>
+                            <br/>
+                            <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
+                            <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                            <a class="atext" href="home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                            <!--<a class="register" style="font-size: 13px;font-family:STFangsong " href="#">注册</a>-->
+                        </p:tab>
+                        <p:tab title="注册">
+                            <h:outputLabel>姓名</h:outputLabel>
+                            <p:inputText id="name" style="margin-left: 10px"></p:inputText>
+                            <p:watermark for="name" value="支持中英文" /> 
+                            <br/><br/>
+                            <h:outputLabel>性别</h:outputLabel>
+                            <h:selectOneMenu id="sexmenu" required="true" style="margin-left: 10px">                               
+                                <f:selectItem itemValue="男" itemLabel="男" />
+                                <f:selectItem itemValue="女" itemLabel="女" />
+                            </h:selectOneMenu><br /><br/>
+                            <h:outputLabel>密码</h:outputLabel>
+                            <p:password id="mima" style="margin-left: 10px"/>
+                            <p:watermark class="watermark" for="mima" value="5-20位，字母和数字组成" />
+                            <br/><br/>
+                            <h:outputLabel>编号</h:outputLabel>
+                            <p:inputText id="id" style="margin-left: 10px"></p:inputText>
+                            <p:watermark class="watermark" for="id" value="身份编号" />
+                            <br/><br/>
+                            <h:outputLabel>手机号码</h:outputLabel>
+                            <p:inputText class="phone" style="margin-left: 10px"></p:inputText>
+                            <br/><br/>
+                            <h:outputLabel>管辖片区</h:outputLabel>
+                            <h:selectOneMenu id="areamenu" required="true" style="margin-left: 10px">                               
+                                <f:selectItem itemValue="片区1" itemLabel="片区1" />
+                                <f:selectItem itemValue="片区2" itemLabel="片区2" />
+                            </h:selectOneMenu><br /><br/>
+                            <p:commandButton value="注册" id="nonAj3ax" action="signPolice.xhtml" ajax="false" style="margin-top: 20px;" />
+                            <br/>
+                            <br/>
+                            <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
+                            <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                            <a class="atext" href="../user/home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+
+                        </p:tab>
+
+                    </p:tabView>
+                </h:form>
+
+            </div>
+            <div class="index_bottom">
+                <!--<img src="../resources/images/封面2.png" style=""></img>-->
+            </div>
+        </h:body>
+
+    </f:view>
+</html>
+

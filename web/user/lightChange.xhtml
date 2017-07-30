@@ -1,0 +1,245 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--监控调度与查询-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:outputStylesheet name="webjars/font-awesome/4.4.0/css/font-awesome.css"/>
+    <link rel="stylesheet" href="../resources/css/lightChange.css" />
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>PrimeFaces</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+                <p:layoutUnit position="north" size="55" resizable="false" gutter="0">        
+                    <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
+                    <h:outputText id="title" class="ui-title" value="#{EL}"></h:outputText>           
+                </p:layoutUnit>
+                <p:layoutUnit position="center">
+                    <h:form>
+                        <p:panelGrid style="margin-top: 40px;margin-left: 60px;">
+                            <p:row>
+                                <p:column></p:column>
+                                <p:column colspan="3">
+                                    <h3 style="margin-left: 150px">N</h3>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <h3 style="margin-left: 150px">S</h3>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <h3 style="margin-left: 150px">W</h3>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <h3 style="margin-left: 150px">E</h3>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column rowspan="1">
+                                    <h3>摄像头</h3>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <p:photoCam></p:photoCam>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <p:photoCam></p:photoCam>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <p:photoCam></p:photoCam>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <p:photoCam></p:photoCam>
+                                </p:column>
+
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="13" styleClass="ui-widget-header">
+                                    <p:spacer height="1"/>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column rowspan="4">
+                                    <h3>信号灯</h3>
+                                </p:column>
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column style="border-left: transparent;border-bottom: transparent;">
+                                    <p:outputLabel id="Nsecond_Red_Up" value="#{counterView.nsecond_Red_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondRedUpDecrement()}" update="Nsecond_Red_Up"/>
+                                </p:column>
+
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+                            </p:row>
+                            <p:row>
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column style="border-left: transparent;">
+                                    <p:outputLabel id="Nsecond_Green_Up" value="#{counterView.nsecond_Green_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondGreenUpDecrement()}" update="Nsecond_Green_Up"/>
+                                </p:column>
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+                            </p:row>
+                            <p:row>
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column style="border-left: transparent;border-bottom: transparent;">
+<!--                                    <p:outputLabel id="Nsecond_Red_Left" value="#{counterView.nsecond_Red_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondRedUpDecrement()}" update="Nsecond_Red_Left"/>-->
+                                </p:column>
+
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column rowspan="2" style="border-right: transparent;">
+                                    <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                                </p:column>
+                                <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                    <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+
+                            </p:row>
+                            <p:row>
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column style="border-left: transparent;">
+<!--                                    <p:outputLabel id="Nsecond_Green_Left" value="#{counterView.nsecond_Green_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondGreenUpDecrement()}" update="Nsecond_Green_Left"/>-->
+                                </p:column>
+
+
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column>
+
+
+                                <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                    <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                                </p:column>
+                                <p:column>
+
+                                </p:column> 
+
+
+                            </p:row>
+                        </p:panelGrid>
+                    </h:form>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
