@@ -7,7 +7,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
-        <link href="../resources/css/home.css" type="text/css" rel="stylesheet"/>
+        <link href="resources/css/home.css" type="text/css" rel="stylesheet"/>
         <style type="text/css">
 
             .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
@@ -20,18 +20,18 @@
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="140" resizable="false" gutter="0">        
                 <div style="height:121px;margin-bottom: 20px;margin-left:0px;">
-                    <a class="iconbt" onmouseover="changeicon1();" onmouseout="recover1();" href="realTime.xhtml">
-                        <p:graphicImage value="resources/images/lukuang.png" height="100px" width="100px" id="icon1" />
-                        <h:outputText value="实时路况" ></h:outputText>
-                    </a>
-                    <a class="iconbt" href="monitor.xhtml">
+                    <h:link outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
+                        <p:graphicImage value="resources/images/lukuang.png" height="100px" width="100px" id="icon1"/>
+                        <h:outputText value="实时路况"></h:outputText>
+                    </h:link>
+                    <h:link outcome="user/monitor" styleClass="iconbt">
                         <p:graphicImage value="resources/images/jiankong.png" height="100px" width="100px"/>
                         <h:outputText value="监控查询与调度"></h:outputText>
-                    </a>
-                    <a class="iconbt" href="statictic.xhtml">
-                        <p:graphicImage value="../resources/images/jilu.png" height="100px" width="100px"/>
+                    </h:link>
+                    <h:link outcome="user/statictic" styleClass="iconbt">
+                        <p:graphicImage value="resources/images/jilu.png" height="100px" width="100px"/>
                         <h:outputText value="记录查询"></h:outputText>
-                    </a>
+                    </h:link>
 
                     <!--                    <h:panelGrid id="usrlk" columns="3" style="cursor: pointer;margin-left:0px;border:solid">
                                             <p:row>
@@ -49,13 +49,13 @@
 
                     <!--                    <div style="margin-right:0px;border:solid">
                     --><div style="position: fixed;left:1050px;right:0px" >
-                        <p:graphicImage id="usrlk1" value="../resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
-                        <a class="atext" href="signPolice.xhtml" style="margin-left:0px" >交警登录/注册</a>
-                        <a class="atext" href="../administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                        <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
+                        <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >交警登录/注册</a>
+                        <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
                         <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left">                           
                             <h:outputText value="姓名：孙XX"></h:outputText><br/>
                             <h:outputText value="管辖片区：昌平区"></h:outputText><br/>
-                            <a href="signPolice.xhtml" class="atext" style="text-decoration: none;">注销</a>
+                            <a href="user/signPolice.xhtml" class="atext" style="text-decoration: none;">注销</a>
                         </p:overlayPanel>
                     </div>
                     <!--</div>-->
@@ -86,7 +86,7 @@
 
         function recover1() {
             var obj = document.getElementById("icon1");
-            obj.src = "../resources/images/lukuang.png";
+            obj.src = "resources/images/lukuang.png";
         }
 
         function initMap() {
