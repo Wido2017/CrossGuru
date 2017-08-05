@@ -6,7 +6,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-
     <link rel="stylesheet" href="../resources/css/lightChange.css" />
     <f:view contentType="text/html">
         <h:head>
@@ -16,7 +15,7 @@
             </f:facet>
         </h:head>
 
-         <h:body>
+        <h:body>
 
             <p:layout fullPage="true">
                 <p:layoutUnit position="north" size="55" resizable="false" gutter="0">        
@@ -27,31 +26,30 @@
                     <!--<div style="margin-left:30%">-->
                     <h:form>
                         <p:growl id="growl" showDetail="true" />
-                        <h:panelGrid id="title" columns="4" cellpadding="20" class="ui-setGrid" style="margin-top:-60px;">
+                        <h:panelGrid id="title" columns="5" cellpadding="20" class="ui-setGrid" style="margin-top:-60px;">
                             <h:outputLabel class="ui-setLabel" for="danwei" value="请选择时段单位:" />
                             <p:selectOneMenu id="danwei" value="#{chartView.selectDanwei}" style="width:125px" effect="fold">
+                                <f:selectItem itemLabel="请选择"/>
                                 <f:selectItem itemLabel="天" itemValue="天"/>
                                 <f:selectItem itemLabel="小时" itemValue="小时"/>
                                 <f:selectItem itemLabel="分钟" itemValue="分钟"/>
-                                <p:ajax listener="#{chartView.selectListener()}" update="lineChart barChart"/>
                             </p:selectOneMenu>
                             <h:outputLabel class="ui-setLabel" for="riqi" value="选择日期:"/>
                             <p:calendar id="riqi" value="#{chartView.selectDate}" showOn="button" effect="fold" maxdate="#{chartView.currentDate}">
-                                <p:ajax event="dateSelect" update="lineChart barChart"/>
-                                <p:ajax event="change" update="lineChart barChart"/>
                             </p:calendar>
-
+                            <p:commandButton value="确定" actionListener="#{chartView.buttonAction}" update="lineChart barChart growl"/>
                         </h:panelGrid>
-                        <h:panelGroup id="lineChart" class="ui-setGroup1" style="margin-left:0px;margin-top:40px ">
+                        <h:panelGroup  id="lineChart" class="ui-setGroup1" style="margin-left:0px;margin-top:40px ">
                             <!--<div style="position:fixed;left:0px;right:50%;top:15%">-->
                             <h:panelGrid columns="2" cellpadding="5">
                                 <img src="../resources/images/clock.png" class="ui-setimg"/> 
                                 <h:outputText class="ui-setLabel" value="时刻:"/>                       
                             </h:panelGrid>
                             <p:selectOneMenu id="shiduan" value="分钟" rendered="#{chartView.minute}">
-                                
+
                             </p:selectOneMenu>
-                            <p:chart type="line" model="#{chartView.lineModel}" style="height:450px;width: 650px;"/>
+                            <p:chart  type="line" model="#{chartView.lineModel}" style="height:450px;width: 650px;"/>
+
                             <!--</div>-->
                         </h:panelGroup>
                         <h:panelGroup id="barChart" class="ui-setGroup2" style="margin-left:50%;;margin-top:40px">
