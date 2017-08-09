@@ -23,6 +23,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -30,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -58,6 +63,7 @@ public class ChartView implements Serializable {
     private Date selectDate = (Date) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDate");
     private String selectDanwei = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDanwei");
     private Crossing selectedCrossing = (Crossing) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectCrossing");
+    private DateFormat dateFormat_month = new SimpleDateFormat("yyyy-MM");
     private DateFormat dateFormat_day = new SimpleDateFormat("yyyy-MM-dd");
     private DateFormat dateFormat_hour = new SimpleDateFormat("yyyy-MM-dd HH");
     private DateFormat dateFormat_minute = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -100,9 +106,9 @@ public class ChartView implements Serializable {
         line.setLabel("车辆数");
 
         if (selectedCrossing == null && selectDate == null) {
-
             Date currentDate = new Date();
             String currentDateString = dateFormat_day.format(currentDate);
+            String startDateString =dateFormat_month.format(currentDate).concat("-01");
             String formatDate;
             Crossing c = crossingFacade.findAll().get(0);
             Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
@@ -113,8 +119,22 @@ public class ChartView implements Serializable {
                 if (formatDate.equals(currentDateString)) {
                     line.set(formatDate, (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4);
                 }
-
             }
+        } else if (selectedCrossing == null && selectDanwei.equals("天") && selectDate != null) {
+            String selectDateString = dateFormat_day.format(selectDate);
+            String formatDate_day = new String();
+            Crossing c = crossingFacade.findAll().get(0);
+            Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
+            Iterator it = tfs.iterator();
+            long avg = 0;
+            while (it.hasNext()) {
+                TrafficFlow tf = (TrafficFlow) it.next();
+                formatDate_day = dateFormat_day.format(tf.getTime());
+                if (formatDate_day.equals(selectDateString)) {
+                    avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                }
+            }
+            line.set(selectDateString, avg);
         }
 
         model.addSeries(line);
@@ -178,4 +198,14 @@ public class ChartView implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectCrossing", selectCrossing);
     }
 
+    public static List<String> collectLocalDates(LocalDate start, LocalDate end) {
+        // 用起始时间作为流的源头，按照每次加一天的方式创建一个无限流
+        return Stream.iterate(start, localDate -> localDate.plusDays(1))
+                // 截断无限流，长度为起始时间和结束时间的差+1个
+                .limit(ChronoUnit.DAYS.between(start, end) + 1)
+                // 由于最后要的是字符串，所以map转换一下
+                .map(LocalDate::toString)
+                // 把流收集为List
+                .collect(Collectors.toList());
+    }
 }
