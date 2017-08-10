@@ -108,33 +108,52 @@ public class ChartView implements Serializable {
         if (selectedCrossing == null && selectDate == null) {
             Date currentDate = new Date();
             String currentDateString = dateFormat_day.format(currentDate);
-            String startDateString =dateFormat_month.format(currentDate).concat("-01");
+            String startDateString = dateFormat_month.format(currentDate).concat("-01");
+            List<String> datesList = collectLocalDates(LocalDate.parse(startDateString), LocalDate.parse(currentDateString));
+            Iterator datesIterator = datesList.iterator();
             String formatDate;
             Crossing c = crossingFacade.findAll().get(0);
             Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
-            Iterator it = tfs.iterator();
-            while (it.hasNext()) {
-                TrafficFlow tf = (TrafficFlow) it.next();
-                formatDate = dateFormat_day.format(tf.getTime());
-                if (formatDate.equals(currentDateString)) {
-                    line.set(formatDate, (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4);
+
+            while (datesIterator.hasNext()) {
+                String dateString = (String) datesIterator.next();
+                long avg = 0;
+                Iterator it = tfs.iterator();
+                while (it.hasNext()) {
+                    TrafficFlow tf = (TrafficFlow) it.next();
+                    formatDate = dateFormat_day.format(tf.getTime());
+                    if (formatDate.equals(dateString)) {
+                        avg = avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4;
+                    }
+                }
+                if (avg != 0) {
+                    line.set(dateString, avg);
                 }
             }
         } else if (selectedCrossing == null && selectDanwei.equals("天") && selectDate != null) {
             String selectDateString = dateFormat_day.format(selectDate);
             String formatDate_day = new String();
+            String endDateString = dateFormat_day.format(selectDate);
+            String startDateString = dateFormat_month.format(selectDate).concat("-01");
+            List<String> datesList = collectLocalDates(LocalDate.parse(startDateString), LocalDate.parse(endDateString));
+            Iterator datesIterator = datesList.iterator();
             Crossing c = crossingFacade.findAll().get(0);
             Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
-            Iterator it = tfs.iterator();
-            long avg = 0;
-            while (it.hasNext()) {
-                TrafficFlow tf = (TrafficFlow) it.next();
-                formatDate_day = dateFormat_day.format(tf.getTime());
-                if (formatDate_day.equals(selectDateString)) {
-                    avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+            while (datesIterator.hasNext()) {
+                String dateString = (String) datesIterator.next();
+                Iterator it = tfs.iterator();
+                long avg = 0;
+                while (it.hasNext()) {
+                    TrafficFlow tf = (TrafficFlow) it.next();
+                    formatDate_day = dateFormat_day.format(tf.getTime());
+                    if (formatDate_day.equals(dateString)) {
+                        avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                    }
+                }
+                if (avg != 0) {
+                    line.set(dateString, avg);
                 }
             }
-            line.set(selectDateString, avg);
         }
 
         model.addSeries(line);
@@ -161,12 +180,16 @@ public class ChartView implements Serializable {
         crossings.setLabel("车辆数");
         List<Crossing> crossingList = crossingFacade.findAll();
         Iterator iterator = crossingList.iterator();
+        long avg=0;
         while (iterator.hasNext()) {
             Crossing c = (Crossing) iterator.next();
             Collection<TrafficFlow> trafficFlows = c.getTrafficFlowCollection();
+            if(trafficFlows.isEmpty())
+            {
+                continue;
+            }
             Iterator iterator1 = trafficFlows.iterator();
             long sum = 0;
-            long avg;
             int i = 0;
             while (iterator1.hasNext()) {
                 TrafficFlow t = (TrafficFlow) iterator1.next();
@@ -174,11 +197,8 @@ public class ChartView implements Serializable {
                 i++;
             }
             avg = sum / (4 * i);
-
             crossings.set(c.getLocation(), avg);
-
         }
-
         model.addSeries(crossings);
 
         return model;
@@ -194,8 +214,15 @@ public class ChartView implements Serializable {
         }
         FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "选择路口:", key);
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        Crossing selectCrossing = crossingFacade.find(key);
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectCrossing", selectCrossing);
+        List<Crossing> crossingList=crossingFacade.findAll();
+        it=crossingList.iterator();
+        while (it.hasNext()) {
+            Crossing c=(Crossing) it.next();
+            if(c.getLocation().equals(key)){
+                selectedCrossing=c;
+            } 
+        }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectCrossing", selectedCrossing);
     }
 
     public static List<String> collectLocalDates(LocalDate start, LocalDate end) {
