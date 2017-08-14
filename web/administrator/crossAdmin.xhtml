@@ -1,9 +1,10 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -94,7 +95,14 @@
 
                                             <p:toolbar style="width: 1000px;">
                                                 <f:facet name="left">
-                                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="新增" actionListener="#{areaController.prepareCreate}" update="areaCreateForm:display" oncomplete="PF('areaCreateDialog').show()"/>
+                                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="新增" actionListener="#{areaController.prepareCreate}" update=":AreaCreateForm" oncomplete="PF('AreaCreateDialog').show()"/>
+                                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"   value="删除" actionListener="#{crossManager.deleteSelectArea}" update=":AreaDTForm:areaTable :AreaDTForm:deleteButton" disabled="#{crossManager.selectedArea==null}">
+                                                        <p:confirm header="提示" message="确定删除吗?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="是" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="否" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
                                                 </f:facet>
                                             </p:toolbar>
 
@@ -103,7 +111,7 @@
 
 
                                     <p:panel header="区域" style="width: 1000px;">
-                                        <p:dataTable id="areaTable" value="#{crossManager.areas}" var="item" widgetVar="areasTable"
+                                        <p:dataTable id="areaTable" value="#{crossManager.areas}" var="item" widgetVar="areaTable"
                                                      selectionMode="single" selection="#{crossManager.selectedArea}"
                                                      rowKey="#{item.id}"
                                                      rows="10"
@@ -120,51 +128,48 @@
                                                 <h:outputText value="#{item.location}" />
                                             </p:column>
 
-                                            <p:ajax event="rowSelect" listener="#{crossManager.onRowSelect}" update=":AreaDTForm:areaDetail,:AreaDTForm:messages" onsuccess="PF('areaDialog').show()" />
+                                            <p:ajax event="rowSelect" listener="#{crossManager.onRowSelect}" update=":AreaDTForm:areaDetailForm:areaDetail,:AreaDTForm:messages,:AreaDTForm:deleteButton" onsuccess="PF('areaDialog').show()" />
                                         </p:dataTable>
                                     </p:panel>
-                                    <p:dialog header="Area Info" widgetVar="areaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                        <p:outputPanel id="crossingDetail" style="text-align:center;">
-                                            <p:dataTable id="crossingTable" value="#{crossManager.areas}" var="item" widgetVar="areasTable"
-                                                         selectionMode="single" selection="#{crossManager.selectedArea}"
-                                                         rowKey="#{item.id}"
-                                                         rows="10"
-                                                         paginator="true"
-                                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                         >
-                                                <p:column filterBy="#{item.id}" headerText="区域ID" filterMatchMode="contains">
-                                                    <h:outputText value="#{item.id}" />
-                                                </p:column>
-                                                <p:column filterBy="#{item.name}" headerText="区域名" filterMatchMode="contains">
-                                                    <h:outputText value="#{item.name}" />
-                                                </p:column>
-                                                <p:column filterBy="#{item.location}" headerText="位置" filterMatchMode="contains">
-                                                    <h:outputText value="#{item.location}" />
-                                                </p:column>
-
-                                                <p:ajax event="rowSelect" listener="#{crossManager.onRowSelect}" update=":AreaDTForm:areaDetail,:AreaDTForm:messages" onsuccess="PF('areaDialog').show()" />
-                                            </p:dataTable>
-                                        </p:outputPanel>
-                                    </p:dialog>
-                                    <p:dialog header="Create" widgetVar="areaCreateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-                                        <h:form id="areaCreateForm">
-                                            <h:panelGroup id="display">
-                                                <p:panelGrid columns="2" rendered="#{areaController.selected != null}">
-                                                    <p:outputLabel value="#{bundle.CreateAreaLabel_id}" for="id" />
-                                                    <p:inputText id="id" value="#{areaController.selected.id}" title="#{bundle.CreateAreaTitle_id}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_id}"/>
-                                                    <p:outputLabel value="#{bundle.CreateAreaLabel_name}" for="name" />
-                                                    <p:inputText id="name" value="#{areaController.selected.name}" title="#{bundle.CreateAreaTitle_name}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_name}"/>
-                                                    <p:outputLabel value="#{bundle.CreateAreaLabel_location}" for="location" />
-                                                    <p:inputText id="location" value="#{areaController.selected.location}" title="#{bundle.CreateAreaTitle_location}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_location}"/>
-                                                </p:panelGrid>
-                                                <p:commandButton actionListener="#{areaController.create}" value="#{bundle.Save}" update=":AreaDTForm:areaTable display :AreaDTForm:messages" oncomplete="handleSubmit(args,'areaCreateDialog');"/>
-                                                <p:commandButton value="#{bundle.Cancel}" update=":AreaDTForm:areaTable" onclick="AreaCreateDialog.hide()"/>
-                                            </h:panelGroup>
+                                    <p:dialog header="Area Info" widgetVar="areaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
+                                        <h:form id="areaDetailForm">
+                                            <p:panel id="areaDetail" style="text-align:center;width: 1000px;">
+                                                <p:dataTable id="crossingTable" value="#{crossManager.areaHasCrossings}" var="crossings" widgetVar="crossingTable"
+                                                             selectionMode="single" selection="#{crossManager.selectedCrossing}"
+                                                             rowKey="#{crossings.id}"
+                                                             rows="10"
+                                                             paginator="true"
+                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             >
+                                                    <p:column headerText="路口ID">
+                                                        <h:outputText value="#{crossings.id}" />
+                                                    </p:column>
+                                                    <p:column headerText="路口名">
+                                                        <h:outputText value="#{crossings.location}" />
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:panel>
                                         </h:form>
                                     </p:dialog>
 
-                                </h:form>
 
+                                </h:form>
+                                <p:dialog id="AreaCreateDlg" widgetVar="AreaCreateDialog" modal="true" resizable="false" header="#{bundle.CreateAreaTitle}">
+                                    <h:form id="AreaCreateForm">
+                                        <h:panelGroup id="display">
+                                            <p:panelGrid columns="2" rendered="#{areaController.selected != null}">
+                                                <p:outputLabel value="#{bundle.CreateAreaLabel_id}" for="id" />
+                                                <p:inputText id="id" value="#{areaController.selected.id}" title="#{bundle.CreateAreaTitle_id}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_id}"/>
+                                                <p:outputLabel value="#{bundle.CreateAreaLabel_name}" for="name" />
+                                                <p:inputText id="name" value="#{areaController.selected.name}" title="#{bundle.CreateAreaTitle_name}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_name}"/>
+                                                <p:outputLabel value="#{bundle.CreateAreaLabel_location}" for="location" />
+                                                <p:inputText id="location" value="#{areaController.selected.location}" title="#{bundle.CreateAreaTitle_location}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_location}"/>
+                                            </p:panelGrid>
+                                            <p:commandButton actionListener="#{areaController.create}" value="#{bundle.Save}" update="display,:AreaDTForm:areaTable,:AreaDTForm:messages" oncomplete="handleSubmit(args,'AreaCreateDialog');"/>
+                                            <p:commandButton value="#{bundle.Cancel}" onclick="AreaCreateDialog.hide()"/>
+                                        </h:panelGroup>
+                                    </h:form>
+                                </p:dialog>
 
                             </div>  
                         </div>
