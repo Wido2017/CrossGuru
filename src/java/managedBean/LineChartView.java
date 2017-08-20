@@ -16,16 +16,13 @@ import jsf.util.JsfUtil.PersistAction;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -55,11 +52,10 @@ import org.primefaces.model.chart.LineChartSeries;
 
 @Named("ChartView")
 @ManagedBean
-public class ChartView implements Serializable {
+public class LineChartView implements Serializable {
 
     private LineChartModel lineModel;
-    private BarChartModel barModel;
-    private ChartSeries crossings = new ChartSeries();
+
     private Date selectDate = (Date) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDate");
     private String selectDanwei = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDanwei");
     private Crossing selectedCrossing = (Crossing) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectCrossing");
@@ -71,7 +67,6 @@ public class ChartView implements Serializable {
     @PostConstruct
     public void init() {
         createLineModel();
-        createBarModel();
     }
     @EJB
     private session.CrossingFacade crossingFacade;
@@ -80,10 +75,6 @@ public class ChartView implements Serializable {
 
     public LineChartModel getLineModel() {
         return lineModel;
-    }
-
-    public BarChartModel getBarModel() {
-        return barModel;
     }
 
     private void createLineModel() {
@@ -104,33 +95,14 @@ public class ChartView implements Serializable {
         LineChartModel model = new LineChartModel();
         ChartSeries line = new ChartSeries();
         line.setLabel("车辆数");
+        if (selectDate == null) {
+            selectDate = new Date();
+        }
+        if (selectDanwei == null) {
+            selectDanwei = "天";
+        }
 
-        if (selectedCrossing == null && selectDate == null) {
-            Date currentDate = new Date();
-            String currentDateString = dateFormat_day.format(currentDate);
-            String startDateString = dateFormat_month.format(currentDate).concat("-01");
-            List<String> datesList = collectLocalDates(LocalDate.parse(startDateString), LocalDate.parse(currentDateString));
-            Iterator datesIterator = datesList.iterator();
-            String formatDate;
-            Crossing c = crossingFacade.findAll().get(0);
-            Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
-
-            while (datesIterator.hasNext()) {
-                String dateString = (String) datesIterator.next();
-                long avg = 0;
-                Iterator it = tfs.iterator();
-                while (it.hasNext()) {
-                    TrafficFlow tf = (TrafficFlow) it.next();
-                    formatDate = dateFormat_day.format(tf.getTime());
-                    if (formatDate.equals(dateString)) {
-                        avg = avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4;
-                    }
-                }
-                if (avg != 0) {
-                    line.set(dateString, avg);
-                }
-            }
-        } else if (selectedCrossing == null && selectDanwei.equals("天") && selectDate != null) {
+        if (selectedCrossing == null && selectDanwei.equals("天") && selectDate != null) {
             String selectDateString = dateFormat_day.format(selectDate);
             String formatDate_day = new String();
             String endDateString = dateFormat_day.format(selectDate);
@@ -139,6 +111,7 @@ public class ChartView implements Serializable {
             Iterator datesIterator = datesList.iterator();
             Crossing c = crossingFacade.findAll().get(0);
             Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
+            boolean setline = false;
             while (datesIterator.hasNext()) {
                 String dateString = (String) datesIterator.next();
                 Iterator it = tfs.iterator();
@@ -151,78 +124,230 @@ public class ChartView implements Serializable {
                     }
                 }
                 if (avg != 0) {
+                    setline = true;
                     line.set(dateString, avg);
                 }
             }
-        }
+            if(setline==false){
+                line.set(null, null);
+            }
+        } else if (selectedCrossing == null && selectDanwei.equals("小时") && selectDate != null) {
+            try {
+                String selectDateString = dateFormat_hour.format(selectDate);
+                String formatDate_hour = new String();
+                String endDateString = dateFormat_day.format(selectDate).concat(" 24");
+                String startDateString = dateFormat_day.format(selectDate).concat(" 00");
+                boolean setline = false;
+                List<String> hoursList = new ArrayList<>();
+                Date begin = dateFormat_hour.parse(startDateString);
+                Date end = dateFormat_hour.parse(endDateString);
+                Calendar cal = Calendar.getInstance();
+                while (begin.before(end)) {
+                    hoursList.add(dateFormat_hour.format(begin));
+                    cal.setTime(begin);
+                    cal.add(Calendar.HOUR_OF_DAY, 1);
+                    begin = cal.getTime();
+                }
 
+                Iterator hoursIterator = hoursList.iterator();
+                Crossing c = crossingFacade.findAll().get(0);
+                Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
+                while (hoursIterator.hasNext()) {
+                    String hourString = (String) hoursIterator.next();
+                    Iterator it = tfs.iterator();
+                    long avg = 0;
+                    while (it.hasNext()) {
+                        TrafficFlow tf = (TrafficFlow) it.next();
+                        formatDate_hour = dateFormat_hour.format(tf.getTime());
+                        if (formatDate_hour.equals(hourString)) {
+                            avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                        }
+                    }
+                    if (avg != 0) {
+                        String addHourString = (String) hourString.subSequence(10, 13);
+                        setline = true;
+                        line.set(addHourString.concat(":00"), avg);
+                    }
+                }
+            if(setline==false)
+            {
+                line.set(null, null);
+            }
+            } catch (ParseException ex) {
+                Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (selectedCrossing == null && selectDanwei.equals("分钟") && selectDate != null) {
+            try {
+                String selectHour = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectHour");
+                if (selectHour.equals("")) {
+                    selectHour = "00:00-01:00";
+                }
+                String selectDateString = dateFormat_day.format(selectDate);
+                String startString = selectDateString.concat(" " + selectHour.substring(0, 5));
+                String endString = selectDateString.concat(" " + selectHour.substring(6));
+                String formatDate_minute = new String();
+                boolean setline = false;
+                List<String> minuteList = new ArrayList<>();
+                Date begin = dateFormat_minute.parse(startString);
+                Date end = dateFormat_minute.parse(endString);
+                Calendar cal = Calendar.getInstance();
+                while (begin.before(end)) {
+                    minuteList.add(dateFormat_minute.format(begin));
+                    cal.setTime(begin);
+                    cal.add(Calendar.MINUTE, 1);
+                    begin = cal.getTime();
+                }
+                Iterator minuteIterator = minuteList.iterator();
+                Crossing c = crossingFacade.findAll().get(0);
+                Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
+                while (minuteIterator.hasNext()) {
+                    String minuteString = (String) minuteIterator.next();
+                    Iterator it = tfs.iterator();
+                    long avg = 0;
+                    while (it.hasNext()) {
+                        TrafficFlow tf = (TrafficFlow) it.next();
+                        formatDate_minute = dateFormat_minute.format(tf.getTime());
+                        if (formatDate_minute.equals(minuteString)) {
+                            avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                        }
+                    }
+                    if (avg != 0) {
+                        setline = true;
+                        String minuteString1 = formatDate_minute.substring(11, 16);
+                        line.set(minuteString1, avg);
+                    }
+
+                }
+            if(setline==false)
+            {
+                line.set(null, null);
+            }
+            } catch (ParseException ex) {
+                Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (selectedCrossing != null && selectDanwei.equals("天") && selectDate != null) {
+            String selectDateString = dateFormat_day.format(selectDate);
+            String formatDate_day = new String();
+            String endDateString = dateFormat_day.format(selectDate);
+            String startDateString = dateFormat_month.format(selectDate).concat("-01");
+            List<String> datesList = collectLocalDates(LocalDate.parse(startDateString), LocalDate.parse(endDateString));
+            Iterator datesIterator = datesList.iterator();
+            Collection<TrafficFlow> tfs = selectedCrossing.getTrafficFlowCollection();
+            boolean setline = false;
+            while (datesIterator.hasNext()) {
+                String dateString = (String) datesIterator.next();
+                Iterator it = tfs.iterator();
+                long avg = 0;
+                while (it.hasNext()) {
+                    TrafficFlow tf = (TrafficFlow) it.next();
+                    formatDate_day = dateFormat_day.format(tf.getTime());
+                    if (formatDate_day.equals(dateString)) {
+                        avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                    }
+                }
+                if (avg != 0) {
+                     setline = true;
+                    line.set(dateString, avg);
+                }
+            }
+            if(setline==false)
+            {
+                line.set(null, null);
+            }
+        } else if (selectedCrossing != null && selectDanwei.equals("小时") && selectDate != null) {
+            try {
+                String selectDateString = dateFormat_hour.format(selectDate);
+                String formatDate_hour = new String();
+                String endDateString = dateFormat_day.format(selectDate).concat(" 24");
+                String startDateString = dateFormat_day.format(selectDate).concat(" 00");
+                boolean setline = false;
+                List<String> hoursList = new ArrayList<>();
+                Date begin = dateFormat_hour.parse(startDateString);
+                Date end = dateFormat_hour.parse(endDateString);
+                Calendar cal = Calendar.getInstance();
+                while (begin.before(end)) {
+                    hoursList.add(dateFormat_hour.format(begin));
+                    cal.setTime(begin);
+                    cal.add(Calendar.HOUR_OF_DAY, 1);
+                    begin = cal.getTime();
+                }
+
+                Iterator hoursIterator = hoursList.iterator();
+                Collection<TrafficFlow> tfs = selectedCrossing.getTrafficFlowCollection();
+                while (hoursIterator.hasNext()) {
+                    String hourString = (String) hoursIterator.next();
+                    Iterator it = tfs.iterator();
+                    long avg = 0;
+                    while (it.hasNext()) {
+                        TrafficFlow tf = (TrafficFlow) it.next();
+                        formatDate_hour = dateFormat_hour.format(tf.getTime());
+                        if (formatDate_hour.equals(hourString)) {
+                            avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                        }
+                    }
+                    if (avg != 0) {
+                        String addHourString = (String) hourString.subSequence(10, 13);
+                        setline = true;
+                        line.set(addHourString.concat(":00"), avg);
+                    }
+                }
+                if (setline == false) {
+                        line.set(null, null);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (selectedCrossing != null && selectDanwei.equals("分钟") && selectDate != null) {
+            try {
+                String selectHour = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectHour");
+                if (selectHour.equals("")) {
+                    selectHour = "00:00-01:00";
+                }
+                String selectDateString = dateFormat_day.format(selectDate);
+                String startString = selectDateString.concat(" " + selectHour.substring(0, 5));
+                String endString = selectDateString.concat(" " + selectHour.substring(6));
+                String formatDate_minute = new String();
+                boolean setline = false;
+                List<String> minuteList = new ArrayList<>();
+                Date begin = dateFormat_minute.parse(startString);
+                Date end = dateFormat_minute.parse(endString);
+                Calendar cal = Calendar.getInstance();
+                while (begin.before(end)) {
+                    minuteList.add(dateFormat_minute.format(begin));
+                    cal.setTime(begin);
+                    cal.add(Calendar.MINUTE, 1);
+                    begin = cal.getTime();
+                }
+                Iterator minuteIterator = minuteList.iterator();
+                Collection<TrafficFlow> tfs = selectedCrossing.getTrafficFlowCollection();
+                while (minuteIterator.hasNext()) {
+                    String minuteString = (String) minuteIterator.next();
+                    Iterator it = tfs.iterator();
+                    long avg = 0;
+                    while (it.hasNext()) {
+                        TrafficFlow tf = (TrafficFlow) it.next();
+                        formatDate_minute = dateFormat_minute.format(tf.getTime());
+                        if (formatDate_minute.equals(minuteString)) {
+                            avg = (avg + (tf.getCrossingE() + tf.getCrossingN() + tf.getCrossingS() + tf.getCrossingW()) / 4) / 2;
+                        }
+                    }
+                    if (avg != 0) {
+                        setline = true;
+                        String minuteString1 = formatDate_minute.substring(11, 16);
+                        line.set(minuteString1, avg);
+                    }
+
+                }
+                if (setline == false) {
+                        line.set(null, null);
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         model.addSeries(line);
 
         return model;
-    }
-
-    private void createBarModel() {
-        barModel = initBarModel();
-        barModel.setLegendPosition("e");
-        barModel.setAnimate(true);
-        Axis xAxis = barModel.getAxis(AxisType.X);
-        xAxis.setLabel("路口");
-
-        Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("数量(十万辆)");
-        yAxis.setMin(0);
-        yAxis.setMax(200);
-    }
-
-    private BarChartModel initBarModel() {
-        BarChartModel model = new BarChartModel();
-
-        crossings.setLabel("车辆数");
-        List<Crossing> crossingList = crossingFacade.findAll();
-        Iterator iterator = crossingList.iterator();
-        long avg=0;
-        while (iterator.hasNext()) {
-            Crossing c = (Crossing) iterator.next();
-            Collection<TrafficFlow> trafficFlows = c.getTrafficFlowCollection();
-            if(trafficFlows.isEmpty())
-            {
-                continue;
-            }
-            Iterator iterator1 = trafficFlows.iterator();
-            long sum = 0;
-            int i = 0;
-            while (iterator1.hasNext()) {
-                TrafficFlow t = (TrafficFlow) iterator1.next();
-                sum = sum + t.getCrossingE() + t.getCrossingN() + t.getCrossingS() + t.getCrossingW();
-                i++;
-            }
-            avg = sum / (4 * i);
-            crossings.set(c.getLocation(), avg);
-        }
-        model.addSeries(crossings);
-
-        return model;
-    }
-
-    public void itemSelect(ItemSelectEvent event) {
-        Map datasMap = crossings.getData();
-        Iterator it = datasMap.entrySet().iterator();
-        String key = "";
-        for (int i = 0; i <= event.getItemIndex(); i++) {
-            Map.Entry mapentry = (Map.Entry) it.next();
-            key = mapentry.getKey().toString();
-        }
-        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "选择路口:", key);
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-        List<Crossing> crossingList=crossingFacade.findAll();
-        it=crossingList.iterator();
-        while (it.hasNext()) {
-            Crossing c=(Crossing) it.next();
-            if(c.getLocation().equals(key)){
-                selectedCrossing=c;
-            } 
-        }
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectCrossing", selectedCrossing);
     }
 
     public static List<String> collectLocalDates(LocalDate start, LocalDate end) {
@@ -235,4 +360,5 @@ public class ChartView implements Serializable {
                 // 把流收集为List
                 .collect(Collectors.toList());
     }
+
 }
