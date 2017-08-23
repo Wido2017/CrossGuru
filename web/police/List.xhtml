@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListPoliceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListPoliceEmpty}" rendered="#{policeController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{policeController.items.rowCount > 0}">
+                    <h:outputText value="#{policeController.pagination.pageFirstItem + 1}..#{policeController.pagination.pageLastItem + 1}/#{policeController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{policeController.previous}" value="#{bundle.Previous} #{policeController.pagination.pageSize}" rendered="#{policeController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{policeController.next}" value="#{bundle.Next} #{policeController.pagination.pageSize}" rendered="#{policeController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{policeController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_password}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.password}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_name}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.name}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_sex}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sex}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_tel}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.tel}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_administratorId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.administratorId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListPoliceTitle_areaId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.areaId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{policeController.prepareView}" value="#{bundle.ListPoliceViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{policeController.prepareEdit}" value="#{bundle.ListPoliceEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{policeController.destroy}" value="#{bundle.ListPoliceDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{policeController.prepareCreate}" value="#{bundle.ListPoliceCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListPoliceIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

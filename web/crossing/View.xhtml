@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewCrossingTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewCrossingLabel_id}"/>
+                    <h:outputText value="#{crossingController.selected.id}" title="#{bundle.ViewCrossingTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_location}"/>
+                    <h:outputText value="#{crossingController.selected.location}" title="#{bundle.ViewCrossingTitle_location}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_areaId}"/>
+                    <h:outputText value="#{crossingController.selected.areaId}" title="#{bundle.ViewCrossingTitle_areaId}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_cameraidW}"/>
+                    <h:outputText value="#{crossingController.selected.cameraidW}" title="#{bundle.ViewCrossingTitle_cameraidW}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_cameraidS}"/>
+                    <h:outputText value="#{crossingController.selected.cameraidS}" title="#{bundle.ViewCrossingTitle_cameraidS}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_cameraidN}"/>
+                    <h:outputText value="#{crossingController.selected.cameraidN}" title="#{bundle.ViewCrossingTitle_cameraidN}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_cameraidE}"/>
+                    <h:outputText value="#{crossingController.selected.cameraidE}" title="#{bundle.ViewCrossingTitle_cameraidE}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_trafficLightidW}"/>
+                    <h:outputText value="#{crossingController.selected.trafficLightidW}" title="#{bundle.ViewCrossingTitle_trafficLightidW}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_trafficLightidS}"/>
+                    <h:outputText value="#{crossingController.selected.trafficLightidS}" title="#{bundle.ViewCrossingTitle_trafficLightidS}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_trafficLightidN}"/>
+                    <h:outputText value="#{crossingController.selected.trafficLightidN}" title="#{bundle.ViewCrossingTitle_trafficLightidN}"/>
+                    <h:outputText value="#{bundle.ViewCrossingLabel_trafficLightidE}"/>
+                    <h:outputText value="#{crossingController.selected.trafficLightidE}" title="#{bundle.ViewCrossingTitle_trafficLightidE}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{crossingController.destroyAndView}" value="#{bundle.ViewCrossingDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewCrossingEditLink}"/>
+                <br />
+                <h:commandLink action="#{crossingController.prepareCreate}" value="#{bundle.ViewCrossingCreateLink}" />
+                <br />
+                <h:commandLink action="#{crossingController.prepareList}" value="#{bundle.ViewCrossingShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewCrossingIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

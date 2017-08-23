@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditOperationRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{operationRecordController.selected.id}" title="#{bundle.EditOperationRecordTitle_id}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_operateTime}" for="operateTime" />
+                    <h:inputText id="operateTime" value="#{operationRecordController.selected.operateTime}" title="#{bundle.EditOperationRecordTitle_operateTime}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_operateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_operateTable}" for="operateTable" />
+                    <h:inputText id="operateTable" value="#{operationRecordController.selected.operateTable}" title="#{bundle.EditOperationRecordTitle_operateTable}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_operateTable}"/>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_operator}" for="operator" />
+                    <h:inputText id="operator" value="#{operationRecordController.selected.operator}" title="#{bundle.EditOperationRecordTitle_operator}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_operator}"/>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_operateType}" for="operateType" />
+                    <h:inputTextarea rows="4" cols="30" id="operateType" value="#{operationRecordController.selected.operateType}" title="#{bundle.EditOperationRecordTitle_operateType}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_operateType}"/>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_administratorId}" for="administratorId" />
+                    <h:selectOneMenu id="administratorId" value="#{operationRecordController.selected.administratorId}" title="#{bundle.EditOperationRecordTitle_administratorId}" >
+                        <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditOperationRecordLabel_policeId}" for="policeId" />
+                    <h:selectOneMenu id="policeId" value="#{operationRecordController.selected.policeId}" title="#{bundle.EditOperationRecordTitle_policeId}" >
+                        <f:selectItems value="#{policeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{operationRecordController.update}" value="#{bundle.EditOperationRecordSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditOperationRecordViewLink}"/>
+                <br />
+                <h:commandLink action="#{operationRecordController.prepareList}" value="#{bundle.EditOperationRecordShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditOperationRecordIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
