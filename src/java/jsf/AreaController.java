@@ -37,7 +37,7 @@ public class AreaController implements Serializable {
         return arealist;
     }
     
-    public List<String> exitedArea(){
+    public List<String> existedArea(){
         arealist=new ArrayList<>();
         arealist=ejbFacade.findExistedAreas();
         return arealist;

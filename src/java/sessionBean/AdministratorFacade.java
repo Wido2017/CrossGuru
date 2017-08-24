@@ -6,6 +6,9 @@
 package sessionBean;
 
 import entity.Administrator;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +31,17 @@ public class AdministratorFacade extends AbstractFacade<Administrator> {
     public AdministratorFacade() {
         super(Administrator.class);
     }
-    
+
+    public List<String> findExistedAdminis() {
+        List<String> adminis = new ArrayList<>();
+        try {
+            List<Administrator> a=em.createNamedQuery("Administrator.findAll").getResultList();
+            a.forEach((admini)->{
+                adminis.add(admini.getId());
+            });
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+        return adminis;
+    }
 }

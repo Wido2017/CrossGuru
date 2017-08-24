@@ -6,6 +6,8 @@ import jsf.util.PaginationHelper;
 import sessionBean.AdministratorFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -28,6 +30,24 @@ public class AdministratorController implements Serializable {
     private sessionBean.AdministratorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    private List<String> adminilist;
+    
+    public List<String> existedAdmini(){
+        adminilist=new ArrayList<>();
+        adminilist=ejbFacade.findExistedAdminis();
+        return adminilist;
+    }
+
+    public void setAdminilist(List<String> adminilist) {
+        this.adminilist = adminilist;
+    }
+
+    public List<String> getAdminilist() {
+        return adminilist;
+    }
+    
+    
 
     public AdministratorController() {
     }
