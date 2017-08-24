@@ -42,66 +42,69 @@
                 <h:form class="index_right_form">
                     <p:tabView>
                         <p:tab title="登录">
-                            <div class="name">
-                                <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
-                                <p:inputText id="name_" style="margin-left:20px" value="#{policeController.ID}"></p:inputText>
-                                <p:watermark class="watermark" for="name_" value="输入账号" />
-                            </div>
-                            <br/>
-                            <div class="pwd">
-                                <p:graphicImage value="../resources/images/密码.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
-                                <p:password id="nonfeedback"  style="margin-left:20px;margin-right: 3px" value="#{policeController.pwd}"/>
-                                <p:watermark class="watermark" for="nonfeedback" value="输入密码" />
-                                <h:outputText class="error_output" value="账号密码不一致或无注册记录！" rendered="#{policeController.error_ eq 'error'}"></h:outputText>
-                            </div>
-                            <div class="btn">
-                                <p:commandButton value="登录" id="nonAjax" action="#{policeController.processLogin}" ajax="false" style="margin-top: 20px;margin-left:-70px" />
-                            </div>
-                            <br/>
-                            <br/>
-                            <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
-                            <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
-                            <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
-                            <!--<a class="register" style="font-size: 13px;font-family:STFangsong " href="#">注册</a>-->
+                            <h:form>
+                                <div class="name">
+                                    <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                    <p:inputText id="name_" style="margin-left:20px" value="#{policeController.ID}" placeholder="输入账号"></p:inputText>
+
+                                </div>
+                                <br/>
+                                <div class="pwd">
+                                    <p:graphicImage value="../resources/images/密码.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                    <p:password id="nonfeedback"  style="margin-left:20px;margin-right: 3px" value="#{policeController.pwd}" placeholder="输入密码"/>
+
+<!--                                <h:outputText class="error_output" value="账号密码不一致或无注册记录！" rendered="#{policeController.error_ eq 'error'}"></h:outputText>-->
+                                </div>
+
+                                <p:commandButton value="登录" id="nonAjax" action="#{policeController.processLogin}"  style="margin-top: 20px;margin-left:40px" type="submit"/>
+
+                                <br/>
+                                <br/>
+                                <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
+                                <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                                <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                                <!--<a class="register" style="font-size: 13px;font-family:STFangsong " href="#">注册</a>-->
+                            </h:form>
                         </p:tab>
                         <p:tab title="注册">
-                            <h:outputLabel>姓名</h:outputLabel>
-                            <p:inputText id="name" value="#{policeController.selected.name}" style="margin-left: 10px"></p:inputText>
-                            <p:watermark for="name" value="支持中英文" /> 
-                            <br/><br/>
-                            <h:outputLabel>性别</h:outputLabel>
-                            <h:selectOneMenu id="sexmenu" required="true" value="#{policeController.selected.sex}" style="margin-left: 10px">                               
-                                <f:selectItem itemValue="男" itemLabel="男" />
-                                <f:selectItem itemValue="女" itemLabel="女" />
-                            </h:selectOneMenu><br /><br/>
-                            <h:outputLabel>密码</h:outputLabel>
-                            <p:password id="mima" style="margin-left: 10px" value="#{policeController.selected.password}"/>
-                            <p:watermark class="watermark" for="mima" value="5-20位，字母和数字组成" />
-                            <br/><br/>
-                            <h:outputLabel>编号</h:outputLabel>
-                            <p:inputText id="id" style="margin-left: 10px" value="#{policeController.selected.id}"></p:inputText>
-                            <p:watermark class="watermark" for="id" value="身份编号" />
-                            <br/><br/>
-                            <h:outputLabel>手机号码</h:outputLabel>
-                            <p:inputText class="phone" value="#{policeController.selected.tel}" style="margin-left: 10px"></p:inputText>
-                            <br/><br/>
-                            <h:outputLabel>管辖片区</h:outputLabel>
-                            <h:selectOneMenu id="areamenu" required="true" value="#{policeController.selected.areaId}" style="margin-left: 10px">                               
-                                <f:selectItems value="#{areaController.existedArea}"/>
-                                <!--<f:selectItem itemValue="片区2" itemLabel="片区2" />-->
-                            </h:selectOneMenu><br /><br/>
-                            <h:outputLabel>管理员</h:outputLabel>
-                            <h:selectOneMenu id="adminimenu" required="true" value="#{policeController.selected.administratorId}" style="margin-left: 10px">                               
-                                <f:selectItems value="#{administratorController.adminilist}"/>
-                                <!--<f:selectItem itemValue="片区2" itemLabel="片区2" />-->
-                            </h:selectOneMenu><br /><br/>
-                            <p:commandButton value="注册" id="nonAj3ax" action="#{policeController.policeCreate}" ajax="false" style="margin-top: 20px;" />
-                            <br/>
-                            <br/>
-                            <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
-                            <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
-                            <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
-
+                            <h:form>
+                                <h:outputLabel>姓名</h:outputLabel>
+                                <p:inputText id="name" value="#{policeController.selected.name}" style="margin-left: 10px"></p:inputText>
+                                <p:watermark for="name" value="支持中英文" /> 
+                                <br/><br/>
+                                <h:outputLabel>性别</h:outputLabel>
+                                <h:selectOneMenu id="sexmenu" required="true" value="#{policeController.selected.sex}" style="margin-left: 10px">                               
+                                    <f:selectItem itemValue="男" itemLabel="男" />
+                                    <f:selectItem itemValue="女" itemLabel="女" />
+                                </h:selectOneMenu><br /><br/>
+                                <h:outputLabel>密码</h:outputLabel>
+                                <p:password id="mima" style="margin-left: 10px" value="#{policeController.selected.password}"/>
+                                <p:watermark class="watermark" for="mima" value="5-20位，字母和数字组成" />
+                                <br/><br/>
+                                <h:outputLabel>编号</h:outputLabel>
+                                <p:inputText id="id" style="margin-left: 10px" value="#{policeController.selected.id}"></p:inputText>
+                                <p:watermark class="watermark" for="id" value="身份编号" />
+                                <br/><br/>
+                                <h:outputLabel>手机号码</h:outputLabel>
+                                <p:inputText class="phone" value="#{policeController.selected.tel}" style="margin-left: 10px"></p:inputText>
+                                <br/><br/>
+                                <h:outputLabel>管辖片区</h:outputLabel>
+                                <h:selectOneMenu id="areamenu" required="true" value="#{policeController.selected.areaId}" style="margin-left: 10px">                               
+                                    <f:selectItems value="#{areaController.existedArea}"/>
+                                    <!--<f:selectItem itemValue="片区2" itemLabel="片区2" />-->
+                                </h:selectOneMenu><br /><br/>
+                                <h:outputLabel>管理员</h:outputLabel>
+                                <h:selectOneMenu id="adminimenu" required="true" value="#{policeController.selected.administratorId}" style="margin-left: 10px">                               
+                                    <f:selectItems value="#{administratorController.adminilist}"/>
+                                    <!--<f:selectItem itemValue="片区2" itemLabel="片区2" />-->
+                                </h:selectOneMenu><br /><br/>
+                                <p:commandButton value="注册" id="nonAj3ax" action="#{policeController.policeCreate}" ajax="false" style="margin-top: 20px;" />
+                                <br/>
+                                <br/>
+                                <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
+                                <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                                <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                            </h:form>
                         </p:tab>
 
                     </p:tabView>
