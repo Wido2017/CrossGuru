@@ -11,9 +11,9 @@ and open the template in the editor.
 .ui-title
 {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 150%;
     position: absolute;
-    margin-left: 600px;
+    margin-left: 35%;
 }
 
 .ui-setlayoutColor1{
@@ -23,8 +23,8 @@ and open the template in the editor.
 
 .ui-setGrid{
     position: absolute;
-    left: 350px;
-    top: 50px;
+    left: 25%;
+    top: 0%;
 }
 
 .ui-setGroup1{

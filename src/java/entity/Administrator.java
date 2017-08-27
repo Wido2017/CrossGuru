@@ -23,7 +23,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author 曹锡鹏
+>>>>>>> cxp
  */
 @Entity
 @Table(name = "administrator")
@@ -164,7 +168,11 @@ public class Administrator implements Serializable {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return id;
+=======
+        return "entity.Administrator[ id=" + id + " ]";
+>>>>>>> cxp
     }
     
 }

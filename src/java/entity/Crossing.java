@@ -25,7 +25,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author 曹锡鹏
+>>>>>>> cxp
  */
 @Entity
 @Table(name = "crossing")

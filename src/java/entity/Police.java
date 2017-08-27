@@ -24,7 +24,11 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author 曹锡鹏
+>>>>>>> cxp
  */
 @Entity
 @Table(name = "police")
@@ -176,7 +180,11 @@ public class Police implements Serializable {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return  id;
+=======
+        return "entity.Police[ id=" + id + " ]";
+>>>>>>> cxp
     }
     
 }

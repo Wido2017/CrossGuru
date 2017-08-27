@@ -24,7 +24,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author 曹锡鹏
+>>>>>>> cxp
  */
 @Entity
 @Table(name = "traffic_flow")
@@ -49,6 +53,7 @@ public class TrafficFlow implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "time")
+<<<<<<< HEAD
     @Temporal(TemporalType.DATE)
     private Date time;
     @Column(name = "crossing-N")
@@ -58,6 +63,17 @@ public class TrafficFlow implements Serializable {
     @Column(name = "crossing-W")
     private Long crossingW;
     @Column(name = "crossing-E")
+=======
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date time;
+    @Column(name = "crossing_N")
+    private Long crossingN;
+    @Column(name = "crossing_S")
+    private Long crossingS;
+    @Column(name = "crossing_W")
+    private Long crossingW;
+    @Column(name = "crossing_E")
+>>>>>>> cxp
     private Long crossingE;
     @JoinColumn(name = "crossing_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

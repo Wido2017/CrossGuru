@@ -27,7 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author 曹锡鹏
+>>>>>>> cxp
  */
 @Entity
 @Table(name = "operation_record")

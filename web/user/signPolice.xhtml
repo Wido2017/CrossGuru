@@ -41,6 +41,7 @@
                 <div class="index_right_form">
                     <p:tabView>
                         <p:tab title="登录">
+<<<<<<< HEAD
                             <h:form id="form1">
                                 <div class="name">
                                     <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
@@ -63,6 +64,28 @@
                                 <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
                                 <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
                             </h:form>
+=======
+                            <div class="name">
+                                <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                <p:inputText id="name_" style="margin-left:20px"></p:inputText>
+                                <p:watermark class="watermark" for="name_" value="输入账号" />
+                            </div>
+                            <br/>
+                            <div class="pwd">
+                                <p:graphicImage value="../resources/images/密码.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                <p:password id="nonfeedback"  style="margin-left:20px;margin-right: 3px"/>
+                                <p:watermark class="watermark" for="nonfeedback" value="5-20位，数字、字母组成" />
+                            </div>
+                            <div class="btn">
+                                <p:commandButton value="登录" id="nonAjax" action="home.xhtml" ajax="false" style="margin-top: 20px;margin-left:-70px" />
+                            </div>
+                            <br/>
+                            <br/>
+                            <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>
+                            <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                            <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                            <!--<a class="register" style="font-size: 13px;font-family:STFangsong " href="#">注册</a>-->
+>>>>>>> cxp
                         </p:tab>
                         <p:tab title="注册">
                             <h:form id="form2">
