@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewTrafficFlowTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_id}"/>
+                    <h:outputText value="#{trafficFlowController.selected.id}" title="#{bundle.ViewTrafficFlowTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_time}"/>
+                    <h:outputText value="#{trafficFlowController.selected.time}" title="#{bundle.ViewTrafficFlowTitle_time}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_crossingN}"/>
+                    <h:outputText value="#{trafficFlowController.selected.crossingN}" title="#{bundle.ViewTrafficFlowTitle_crossingN}"/>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_crossingS}"/>
+                    <h:outputText value="#{trafficFlowController.selected.crossingS}" title="#{bundle.ViewTrafficFlowTitle_crossingS}"/>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_crossingW}"/>
+                    <h:outputText value="#{trafficFlowController.selected.crossingW}" title="#{bundle.ViewTrafficFlowTitle_crossingW}"/>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_crossingE}"/>
+                    <h:outputText value="#{trafficFlowController.selected.crossingE}" title="#{bundle.ViewTrafficFlowTitle_crossingE}"/>
+                    <h:outputText value="#{bundle.ViewTrafficFlowLabel_crossingId}"/>
+                    <h:outputText value="#{trafficFlowController.selected.crossingId}" title="#{bundle.ViewTrafficFlowTitle_crossingId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{trafficFlowController.destroyAndView}" value="#{bundle.ViewTrafficFlowDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewTrafficFlowEditLink}"/>
+                <br />
+                <h:commandLink action="#{trafficFlowController.prepareCreate}" value="#{bundle.ViewTrafficFlowCreateLink}" />
+                <br />
+                <h:commandLink action="#{trafficFlowController.prepareList}" value="#{bundle.ViewTrafficFlowShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewTrafficFlowIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

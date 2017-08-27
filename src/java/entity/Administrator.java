@@ -21,10 +21,6 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author lenovo
- */
 @Entity
 @Table(name = "administrator")
 @XmlRootElement
@@ -164,7 +160,7 @@ public class Administrator implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Administrator[ id=" + id + " ]";
+        return id;
     }
     
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditPoliceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{policeController.selected.id}" title="#{bundle.EditPoliceTitle_id}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{policeController.selected.password}" title="#{bundle.EditPoliceTitle_password}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_password}"/>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{policeController.selected.name}" title="#{bundle.EditPoliceTitle_name}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_sex}" for="sex" />
+                    <h:inputText id="sex" value="#{policeController.selected.sex}" title="#{bundle.EditPoliceTitle_sex}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_sex}"/>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_tel}" for="tel" />
+                    <h:inputText id="tel" value="#{policeController.selected.tel}" title="#{bundle.EditPoliceTitle_tel}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_tel}"/>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_administratorId}" for="administratorId" />
+                    <h:selectOneMenu id="administratorId" value="#{policeController.selected.administratorId}" title="#{bundle.EditPoliceTitle_administratorId}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_administratorId}">
+                        <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditPoliceLabel_areaId}" for="areaId" />
+                    <h:selectOneMenu id="areaId" value="#{policeController.selected.areaId}" title="#{bundle.EditPoliceTitle_areaId}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_areaId}">
+                        <f:selectItems value="#{areaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{policeController.update}" value="#{bundle.EditPoliceSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditPoliceViewLink}"/>
+                <br />
+                <h:commandLink action="#{policeController.prepareList}" value="#{bundle.EditPoliceShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditPoliceIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
