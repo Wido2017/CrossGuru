@@ -102,6 +102,11 @@ public class LineChartView implements Serializable {
             selectDanwei = "天";
         }
 
+        if (crossingFacade.findAll() == null) {
+            line.set(null, null);
+            model.addSeries(line);
+            return model;
+        }
         if (selectedCrossing == null && selectDanwei.equals("天") && selectDate != null) {
             String selectDateString = dateFormat_day.format(selectDate);
             String formatDate_day = new String();
@@ -128,7 +133,7 @@ public class LineChartView implements Serializable {
                     line.set(dateString, avg);
                 }
             }
-            if(setline==false){
+            if (setline == false) {
                 line.set(null, null);
             }
         } else if (selectedCrossing == null && selectDanwei.equals("小时") && selectDate != null) {
@@ -169,10 +174,9 @@ public class LineChartView implements Serializable {
                         line.set(addHourString.concat(":00"), avg);
                     }
                 }
-            if(setline==false)
-            {
-                line.set(null, null);
-            }
+                if (setline == false) {
+                    line.set(null, null);
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -218,10 +222,9 @@ public class LineChartView implements Serializable {
                     }
 
                 }
-            if(setline==false)
-            {
-                line.set(null, null);
-            }
+                if (setline == false) {
+                    line.set(null, null);
+                }
             } catch (ParseException ex) {
                 Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -246,12 +249,11 @@ public class LineChartView implements Serializable {
                     }
                 }
                 if (avg != 0) {
-                     setline = true;
+                    setline = true;
                     line.set(dateString, avg);
                 }
             }
-            if(setline==false)
-            {
+            if (setline == false) {
                 line.set(null, null);
             }
         } else if (selectedCrossing != null && selectDanwei.equals("小时") && selectDate != null) {
@@ -292,7 +294,7 @@ public class LineChartView implements Serializable {
                     }
                 }
                 if (setline == false) {
-                        line.set(null, null);
+                    line.set(null, null);
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);
@@ -339,7 +341,7 @@ public class LineChartView implements Serializable {
 
                 }
                 if (setline == false) {
-                        line.set(null, null);
+                    line.set(null, null);
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(LineChartView.class.getName()).log(Level.SEVERE, null, ex);

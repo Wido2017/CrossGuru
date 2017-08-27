@@ -12,6 +12,8 @@ import session.CrossingFacade;
 
 import entity.Area;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import jsf.util.JsfUtil;
 import jsf.util.JsfUtil.PersistAction;
 import session.AreaFacade;
@@ -24,6 +26,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -39,12 +42,12 @@ public class crossManager implements Serializable {
 
     @EJB
     private session.AreaFacade areaFacade;
+    @EJB
+    private session.CrossingFacade crossingFacade;
     private List<Area> areas = null;
     private Area selectedArea;
     private List<Crossing> areaHasCrossings;
     private Crossing selectedCrossing;
-
-    private Area createArea;
 
     /**
      * Creates a new instance of crossManager
@@ -57,7 +60,7 @@ public class crossManager implements Serializable {
     }
 
     public List<Area> getAreas() {
-            areas = getAreaFacade().findAll();
+        areas = areaFacade.findAll();
         return areas;
     }
 
@@ -73,18 +76,28 @@ public class crossManager implements Serializable {
         this.selectedArea = selectedArea;
     }
 
-    public Area getCreateArea() {
-        return createArea;
-    }
-
-    public void setCreateArea(Area createArea) {
-        this.createArea = createArea;
-    }
-
     public void onRowSelect(SelectEvent event) {
-        areaHasCrossings = (List<Crossing>) selectedArea.getCrossingCollection();
+        selectedArea = (Area) event.getObject();
+        areaHasCrossings = new ArrayList<>();
+        List<Crossing> crossings = crossingFacade.findAll();
+        Iterator iterator = crossings.iterator();
+        while (iterator.hasNext()) {
+            Crossing c = (Crossing) iterator.next();
+            if (c.getAreaId().getId() == null ? selectedArea.getId() == null : c.getAreaId().getId().equals(selectedArea.getId())) {
+                areaHasCrossings.add(c);
+            }
+        }
         FacesMessage msg = new FacesMessage("Area Selected", ((Area) event.getObject()).getName() + " " + ((Area) event.getObject()).getLocation());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowSelectCrossing(SelectEvent event) {
+        FacesMessage msg = new FacesMessage("Crossing Selected", ((Crossing) event.getObject()).getId() + " " + ((Crossing) event.getObject()).getLocation());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onClickCreateButton() {
+        selectedCrossing = new Crossing();
     }
 
     public List<Crossing> getAreaHasCrossings() {
@@ -110,61 +123,41 @@ public class crossManager implements Serializable {
         }
     }
 
-    protected void setEmbeddableKeys() {
+    public void updateSelectCrossing() {
+        crossingFacade.edit(selectedCrossing);
+        FacesMessage msg = new FacesMessage(" ", "修改成功");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
-    protected void initializeEmbeddableKey() {
-    }
-
-    public Area areaPrepareCreate() {
-        createArea = new Area();
-        initializeEmbeddableKey();
-        return createArea;
-    }
-
-    public void aeraCreate() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AreaCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            areas = null;    // Invalidate list of items to trigger re-query.
+    public void createNewCrossing() {
+        selectedCrossing.setAreaId(selectedArea);
+        crossingFacade.create(selectedCrossing);
+        selectedCrossing = new Crossing();
+        FacesMessage msg = new FacesMessage(" ", "创建成功");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        areaHasCrossings.clear();
+        List<Crossing> crossings = crossingFacade.findAll();
+        Iterator iterator = crossings.iterator();
+        while (iterator.hasNext()) {
+            Crossing c = (Crossing) iterator.next();
+            if (c.getAreaId().getId() == selectedArea.getId()) {
+                areaHasCrossings.add(c);
+            }
         }
     }
 
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AreaUpdated"));
-    }
-
-    public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AreaDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            createArea = null; // Remove selection
-            areas = null;    // Invalidate list of items to trigger re-query.
-        }
-    }
-
-    private void persist(PersistAction persistAction, String successMessage) {
-        if (createArea != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getAreaFacade().edit(createArea);
-                } else {
-                    getAreaFacade().remove(createArea);
+    public void deleteSelectCrossing() {
+        if (selectedCrossing != null) {
+            crossingFacade.remove(selectedCrossing);
+            selectedCrossing = null;
+            areaHasCrossings.clear();
+            List<Crossing> crossings = crossingFacade.findAll();
+            Iterator iterator = crossings.iterator();
+            while (iterator.hasNext()) {
+                Crossing c = (Crossing) iterator.next();
+                if (c.getAreaId().getId() == null ? selectedArea.getId() == null : c.getAreaId().getId().equals(selectedArea.getId())) {
+                    areaHasCrossings.add(c);
                 }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             }
         }
     }
