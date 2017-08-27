@@ -5,17 +5,25 @@
  */
 package sessionBean;
 
+<<<<<<< HEAD
 import entity.Administrator;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
+=======
+import entityBean.Administrator;
+>>>>>>> origin/qiuli
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author QIULI
+>>>>>>> origin/qiuli
  */
 @Stateless
 public class AdministratorFacade extends AbstractFacade<Administrator> {
@@ -31,6 +39,7 @@ public class AdministratorFacade extends AbstractFacade<Administrator> {
     public AdministratorFacade() {
         super(Administrator.class);
     }
+<<<<<<< HEAD
     public String FindID(String id){
         Administrator p=em.find(Administrator.class, id);
         String ID=p.getId();
@@ -73,4 +82,7 @@ public class AdministratorFacade extends AbstractFacade<Administrator> {
 //        }
 //        return adminis;
 //    }
+=======
+    
+>>>>>>> origin/qiuli
 }

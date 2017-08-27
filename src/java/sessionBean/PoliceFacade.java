@@ -5,15 +5,23 @@
  */
 package sessionBean;
 
+<<<<<<< HEAD
 import entity.Police;
 import javax.ejb.EJBException;
+=======
+import entityBean.Police;
+>>>>>>> origin/qiuli
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
+<<<<<<< HEAD
  * @author Nicole Yang
+=======
+ * @author QIULI
+>>>>>>> origin/qiuli
  */
 @Stateless
 public class PoliceFacade extends AbstractFacade<Police> {
@@ -30,6 +38,7 @@ public class PoliceFacade extends AbstractFacade<Police> {
         super(Police.class);
     }
     
+<<<<<<< HEAD
     public String FindID(String id){
         Police p=em.find(Police.class, id);
         String ID=p.getId();
@@ -60,4 +69,6 @@ public class PoliceFacade extends AbstractFacade<Police> {
         return police;
     }
     
+=======
+>>>>>>> origin/qiuli
 }
