@@ -5,22 +5,14 @@
  */
 package sessionBean;
 
-<<<<<<< HEAD
 import entity.Trafficlight;
-=======
-import entityBean.Trafficlight;
->>>>>>> origin/qiuli
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
-<<<<<<< HEAD
  * @author Nicole Yang
-=======
- * @author QIULI
->>>>>>> origin/qiuli
  */
 @Stateless
 public class TrafficlightFacade extends AbstractFacade<Trafficlight> {

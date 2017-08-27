@@ -12,7 +12,7 @@ package managedBean;
 import javax.faces.bean.ManagedBean;
 
 @ManagedBean
-public class SpinnerView {                   
+public class SpinnerView {
 
     private int Nsecond_Red_up;
     private int Nsecond_Green_up;

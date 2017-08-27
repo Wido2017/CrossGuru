@@ -5,26 +5,18 @@
  */
 package sessionBean;
 
-<<<<<<< HEAD
 import entity.Area;
 import entity.Police;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJBException;
-=======
-import entityBean.Area;
->>>>>>> origin/qiuli
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
-<<<<<<< HEAD
  * @author Nicole Yang
-=======
- * @author QIULI
->>>>>>> origin/qiuli
  */
 @Stateless
 public class AreaFacade extends AbstractFacade<Area> {
@@ -40,7 +32,6 @@ public class AreaFacade extends AbstractFacade<Area> {
     public AreaFacade() {
         super(Area.class);
     }
-<<<<<<< HEAD
 
     public List<String> findExistedAreas() {
         List<String> areas = new ArrayList<>();
@@ -55,7 +46,4 @@ public class AreaFacade extends AbstractFacade<Area> {
         return areas;
     }
 
-=======
-    
->>>>>>> origin/qiuli
 }

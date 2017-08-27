@@ -22,7 +22,7 @@
             <p:layout fullPage="true">
                 <p:layoutUnit position="north" size="55" resizable="false" gutter="0">        
                     <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
-                    <h:outputText id="title" class="ui-title" value="实时红绿灯"></h:outputText>           
+                    <h:outputText id="title" class="ui-title" value="#{EL}"></h:outputText>           
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
@@ -48,12 +48,6 @@
                                 </p:column>
                                 <p:column colspan="3">
                                     <p:photoCam></p:photoCam>
-                                    <!--调用网络摄像头-->
-                                    <!--                                    <video controls>
-                                                                            <source src="#{cameraController.getNewCamera.ipAddress}" type="video/ogg" />
-                                                                            Your browser does no support the video tag.
-                                                                        </video>-->
-
                                 </p:column>
                                 <p:column colspan="3">
                                     <p:photoCam></p:photoCam>
@@ -94,8 +88,7 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                    <p:outputLabel id="Esecond_Red_Up" value="#{counterView.esecond_Red_Up}"/>
-                                    <p:poll interval="1" listener="#{counterView.EsecondRedUpDecrement()}" update="Esecond_Red_Up"/>
+
                                 </p:column>
 
 
@@ -106,7 +99,7 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                    
+
                                 </p:column>
 
                                 <p:column rowspan="2" style="border-right: transparent;">
@@ -116,7 +109,7 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                   
+
                                 </p:column>
 
                             </p:row>
@@ -134,8 +127,7 @@
                                     <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                    <p:outputLabel id="Esecond_Green_Up" value="#{counterView.esecond_Green_Up}"/>
-                                    <p:poll interval="1" listener="#{counterView.EsecondGreenUpDecrement()}" update="Esecond_Green_Up"/>
+
                                 </p:column>
 
 
@@ -163,8 +155,8 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column style="border-left: transparent;border-bottom: transparent;">
-
-                                    
+<!--                                    <p:outputLabel id="Nsecond_Red_Left" value="#{counterView.nsecond_Red_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondRedUpDecrement()}" update="Nsecond_Red_Left"/>-->
                                 </p:column>
 
 
@@ -207,8 +199,8 @@
                                     <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column style="border-left: transparent;">
-                                    
-                                    
+<!--                                    <p:outputLabel id="Nsecond_Green_Left" value="#{counterView.nsecond_Green_Up}"/>
+                                    <p:poll interval="1" listener="#{counterView.NsecondGreenUpDecrement()}" update="Nsecond_Green_Left"/>-->
                                 </p:column>
 
 

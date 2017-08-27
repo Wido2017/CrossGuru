@@ -10,11 +10,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
-<<<<<<< HEAD
  * @author Nicole Yang
-=======
- * @author QIULI
->>>>>>> origin/qiuli
  */
 public abstract class AbstractFacade<T> {
 
