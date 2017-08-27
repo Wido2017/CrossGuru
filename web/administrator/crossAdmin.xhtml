@@ -1,10 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -35,7 +34,7 @@
                     <li class="hidden-xs am-hide-sm-only">
                         <form role="search" class="app-search">
                             <input type="text" placeholder="Search..." class="form-control"/>
-
+                            <a href=""><img src="../resources/images/search.png"/></a>
                         </form>
                     </li>
                     <li>
@@ -86,160 +85,44 @@
 
                             <!--container start-->
                             <div class="am-u-sm-12 am-u-md-6">
-                                <h:form id="AreaDTForm">
-                                    <div class="am-btn-toolbar">
-                                        <div class="am-btn-group am-btn-group-xs">
-                                            <h4 class="page-title">路口管理</h4>
-
-                                            <p:growl id="messages" showDetail="true" />
-
-                                            <p:toolbar style="width: 1000px;">
-                                                <f:facet name="left">
-                                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="新增" actionListener="#{areaController.prepareCreate}" update=":AreaCreateForm" oncomplete="PF('AreaCreateDialog').show()"/>
-                                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"   value="删除" actionListener="#{crossManager.deleteSelectArea}" update=":AreaDTForm:areaTable :AreaDTForm:deleteButton" disabled="#{crossManager.selectedArea==null}">
-                                                        <p:confirm header="提示" message="确定删除吗?" icon="ui-icon-alert" />
-                                                    </p:commandButton>
-                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                        <p:commandButton value="是" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                                        <p:commandButton value="否" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                                    </p:confirmDialog>
-                                                </f:facet>
-                                            </p:toolbar>
-
-                                        </div>
+                                <div class="am-btn-toolbar">
+                                    <div class="am-btn-group am-btn-group-xs">
+                                        <h4 class="page-title">路口管理</h4>
+                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
+                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
+                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
+                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
                                     </div>
+                                </div>
 
+                                <h:form>
+                                    <h:outputLabel for="menu" value="Basic:" />
+                                    <!--<div id="j_idt87:menu" class="ui-selectcheckboxmenu ui-widget ui-state-default ui-corner-all"><div class="ui-helper-hidden-accessible"><input id="j_idt87:menu_focus" name="j_idt87:menu_focus" type="text" readonly="readonly" aria-expanded="false" aria-labelledby="j_idt87:menu_label"></div><div class="ui-helper-hidden"><input id="j_idt87:menu:0" name="j_idt87:menu" type="checkbox" value="Miami" data-escaped="true"><label for="j_idt87:menu:0">Miami</label><input id="j_idt87:menu:1" name="j_idt87:menu" type="checkbox" value="London" data-escaped="true"><label for="j_idt87:menu:1">London</label><input id="j_idt87:menu:2" name="j_idt87:menu" type="checkbox" value="Paris" data-escaped="true"><label for="j_idt87:menu:2">Paris</label><input id="j_idt87:menu:3" name="j_idt87:menu" type="checkbox" value="Istanbul" data-escaped="true"><label for="j_idt87:menu:3">Istanbul</label><input id="j_idt87:menu:4" name="j_idt87:menu" type="checkbox" value="Berlin" data-escaped="true"><label for="j_idt87:menu:4">Berlin</label><input id="j_idt87:menu:5" name="j_idt87:menu" type="checkbox" value="Barcelona" data-escaped="true"><label for="j_idt87:menu:5">Barcelona</label><input id="j_idt87:menu:6" name="j_idt87:menu" type="checkbox" value="Rome" data-escaped="true"><label for="j_idt87:menu:6">Rome</label><input id="j_idt87:menu:7" name="j_idt87:menu" type="checkbox" value="Brasilia" data-escaped="true"><label for="j_idt87:menu:7">Brasilia</label><input id="j_idt87:menu:8" name="j_idt87:menu" type="checkbox" value="Amsterdam" data-escaped="true"><label for="j_idt87:menu:8">Amsterdam</label></div><span class="ui-selectcheckboxmenu-label-container"><label class="ui-selectcheckboxmenu-label ui-corner-all" id="j_idt87:menu_label">Cities</label></span><div class="ui-selectcheckboxmenu-trigger ui-state-default ui-corner-right"><span class="ui-icon ui-icon-triangle-1-s"></span></div></div>-->
+                                    <p:selectCheckboxMenu id="menu" value="#{checkboxView.selectedCities}" label="Cities"
+                                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
+                                        <f:selectItems value="#{checkboxView.cities}" />
+                                    </p:selectCheckboxMenu>
 
-                                    <p:panel header="区域" style="width: 1000px;">
-                                        <p:dataTable id="areaTable" value="#{crossManager.areas}" var="item" widgetVar="areaTable"
-                                                     selectionMode="single" selection="#{crossManager.selectedArea}"
-                                                     rowKey="#{item.id}"
-                                                     rows="10"
-                                                     paginator="true"
-                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                     >
-                                            <p:column filterBy="#{item.id}" headerText="区域ID" filterMatchMode="contains">
-                                                <h:outputText value="#{item.id}" />
-                                            </p:column>
-                                            <p:column filterBy="#{item.name}" headerText="区域名" filterMatchMode="contains">
-                                                <h:outputText value="#{item.name}" />
-                                            </p:column>
-                                            <p:column filterBy="#{item.location}" headerText="位置" filterMatchMode="contains">
-                                                <h:outputText value="#{item.location}" />
-                                            </p:column>
-
-                                            <p:ajax event="rowSelect" listener="#{crossManager.onRowSelect}" update=":AreaDTForm:areaDetailForm:areaDetail,:AreaDTForm:messages,:AreaDTForm:deleteButton" onsuccess="PF('areaDialog').show()" />
-                                        </p:dataTable>
-                                    </p:panel>
-                                    <p:dialog header="区域信息" widgetVar="areaDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" >
-                                        <h:form id="areaDetailForm">
-                                            <p:panel id="areaDetail" style="text-align:center;width: 1000px;">
-                                                <p:dataTable id="crossingTable" value="#{crossManager.areaHasCrossings}" var="crossings" widgetVar="crossingTable"
-                                                             selectionMode="single" selection="#{crossManager.selectedCrossing}"
-                                                             rowKey="#{crossings.id}"
-                                                             rows="10"
-                                                             paginator="true"
-                                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                             >
-                                                    <p:column headerText="路口ID">
-                                                        <h:outputText value="#{crossings.id}" />
-                                                    </p:column>
-                                                    <p:column headerText="路口名">
-                                                        <h:outputText value="#{crossings.location}" />
-                                                    </p:column>
-                                                    <p:ajax event="rowSelect" listener="#{crossManager.onRowSelectCrossing}" update=":AreaDTForm:messages :CrossingInfoForm:CrossingDisplay :AreaDTForm:areaDetailForm:crossingDeleteButton" onsuccess="PF('CrossingInfoDialog').show()"/>
-                                                </p:dataTable>
-                                                <f:facet name="footer">
-                                                    <p:commandButton id="crossingCreateButton" icon="ui-icon-plus" value="新增"  actionListener="#{crossManager.onClickCreateButton}"  update=":CrossingCreateForm:CrossingCreateDisplay" oncomplete="PF('CrossingCreateDialog').show()" />
-                                                    <p:commandButton id="crossingDeleteButton" icon="ui-icon-trash"   value="删除" actionListener="#{crossManager.deleteSelectCrossing}" update=":AreaDTForm:areaDetailForm:crossingTable crossingDeleteButton" disabled="#{crossManager.selectedCrossing==null}">
-                                                        <p:confirm header="提示" message="确定删除吗?" icon="ui-icon-alert" />
-                                                    </p:commandButton>
-                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                                        <p:commandButton value="是" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                                        <p:commandButton value="否" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                                    </p:confirmDialog>
+                                    <p:commandButton value="Submit" update="displayCities"  style="margin-top:10px;" />    
+                                    <p:dialog header="Selected Cities" modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog" width="250">
+                                        <p:outputPanel id="displayCities">
+                                            <p:dataList value="#{checkboxView.selectedCities}" var="city" emptyMessage="No cities selected" style="margin-bottom: 10px;">
+                                                <f:facet name="header">
+                                                    Basic
                                                 </f:facet>
-                                            </p:panel>
-                                        </h:form>
+                                                #{city}
+                                            </p:dataList>
+
+                                            <p:dataList value="#{checkboxView.selectedCities2}" var="city" emptyMessage="No cities selected">
+                                                <f:facet name="header">
+                                                    Multiple
+                                                </f:facet>
+                                                #{city}
+                                            </p:dataList>
+                                        </p:outputPanel>
                                     </p:dialog>
-
-
                                 </h:form>
-                                <p:dialog id="AreaCreateDlg" widgetVar="AreaCreateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="新建区域">
-                                    <h:form id="AreaCreateForm">
-                                        <h:panelGroup id="display">
-                                            <p:panelGrid columns="2" rendered="#{areaController.selected != null}">
-                                                <p:outputLabel value="区域id" for="id" />
-                                                <p:inputText id="id" value="#{areaController.selected.id}" title="#{bundle.CreateAreaTitle_id}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_id}"/>
-                                                <p:outputLabel value="区域名" for="name" />
-                                                <p:inputText id="name" value="#{areaController.selected.name}" title="#{bundle.CreateAreaTitle_name}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_name}"/>
-                                                <p:outputLabel value="位置" for="location" />
-                                                <p:inputText id="location" value="#{areaController.selected.location}" title="#{bundle.CreateAreaTitle_location}" required="true" requiredMessage="#{bundle.CreateAreaRequiredMessage_location}"/>
-                                            </p:panelGrid>
-                                            <p:commandButton actionListener="#{areaController.create}" value="确认" update="display,:AreaDTForm:areaTable,:AreaDTForm:messages" oncomplete="handleSubmit(args,'AreaCreateDialog');"/>
-                                            <p:commandButton value="取消" onclick="AreaCreateDialog.hide()"/>
-                                        </h:panelGroup>
-                                    </h:form>
-                                </p:dialog>
-                                <p:dialog id="CrossingInfoDlg" widgetVar="CrossingInfoDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="路口信息">
-                                    <h:form id="CrossingInfoForm">
-                                        <h:panelGroup id="CrossingDisplay">
-                                            <p:panelGrid columns="2" rendered="#{crossManager.selectedCrossing != null}">
-                                                <p:outputLabel value="路口id"/>
-                                                <h:outputText value="#{crossManager.selectedCrossing.id}" />
-                                                <p:outputLabel value="路口名"/>
-                                                <h:outputText value="#{crossManager.selectedCrossing.location}" />
-                                                <p:outputLabel value="摄像头_W"/>
-                                                <p:inputText id="camera_id_w" value="#{crossManager.selectedCrossing.cameraidW}"/>
-                                                <p:outputLabel value="摄像头_S"/>
-                                                <p:inputText id="camera_id_s" value="#{crossManager.selectedCrossing.cameraidS}"/>
-                                                <p:outputLabel value="摄像头_N"/>
-                                                <p:inputText id="camera_id_n" value="#{crossManager.selectedCrossing.cameraidN}"/>
-                                                <p:outputLabel value="摄像头_E"/>
-                                                <p:inputText id="camera_id_e" value="#{crossManager.selectedCrossing.cameraidE}"/>
-                                                <p:outputLabel value="红路灯_W"/>
-                                                <p:inputText id="trafficLight_id_w" value="#{crossManager.selectedCrossing.trafficLightidW}"/>
-                                                <p:outputLabel value="红路灯_S"/>
-                                                <p:inputText id="trafficLight_id_s" value="#{crossManager.selectedCrossing.trafficLightidS}"/>
-                                                <p:outputLabel value="红路灯_N"/>
-                                                <p:inputText id="trafficLight_id_n" value="#{crossManager.selectedCrossing.trafficLightidN}"/>
-                                                <p:outputLabel value="红路灯_E"/>
-                                                <p:inputText id="trafficLight_id_e" value="#{crossManager.selectedCrossing.trafficLightidE}"/>
-                                            </p:panelGrid>
-                                        </h:panelGroup>
-                                        <p:commandButton id="saveButton" value="保存" actionListener="#{crossManager.updateSelectCrossing}" update="CrossingDisplay :AreaDTForm:messages"/>
-                                    </h:form>
-                                </p:dialog>
-                                <p:dialog id="CrossingCreateDlg" widgetVar="CrossingCreateDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="新建路口">
-                                    <h:form id="CrossingCreateForm">
-                                        <h:panelGroup id="CrossingCreateDisplay">
-                                            <p:panelGrid columns="2" rendered="#{crossManager.selectedArea != null}">
-                                                <p:outputLabel value="路口id"/>
-                                                <p:inputText value="#{crossManager.selectedCrossing.id}" />
-                                                <p:outputLabel value="路口名"/>
-                                                <p:inputText value="#{crossManager.selectedCrossing.location}" />
-                                                <p:outputLabel value="摄像头_W"/>
-                                                <p:inputText id="camera_id_w" value="#{crossManager.selectedCrossing.cameraidW}"/>
-                                                <p:outputLabel value="摄像头_S"/>
-                                                <p:inputText id="camera_id_s" value="#{crossManager.selectedCrossing.cameraidS}"/>
-                                                <p:outputLabel value="摄像头_N"/>
-                                                <p:inputText id="camera_id_n" value="#{crossManager.selectedCrossing.cameraidN}"/>
-                                                <p:outputLabel value="摄像头_E"/>
-                                                <p:inputText id="camera_id_e" value="#{crossManager.selectedCrossing.cameraidE}"/>
-                                                <p:outputLabel value="红路灯_W"/>
-                                                <p:inputText id="trafficLight_id_w" value="#{crossManager.selectedCrossing.trafficLightidW}"/>
-                                                <p:outputLabel value="红路灯_S"/>
-                                                <p:inputText id="trafficLight_id_s" value="#{crossManager.selectedCrossing.trafficLightidS}"/>
-                                                <p:outputLabel value="红路灯_N"/>
-                                                <p:inputText id="trafficLight_id_n" value="#{crossManager.selectedCrossing.trafficLightidN}"/>
-                                                <p:outputLabel value="红路灯_E"/>
-                                                <p:inputText id="trafficLight_id_e" value="#{crossManager.selectedCrossing.trafficLightidE}"/>
-                                            </p:panelGrid>
-                                            <p:commandButton actionListener="#{crossManager.createNewCrossing}" value="确认" update="CrossingCreateDisplay :AreaDTForm:areaDetailForm:areaDetail :AreaDTForm:messages"/>
-                                            
-                                        </h:panelGroup>
-                                    </h:form>
-                                </p:dialog>
+                                
                             </div>  
                         </div>
                     </div>

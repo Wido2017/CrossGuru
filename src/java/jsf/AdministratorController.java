@@ -2,7 +2,6 @@ package jsf;
 
 import entity.Administrator;
 import jsf.util.JsfUtil;
-<<<<<<< HEAD
 import jsf.util.PaginationHelper;
 import sessionBean.AdministratorFacade;
 
@@ -11,36 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-=======
-import jsf.util.JsfUtil.PersistAction;
-import session.AdministratorFacade;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.EJB;
-import javax.ejb.EJBException;
->>>>>>> cxp
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-<<<<<<< HEAD
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-=======
->>>>>>> cxp
 
 @Named("administratorController")
 @SessionScoped
 public class AdministratorController implements Serializable {
 
-<<<<<<< HEAD
     private Administrator current;
     private DataModel items = null;
     @EJB
@@ -104,18 +87,11 @@ public class AdministratorController implements Serializable {
         this.loginAdministrator = loginAdministrator;
     }
 
-=======
-    @EJB
-    private session.AdministratorFacade ejbFacade;
-    private List<Administrator> items = null;
-    private Administrator selected;
->>>>>>> cxp
 
     public AdministratorController() {
     }
 
     public Administrator getSelected() {
-<<<<<<< HEAD
         if (current == null) {
             current = new Administrator();
             selectedItemIndex = -1;
@@ -250,58 +226,10 @@ public class AdministratorController implements Serializable {
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
-=======
-        return selected;
-    }
-
-    public void setSelected(Administrator selected) {
-        this.selected = selected;
-    }
-
-    protected void setEmbeddableKeys() {
-    }
-
-    protected void initializeEmbeddableKey() {
-    }
-
-    private AdministratorFacade getFacade() {
-        return ejbFacade;
-    }
-
-    public Administrator prepareCreate() {
-        selected = new Administrator();
-        initializeEmbeddableKey();
-        return selected;
-    }
-
-    public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("/Bundle").getString("AdministratorCreated"));
-        if (!JsfUtil.isValidationFailed()) {
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
-    }
-
-    public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("/Bundle").getString("AdministratorUpdated"));
-    }
-
-    public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("AdministratorDeleted"));
-        if (!JsfUtil.isValidationFailed()) {
-            selected = null; // Remove selection
-            items = null;    // Invalidate list of items to trigger re-query.
-        }
-    }
-
-    public List<Administrator> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
->>>>>>> cxp
         }
         return items;
     }
 
-<<<<<<< HEAD
     private void recreateModel() {
         items = null;
     }
@@ -332,46 +260,6 @@ public class AdministratorController implements Serializable {
 
     public Administrator getAdministrator(java.lang.String id) {
         return ejbFacade.find(id);
-=======
-    private void persist(PersistAction persistAction, String successMessage) {
-        if (selected != null) {
-            setEmbeddableKeys();
-            try {
-                if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
-                } else {
-                    getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
-            } catch (EJBException ex) {
-                String msg = "";
-                Throwable cause = ex.getCause();
-                if (cause != null) {
-                    msg = cause.getLocalizedMessage();
-                }
-                if (msg.length() > 0) {
-                    JsfUtil.addErrorMessage(msg);
-                } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-                }
-            } catch (Exception ex) {
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            }
-        }
-    }
-
-    public Administrator getAdministrator(java.lang.String id) {
-        return getFacade().find(id);
-    }
-
-    public List<Administrator> getItemsAvailableSelectMany() {
-        return getFacade().findAll();
-    }
-
-    public List<Administrator> getItemsAvailableSelectOne() {
-        return getFacade().findAll();
->>>>>>> cxp
     }
 
     @FacesConverter(forClass = Administrator.class)
@@ -408,18 +296,12 @@ public class AdministratorController implements Serializable {
                 Administrator o = (Administrator) object;
                 return getStringKey(o.getId());
             } else {
-<<<<<<< HEAD
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Administrator.class.getName());
-=======
-                Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Administrator.class.getName()});
-                return null;
->>>>>>> cxp
             }
         }
 
     }
 
-<<<<<<< HEAD
     public String processLogin() {
         try {
             this.IDresult = (String) ejbFacade.FindID(id);   //找到对应的ID
@@ -438,6 +320,4 @@ public class AdministratorController implements Serializable {
         }
     }
 
-=======
->>>>>>> cxp
 }
