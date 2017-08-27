@@ -3,8 +3,9 @@
 <!--管理员对用户进行管理-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-    <head>
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>管理</title>
@@ -16,8 +17,8 @@
         <link rel="stylesheet" href="../resources/css/admin.css" />
         <link rel="stylesheet" href="../resources/css/typography.css" />
         <link rel="stylesheet" href="../resources/css/form.css" />
-    </head>
-    <body>
+    </h:head>
+    <h:body>
         <!-- Begin page -->
         <header class="am-topbar am-topbar-fixed-top">      
             <div class="am-topbar-left am-hide-sm-only">
@@ -38,7 +39,7 @@
                         </form>
                     </li>
                     <li>
-                    <p:button value="注销" href="../home.xhtml"></p:button>
+                        <p:button value="注销" href="../home.xhtml"></p:button>
                     </li>
                 </ul>
             </div>
@@ -84,58 +85,73 @@
                     <div class="card-box">
                         <!-- Row start -->
                         <div class="am-g">
+
                             <div class="am-u-sm-12 am-u-md-6">
-                                <div class="am-btn-toolbar">
-                                    <div class="am-btn-group am-btn-group-xs">
-                                        <h4 class="page-title">用户管理</h4>
-                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增</button>
-                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-save"></span> 保存</button>
-                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-archive"></span> 审核</button>
-                                        <button type="button" class="am-btn am-btn-default"><span class="am-icon-trash-o"></span> 删除</button>
+                                <h:form id="PoliceDTForm">
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <h class="page-title">用户管理</h>
+
+                                            <p:growl id="messages" showDetail="true" />
+
+                                            <p:toolbar style="width: 1000px;">
+                                                <f:facet name="left">
+
+                                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"   value="删除" 
+                                                                     actionListener="#{policeController.destroy}" 
+                                                                     update=":PoliceDTForm:policeTable :PoliceDTForm:deleteButton" 
+                                                                     disabled="#{policeController.selected=null}">
+                                                        <p:confirm header="提示" message="确定删除吗?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="是" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="否" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                </f:facet>
+                                            </p:toolbar>
+
+                                        </div>
                                     </div>
-                                </div>
-                            </div>  
-                        </div>
-                        <!-- Row end -->
-                        <!-- Row start -->
-                        <div class="am-g">
-                            <div class="am-u-sm-12">
-                                <form class="am-form">
-                                    <table class="am-table am-table-striped am-table-hover table-main">
-                                        <thead>
-                                            <tr>
-                                                <th class="table-check"><input type="checkbox" /></th><th class="table-id">ID</th><th class="table-title">标题</th><th class="table-type">类别</th><th class="table-author am-hide-sm-only">作者</th><th class="table-date am-hide-sm-only">修改日期</th><th class="table-set">操作</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input type="checkbox" /></td>
-                                                <td>1</td>
-                                                <td><a href="#">Business management</a></td>
-                                                <td>default</td>
-                                                <td class="am-hide-sm-only">测试1号</td>
-                                                <td class="am-hide-sm-only">2014年9月4日 7:28:47</td>
-                                                <td>
-                                                    <div class="am-btn-toolbar">
-                                                        <div class="am-btn-group am-btn-group-xs">
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                            <!--<button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>-->
-                                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <hr />
-                                </form>
+
+                                    <p:panel header="区域" style="width: 1000px;">
+                                        <p:dataTable id="policeTable" value="#{policeController.items}" var="item" widgetVar="policeTable"
+                                                     selectionMode="single" selection="#{policeController.selected}"
+                                                     rowKey="#{item.id}"
+                                                     rows="10"
+                                                     paginator="true"
+                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     >
+                                            <p:column headerText="警察ID">
+                                                <h:outputText value="#{item.id}" />
+                                            </p:column>
+                                            <p:column headerText="姓名" >
+                                                <h:outputText value="#{item.name}" />
+                                            </p:column>
+                                            <p:column headerText="性别">
+                                                <h:outputText value="#{item.sex}" />
+                                            </p:column>
+                                            <p:column headerText="电话">
+                                                <h:outputText value="#{item.tel}" />
+                                            </p:column>
+                                            <p:column headerText="所属区域">
+                                                <h:outputText value="#{item.areaId.location}" />
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+
+
                             </div>
-                        </div>
-                        <!-- Row end -->
+
+                        </div>  
+
                     </div>
+
+                    <!-- Row end -->
                 </div>
             </div>
         </div>
-    </body>
+
+    </h:body>
 
 </html>

@@ -2,6 +2,7 @@ package jsf;
 
 import entity.Administrator;
 import jsf.util.JsfUtil;
+
 import jsf.util.PaginationHelper;
 import sessionBean.AdministratorFacade;
 
@@ -16,9 +17,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+
 
 @Named("administratorController")
 @SessionScoped
@@ -102,7 +105,6 @@ public class AdministratorController implements Serializable {
     private AdministratorFacade getFacade() {
         return ejbFacade;
     }
-
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -301,6 +303,7 @@ public class AdministratorController implements Serializable {
         }
 
     }
+
 
     public String processLogin() {
         try {

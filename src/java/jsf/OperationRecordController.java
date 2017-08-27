@@ -8,19 +8,23 @@ import sessionBean.OperationRecordFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("operationRecordController")
 @SessionScoped
 public class OperationRecordController implements Serializable {
+
 
     private OperationRecord current;
     private DataModel items = null;
@@ -28,6 +32,7 @@ public class OperationRecordController implements Serializable {
     private sessionBean.OperationRecordFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
 
     public OperationRecordController() {
     }
@@ -190,6 +195,7 @@ public class OperationRecordController implements Serializable {
 
     public OperationRecord getOperationRecord(java.lang.Integer id) {
         return ejbFacade.find(id);
+
     }
 
     @FacesConverter(forClass = OperationRecord.class)
@@ -226,6 +232,7 @@ public class OperationRecordController implements Serializable {
                 OperationRecord o = (OperationRecord) object;
                 return getStringKey(o.getId());
             } else {
+
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + OperationRecord.class.getName());
             }
         }

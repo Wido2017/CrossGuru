@@ -23,6 +23,7 @@ public class JsfUtil {
         return items;
     }
 
+
     public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
@@ -55,6 +56,13 @@ public class JsfUtil {
     public static Object getObjectFromRequestParameter(String requestParameterName, Converter converter, UIComponent component) {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
+    }
+
+
+    public static enum PersistAction {
+        CREATE,
+        DELETE,
+        UPDATE
     }
 
 }
