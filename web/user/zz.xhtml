@@ -22,7 +22,7 @@
                     <f:selectItems value="#{checkboxView.cities}" />
                 </p:selectCheckboxMenu>
             </h:panelGrid>
-
+            
             <p:commandButton value="Submit" update="displayCities" oncomplete="PF('cityDialog').show()" style="margin-top:10px;" />
 
             <p:dialog header="Selected Cities" modal="true" showEffect="fade" hideEffect="fade" widgetVar="cityDialog" width="250">
