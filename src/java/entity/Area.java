@@ -21,15 +21,12 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
-/**
- *
- * @author Nicole Yang
- */
 @Entity
 @Table(name = "area")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Area.findAll", query = "SELECT id FROM Area id")
+
+    @NamedQuery(name = "Area.findAll", query = "SELECT a FROM Area a")
     , @NamedQuery(name = "Area.findById", query = "SELECT a FROM Area a WHERE a.id = :id")
     , @NamedQuery(name = "Area.findByName", query = "SELECT a FROM Area a WHERE a.name = :name")
     , @NamedQuery(name = "Area.findByLocation", query = "SELECT a FROM Area a WHERE a.location = :location")})

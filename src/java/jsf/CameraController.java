@@ -29,6 +29,7 @@ public class CameraController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+
     public CameraController() {
     }
 
@@ -190,6 +191,7 @@ public class CameraController implements Serializable {
 
     public Camera getCamera(java.lang.String id) {
         return ejbFacade.find(id);
+
     }
 
     @FacesConverter(forClass = Camera.class)
@@ -227,6 +229,7 @@ public class CameraController implements Serializable {
                 return getStringKey(o.getId());
             } else {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Camera.class.getName());
+
             }
         }
 

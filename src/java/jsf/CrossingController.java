@@ -2,25 +2,30 @@ package jsf;
 
 import entity.Crossing;
 import jsf.util.JsfUtil;
+
 import jsf.util.PaginationHelper;
 import sessionBean.CrossingFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("crossingController")
 @SessionScoped
 public class CrossingController implements Serializable {
+
 
     private Crossing current;
     private DataModel items = null;
@@ -28,6 +33,7 @@ public class CrossingController implements Serializable {
     private sessionBean.CrossingFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
 
     public CrossingController() {
     }

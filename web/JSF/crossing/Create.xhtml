@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CrossingCreateDlg" widgetVar="CrossingCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateCrossingTitle}">
+            <h:form id="CrossingCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{crossingController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{crossingController.selected.id}" title="#{bundle.CreateCrossingTitle_id}" required="true" requiredMessage="#{bundle.CreateCrossingRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_location}" for="location" />
+                        <p:inputText id="location" value="#{crossingController.selected.location}" title="#{bundle.CreateCrossingTitle_location}" required="true" requiredMessage="#{bundle.CreateCrossingRequiredMessage_location}"/>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{crossingController.selected.areaId}" >
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_cameraidW}" for="cameraidW" />
+                        <p:selectOneMenu id="cameraidW" value="#{crossingController.selected.cameraidW}" >
+                            <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"
+                                           var="cameraidWItem"
+                                           itemValue="#{cameraidWItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_cameraidS}" for="cameraidS" />
+                        <p:selectOneMenu id="cameraidS" value="#{crossingController.selected.cameraidS}" >
+                            <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"
+                                           var="cameraidSItem"
+                                           itemValue="#{cameraidSItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_cameraidN}" for="cameraidN" />
+                        <p:selectOneMenu id="cameraidN" value="#{crossingController.selected.cameraidN}" >
+                            <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"
+                                           var="cameraidNItem"
+                                           itemValue="#{cameraidNItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_cameraidE}" for="cameraidE" />
+                        <p:selectOneMenu id="cameraidE" value="#{crossingController.selected.cameraidE}" >
+                            <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"
+                                           var="cameraidEItem"
+                                           itemValue="#{cameraidEItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_trafficLightidW}" for="trafficLightidW" />
+                        <p:selectOneMenu id="trafficLightidW" value="#{crossingController.selected.trafficLightidW}" >
+                            <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"
+                                           var="trafficLightidWItem"
+                                           itemValue="#{trafficLightidWItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_trafficLightidS}" for="trafficLightidS" />
+                        <p:selectOneMenu id="trafficLightidS" value="#{crossingController.selected.trafficLightidS}" >
+                            <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"
+                                           var="trafficLightidSItem"
+                                           itemValue="#{trafficLightidSItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_trafficLightidN}" for="trafficLightidN" />
+                        <p:selectOneMenu id="trafficLightidN" value="#{crossingController.selected.trafficLightidN}" >
+                            <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"
+                                           var="trafficLightidNItem"
+                                           itemValue="#{trafficLightidNItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateCrossingLabel_trafficLightidE}" for="trafficLightidE" />
+                        <p:selectOneMenu id="trafficLightidE" value="#{crossingController.selected.trafficLightidE}" >
+                            <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"
+                                           var="trafficLightidEItem"
+                                           itemValue="#{trafficLightidEItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{crossingController.create}" value="#{bundle.Save}" update="display,:CrossingListForm:datalist,:growl" oncomplete="handleSubmit(args,'CrossingCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CrossingCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

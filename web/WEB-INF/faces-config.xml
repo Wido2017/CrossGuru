@@ -8,6 +8,7 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+
     </application>
     <navigation-rule>
         <from-view-id>/user/signPolice.xhtml</from-view-id>
@@ -46,4 +47,5 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+
 </faces-config>

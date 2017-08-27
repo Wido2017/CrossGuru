@@ -2,6 +2,7 @@ package jsf;
 
 import entity.Area;
 import jsf.util.JsfUtil;
+
 import jsf.util.PaginationHelper;
 import sessionBean.AreaFacade;
 
@@ -10,15 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+
 
 @Named("areaController")
 @SessionScoped
@@ -30,7 +34,7 @@ public class AreaController implements Serializable {
     private sessionBean.AreaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-   
+
     public AreaController() {
     }
 

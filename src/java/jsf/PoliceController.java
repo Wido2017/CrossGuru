@@ -2,18 +2,21 @@ package jsf;
 
 import entity.Police;
 import jsf.util.JsfUtil;
+
 import jsf.util.PaginationHelper;
 import sessionBean.PoliceFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -21,6 +24,7 @@ import javax.faces.model.SelectItem;
 @Named("policeController")
 @SessionScoped
 public class PoliceController implements Serializable {
+
 
     private Police current;
     private DataModel items = null;
@@ -305,11 +309,14 @@ public class PoliceController implements Serializable {
                 Police o = (Police) object;
                 return getStringKey(o.getId());
             } else {
+
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Police.class.getName());
+
             }
         }
 
     }
+
     
     public String processLogin() {
             try {
@@ -328,6 +335,6 @@ public class PoliceController implements Serializable {
                 return "failure";
             }
         }
-    
+
 
 }

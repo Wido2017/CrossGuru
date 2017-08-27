@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="OperationRecordCreateDlg" widgetVar="OperationRecordCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateOperationRecordTitle}">
+            <h:form id="OperationRecordCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{operationRecordController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{operationRecordController.selected.id}" title="#{bundle.CreateOperationRecordTitle_id}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_operateTime}" for="operateTime" />
+                        <p:calendar id="operateTime" pattern="MM/dd/yyyy" value="#{operationRecordController.selected.operateTime}" title="#{bundle.EditOperationRecordTitle_operateTime}" required="true" requiredMessage="#{bundle.EditOperationRecordRequiredMessage_operateTime}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_operateTable}" for="operateTable" />
+                        <p:inputText id="operateTable" value="#{operationRecordController.selected.operateTable}" title="#{bundle.CreateOperationRecordTitle_operateTable}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operateTable}"/>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_operator}" for="operator" />
+                        <p:inputText id="operator" value="#{operationRecordController.selected.operator}" title="#{bundle.CreateOperationRecordTitle_operator}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operator}"/>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_operateType}" for="operateType" />
+                        <p:inputTextarea rows="4" cols="30" id="operateType" value="#{operationRecordController.selected.operateType}" title="#{bundle.CreateOperationRecordTitle_operateType}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operateType}"/>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_administratorId}" for="administratorId" />
+                        <p:selectOneMenu id="administratorId" value="#{operationRecordController.selected.administratorId}" >
+                            <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"
+                                           var="administratorIdItem"
+                                           itemValue="#{administratorIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateOperationRecordLabel_policeId}" for="policeId" />
+                        <p:selectOneMenu id="policeId" value="#{operationRecordController.selected.policeId}" >
+                            <f:selectItems value="#{policeController.itemsAvailableSelectOne}"
+                                           var="policeIdItem"
+                                           itemValue="#{policeIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{operationRecordController.create}" value="#{bundle.Save}" update="display,:OperationRecordListForm:datalist,:growl" oncomplete="handleSubmit(args,'OperationRecordCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="OperationRecordCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

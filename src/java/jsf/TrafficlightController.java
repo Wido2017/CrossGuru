@@ -2,25 +2,30 @@ package jsf;
 
 import entity.Trafficlight;
 import jsf.util.JsfUtil;
+
 import jsf.util.PaginationHelper;
 import sessionBean.TrafficlightFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
+
 @Named("trafficlightController")
 @SessionScoped
 public class TrafficlightController implements Serializable {
+
 
     private Trafficlight current;
     private DataModel items = null;
@@ -28,6 +33,7 @@ public class TrafficlightController implements Serializable {
     private sessionBean.TrafficlightFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
 
     public TrafficlightController() {
     }
@@ -226,7 +232,9 @@ public class TrafficlightController implements Serializable {
                 Trafficlight o = (Trafficlight) object;
                 return getStringKey(o.getId());
             } else {
+
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Trafficlight.class.getName());
+
             }
         }
 
