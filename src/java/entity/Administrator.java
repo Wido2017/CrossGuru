@@ -164,7 +164,7 @@ public class Administrator implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Administrator[ id=" + id + " ]";
+        return id;
     }
     
 }

@@ -176,7 +176,7 @@ public class Police implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Police[ id=" + id + " ]";
+        return  id;
     }
     
 }

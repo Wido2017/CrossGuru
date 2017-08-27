@@ -28,6 +28,7 @@ public class PoliceController implements Serializable {
     private sessionBean.PoliceFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private String selectedareaID;
     
     private String id;
     private String pwd;
@@ -35,6 +36,16 @@ public class PoliceController implements Serializable {
     private String IDresult;
     private String pwdresult;
     private Police loginPolice;
+
+    public String getSelectedareaID() {
+        return selectedareaID;
+    }
+
+    public void setSelectedareaID(String selectedareaID) {
+        this.selectedareaID = selectedareaID;
+    }
+    
+    
 
     public Police getLoginPolice() {
         return loginPolice;
@@ -132,7 +143,7 @@ public class PoliceController implements Serializable {
     public String prepareCreate() {
         current = new Police();
         selectedItemIndex = -1;
-        return "Create";
+        return "Created";
     }
 
     public String create() {
@@ -147,17 +158,6 @@ public class PoliceController implements Serializable {
     
     }
     
-    public String policeCreate(){
-        try {
-            getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("PoliceCreated"));
-            return prepareCreate();
-        } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
-
     public String prepareEdit() {
         current = (Police) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -194,14 +194,6 @@ public class PoliceController implements Serializable {
         return "List";
     }
     
-    public String destroy1() {
-        current = (Police) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
 
     public String destroyAndView() {
         performDestroy();
@@ -321,19 +313,19 @@ public class PoliceController implements Serializable {
     
     public String processLogin() {
             try {
-                this.IDresult = (String) ejbFacade.FindID(id);
-                this.pwdresult = (String) ejbFacade.FindPassword(id, pwd);
+                this.IDresult = (String) ejbFacade.FindID(id);   //找到对应的ID
+                this.pwdresult = (String) ejbFacade.FindPassword(id, pwd);  //检测此ID的密码是否等于数据库中的密码，，返回密码；否，返回Null
                 if ((IDresult != null) && (pwdresult != null)) {
                     loginPolice = ejbFacade.findPoliceById(IDresult);
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("police", loginPolice);
-                    return "home.xhtml";
+                    return "success";
                 } else {
                     this.error_ = "error";
-                    return "signPolice.xhtml";
+                    return "failure";
                 }
             } catch (Exception e) {
                 this.error_ = "error";
-                return "signPolice.xhtml";
+                return "failure";
             }
         }
     

@@ -134,7 +134,7 @@ public class Area implements Serializable {
 
     @Override
     public String toString() {
-        return "entity.Area[ id=" + id + " ]";
+        return id;
     }
     
 }

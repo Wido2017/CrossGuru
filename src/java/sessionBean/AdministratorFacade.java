@@ -31,17 +31,46 @@ public class AdministratorFacade extends AbstractFacade<Administrator> {
     public AdministratorFacade() {
         super(Administrator.class);
     }
-
-    public List<String> findExistedAdminis() {
-        List<String> adminis = new ArrayList<>();
-        try {
-            List<Administrator> a=em.createNamedQuery("Administrator.findAll").getResultList();
-            a.forEach((admini)->{
-                adminis.add(admini.getId());
-            });
+    public String FindID(String id){
+        Administrator p=em.find(Administrator.class, id);
+        String ID=p.getId();
+        if (ID != null) {
+            return ID;
+        } else {
+            return null;
+        }
+    }
+    
+    public String FindPassword(String ID,String password){
+        Administrator p=em.find(Administrator.class, ID);
+        String Password=p.getPassword();
+        if(Password.equals(password)){
+            return Password;
+        }else{
+            return null;
+        }
+    }
+    
+    public Administrator findAdminiById(String administratorid){
+        Administrator admini=new Administrator();
+        try{
+            admini=(Administrator) em.createNamedQuery("Administrator.findById").setParameter("id", administratorid).getSingleResult();
         } catch (Exception e) {
             throw new EJBException(e.getMessage());
         }
-        return adminis;
+        return admini;
     }
+
+//    public List<String> findExistedAdminis() {
+//        List<String> adminis = new ArrayList<>();
+//        try {
+//            List<Administrator> a=em.createNamedQuery("Administrator.findAll").getResultList();
+//            a.forEach((admini)->{
+//                adminis.add(admini.getId());
+//            });
+//        } catch (Exception e) {
+//            throw new EJBException(e.getMessage());
+//        }
+//        return adminis;
+//    }
 }

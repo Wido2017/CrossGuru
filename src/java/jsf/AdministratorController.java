@@ -31,23 +31,62 @@ public class AdministratorController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    private List<String> adminilist;
+    private String id;
+    private String pwd;
+    private String error_ = "0";
+    private String IDresult;
+    private String pwdresult;
+    private Administrator loginAdministrator;
+
     
-    public List<String> existedAdmini(){
-        adminilist=new ArrayList<>();
-        adminilist=ejbFacade.findExistedAdminis();
-        return adminilist;
+    public String getId() {
+        return id;
     }
 
-    public void setAdminilist(List<String> adminilist) {
-        this.adminilist = adminilist;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public List<String> getAdminilist() {
-        return adminilist;
+    public String getPwd() {
+        return pwd;
     }
-    
-    
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+
+    public void setError_(String error_) {
+        this.error_ = error_;
+    }
+
+    public String getError_() {
+        return error_;
+    }
+
+    public String getIDresult() {
+        return IDresult;
+    }
+
+    public void setIDresult(String IDresult) {
+        this.IDresult = IDresult;
+    }
+
+    public String getPwdresult() {
+        return pwdresult;
+    }
+
+    public void setPwdresult(String pwdresult) {
+        this.pwdresult = pwdresult;
+    }
+
+    public Administrator getLoginAdministrator() {
+        return loginAdministrator;
+    }
+
+    public void setLoginAdministrator(Administrator loginAdministrator) {
+        this.loginAdministrator = loginAdministrator;
+    }
+
 
     public AdministratorController() {
     }
@@ -96,7 +135,7 @@ public class AdministratorController implements Serializable {
     public String prepareCreate() {
         current = new Administrator();
         selectedItemIndex = -1;
-        return "Create";
+        return "Created";
     }
 
     public String create() {
@@ -119,6 +158,17 @@ public class AdministratorController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AdministratorUpdated"));
+            return "View";
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String adminiUpdate() {
+        try {
+            getFacade().edit(loginAdministrator);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("AdministratorUpdated"));
             return "View";
         } catch (Exception e) {
@@ -250,6 +300,24 @@ public class AdministratorController implements Serializable {
             }
         }
 
+    }
+
+    public String processLogin() {
+        try {
+            this.IDresult = (String) ejbFacade.FindID(id);   //找到对应的ID
+            this.pwdresult = (String) ejbFacade.FindPassword(id, pwd);  //检测此ID的密码是否等于数据库中的密码，，返回密码；否，返回Null
+            if ((IDresult != null) && (pwdresult != null)) {
+                loginAdministrator = ejbFacade.findAdminiById(IDresult);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("administrator", loginAdministrator);
+                return "success";
+            } else {
+                this.error_ = "error";
+                return "failure";
+            }
+        } catch (Exception e) {
+            this.error_ = "error";
+            return "failure";
+        }
     }
 
 }

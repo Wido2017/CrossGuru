@@ -30,24 +30,7 @@ public class AreaController implements Serializable {
     private sessionBean.AreaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    
-    private List<String> arealist;
-
-    public List<String> getArealist() {
-        return arealist;
-    }
-    
-    public List<String> getexistedArea(){
-        arealist=new ArrayList<>();
-        arealist=ejbFacade.findExistedAreas();
-        return arealist;
-    }
-
-    public void setArealist(List<String> arealist) {
-        this.arealist = arealist;
-    }
-    
-
+   
     public AreaController() {
     }
 
