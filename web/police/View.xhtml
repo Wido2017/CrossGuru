@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewPoliceTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewPoliceLabel_id}"/>
+                    <h:outputText value="#{policeController.selected.id}" title="#{bundle.ViewPoliceTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_password}"/>
+                    <h:outputText value="#{policeController.selected.password}" title="#{bundle.ViewPoliceTitle_password}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_name}"/>
+                    <h:outputText value="#{policeController.selected.name}" title="#{bundle.ViewPoliceTitle_name}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_sex}"/>
+                    <h:outputText value="#{policeController.selected.sex}" title="#{bundle.ViewPoliceTitle_sex}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_tel}"/>
+                    <h:outputText value="#{policeController.selected.tel}" title="#{bundle.ViewPoliceTitle_tel}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_administratorId}"/>
+                    <h:outputText value="#{policeController.selected.administratorId}" title="#{bundle.ViewPoliceTitle_administratorId}"/>
+                    <h:outputText value="#{bundle.ViewPoliceLabel_areaId}"/>
+                    <h:outputText value="#{policeController.selected.areaId}" title="#{bundle.ViewPoliceTitle_areaId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{policeController.destroyAndView}" value="#{bundle.ViewPoliceDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewPoliceEditLink}"/>
+                <br />
+                <h:commandLink action="#{policeController.prepareCreate}" value="#{bundle.ViewPoliceCreateLink}" />
+                <br />
+                <h:commandLink action="#{policeController.prepareList}" value="#{bundle.ViewPoliceShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewPoliceIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
