@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PoliceEditDlg" widgetVar="PoliceEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditPoliceTitle}">
+            <h:form id="PoliceEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{policeController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_id}" for="id" />
+                        <p:inputText id="id" value="#{policeController.selected.id}" title="#{bundle.EditPoliceTitle_id}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_id}"/>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_password}" for="password" />
+                        <p:inputText id="password" value="#{policeController.selected.password}" title="#{bundle.EditPoliceTitle_password}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_password}"/>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_name}" for="name" />
+                        <p:inputText id="name" value="#{policeController.selected.name}" title="#{bundle.EditPoliceTitle_name}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_name}"/>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_sex}" for="sex" />
+                        <p:inputText id="sex" value="#{policeController.selected.sex}" title="#{bundle.EditPoliceTitle_sex}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_sex}"/>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_tel}" for="tel" />
+                        <p:inputText id="tel" value="#{policeController.selected.tel}" title="#{bundle.EditPoliceTitle_tel}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_tel}"/>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_administratorId}" for="administratorId" />
+                        <p:selectOneMenu id="administratorId" value="#{policeController.selected.administratorId}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_administratorId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"
+                                           var="administratorIdItem"
+                                           itemValue="#{administratorIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditPoliceLabel_areaId}" for="areaId" />
+                        <p:selectOneMenu id="areaId" value="#{policeController.selected.areaId}" required="true" requiredMessage="#{bundle.EditPoliceRequiredMessage_areaId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{areaController.itemsAvailableSelectOne}"
+                                           var="areaIdItem"
+                                           itemValue="#{areaIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{policeController.update}" value="#{bundle.Save}" update="display,:PoliceListForm:datalist,:growl" oncomplete="handleSubmit(args, 'PoliceEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PoliceEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
