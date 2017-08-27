@@ -5,14 +5,16 @@
  */
 package sessionBean;
 
-import entityBean.OperationRecord;
+
+import entity.OperationRecord;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author QIULI
+
  */
 @Stateless
 public class OperationRecordFacade extends AbstractFacade<OperationRecord> {

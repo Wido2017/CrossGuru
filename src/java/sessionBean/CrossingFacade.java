@@ -5,14 +5,16 @@
  */
 package sessionBean;
 
-import entityBean.Crossing;
+
+import entity.Crossing;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author QIULI
+
  */
 @Stateless
 public class CrossingFacade extends AbstractFacade<Crossing> {

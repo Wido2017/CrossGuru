@@ -5,15 +5,20 @@
  */
 package sessionBean;
 
-import entityBean.Area;
+
+import entity.Area;
+import entity.Police;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJBException;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author QIULI
- */
+
 @Stateless
 public class AreaFacade extends AbstractFacade<Area> {
 
@@ -28,5 +33,19 @@ public class AreaFacade extends AbstractFacade<Area> {
     public AreaFacade() {
         super(Area.class);
     }
-    
+
+    public List<String> findExistedAreas() {
+        List<String> areas = new ArrayList<>();
+        try {
+            List<Area> s = em.createNamedQuery("Area.findAll").getResultList();
+            s.forEach((area) -> {
+                areas.add(area.getId());
+            });
+        } catch (Exception e) {
+            throw new EJBException(e.getMessage());
+        }
+        return areas;
+    }
+
+
 }

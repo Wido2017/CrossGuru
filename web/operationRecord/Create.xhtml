@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateOperationRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{operationRecordController.selected.id}" title="#{bundle.CreateOperationRecordTitle_id}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_operateTime}" for="operateTime" />
+                    <h:inputText id="operateTime" value="#{operationRecordController.selected.operateTime}" title="#{bundle.CreateOperationRecordTitle_operateTime}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_operateTable}" for="operateTable" />
+                    <h:inputText id="operateTable" value="#{operationRecordController.selected.operateTable}" title="#{bundle.CreateOperationRecordTitle_operateTable}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operateTable}"/>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_operator}" for="operator" />
+                    <h:inputText id="operator" value="#{operationRecordController.selected.operator}" title="#{bundle.CreateOperationRecordTitle_operator}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operator}"/>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_operateType}" for="operateType" />
+                    <h:inputTextarea rows="4" cols="30" id="operateType" value="#{operationRecordController.selected.operateType}" title="#{bundle.CreateOperationRecordTitle_operateType}" required="true" requiredMessage="#{bundle.CreateOperationRecordRequiredMessage_operateType}"/>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_administratorId}" for="administratorId" />
+                    <h:selectOneMenu id="administratorId" value="#{operationRecordController.selected.administratorId}" title="#{bundle.CreateOperationRecordTitle_administratorId}" >
+                        <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateOperationRecordLabel_policeId}" for="policeId" />
+                    <h:selectOneMenu id="policeId" value="#{operationRecordController.selected.policeId}" title="#{bundle.CreateOperationRecordTitle_policeId}" >
+                        <f:selectItems value="#{policeController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{operationRecordController.create}" value="#{bundle.CreateOperationRecordSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{operationRecordController.prepareList}" value="#{bundle.CreateOperationRecordShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateOperationRecordIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -5,14 +5,16 @@
  */
 package sessionBean;
 
-import entityBean.TrafficFlow;
+
+import entity.TrafficFlow;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author QIULI
+
  */
 @Stateless
 public class TrafficFlowFacade extends AbstractFacade<TrafficFlow> {

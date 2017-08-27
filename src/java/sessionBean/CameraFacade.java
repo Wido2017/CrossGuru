@@ -5,15 +5,16 @@
  */
 package sessionBean;
 
-import entityBean.Camera;
+
+import entity.Camera;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author QIULI
- */
+
 @Stateless
 public class CameraFacade extends AbstractFacade<Camera> {
 

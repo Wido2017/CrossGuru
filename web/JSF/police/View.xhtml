@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PoliceViewDlg" widgetVar="PoliceViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewPoliceTitle}">
+            <h:form id="PoliceViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{policeController.selected != null}">
+                        <h:outputText value="#{bundle.ViewPoliceLabel_id}"/>
+                        <h:outputText value="#{policeController.selected.id}" title="#{bundle.ViewPoliceTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_password}"/>
+                        <h:outputText value="#{policeController.selected.password}" title="#{bundle.ViewPoliceTitle_password}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_name}"/>
+                        <h:outputText value="#{policeController.selected.name}" title="#{bundle.ViewPoliceTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_sex}"/>
+                        <h:outputText value="#{policeController.selected.sex}" title="#{bundle.ViewPoliceTitle_sex}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_tel}"/>
+                        <h:outputText value="#{policeController.selected.tel}" title="#{bundle.ViewPoliceTitle_tel}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_administratorId}"/>
+                        <h:outputText value="#{policeController.selected.administratorId}" title="#{bundle.ViewPoliceTitle_administratorId}"/>
+                        <h:outputText value="#{bundle.ViewPoliceLabel_areaId}"/>
+                        <h:outputText value="#{policeController.selected.areaId}" title="#{bundle.ViewPoliceTitle_areaId}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PoliceViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

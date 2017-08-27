@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCrossingTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{crossingController.selected.id}" title="#{bundle.EditCrossingTitle_id}" required="true" requiredMessage="#{bundle.EditCrossingRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_location}" for="location" />
+                    <h:inputText id="location" value="#{crossingController.selected.location}" title="#{bundle.EditCrossingTitle_location}" required="true" requiredMessage="#{bundle.EditCrossingRequiredMessage_location}"/>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_areaId}" for="areaId" />
+                    <h:selectOneMenu id="areaId" value="#{crossingController.selected.areaId}" title="#{bundle.EditCrossingTitle_areaId}" >
+                        <f:selectItems value="#{areaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_cameraidW}" for="cameraidW" />
+                    <h:selectOneMenu id="cameraidW" value="#{crossingController.selected.cameraidW}" title="#{bundle.EditCrossingTitle_cameraidW}" >
+                        <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_cameraidS}" for="cameraidS" />
+                    <h:selectOneMenu id="cameraidS" value="#{crossingController.selected.cameraidS}" title="#{bundle.EditCrossingTitle_cameraidS}" >
+                        <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_cameraidN}" for="cameraidN" />
+                    <h:selectOneMenu id="cameraidN" value="#{crossingController.selected.cameraidN}" title="#{bundle.EditCrossingTitle_cameraidN}" >
+                        <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_cameraidE}" for="cameraidE" />
+                    <h:selectOneMenu id="cameraidE" value="#{crossingController.selected.cameraidE}" title="#{bundle.EditCrossingTitle_cameraidE}" >
+                        <f:selectItems value="#{cameraController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_trafficLightidW}" for="trafficLightidW" />
+                    <h:selectOneMenu id="trafficLightidW" value="#{crossingController.selected.trafficLightidW}" title="#{bundle.EditCrossingTitle_trafficLightidW}" >
+                        <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_trafficLightidS}" for="trafficLightidS" />
+                    <h:selectOneMenu id="trafficLightidS" value="#{crossingController.selected.trafficLightidS}" title="#{bundle.EditCrossingTitle_trafficLightidS}" >
+                        <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_trafficLightidN}" for="trafficLightidN" />
+                    <h:selectOneMenu id="trafficLightidN" value="#{crossingController.selected.trafficLightidN}" title="#{bundle.EditCrossingTitle_trafficLightidN}" >
+                        <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditCrossingLabel_trafficLightidE}" for="trafficLightidE" />
+                    <h:selectOneMenu id="trafficLightidE" value="#{crossingController.selected.trafficLightidE}" title="#{bundle.EditCrossingTitle_trafficLightidE}" >
+                        <f:selectItems value="#{trafficlightController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{crossingController.update}" value="#{bundle.EditCrossingSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditCrossingViewLink}"/>
+                <br />
+                <h:commandLink action="#{crossingController.prepareList}" value="#{bundle.EditCrossingShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditCrossingIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

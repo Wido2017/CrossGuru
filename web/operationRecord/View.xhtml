@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewOperationRecordTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_id}"/>
+                    <h:outputText value="#{operationRecordController.selected.id}" title="#{bundle.ViewOperationRecordTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_operateTime}"/>
+                    <h:outputText value="#{operationRecordController.selected.operateTime}" title="#{bundle.ViewOperationRecordTitle_operateTime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_operateTable}"/>
+                    <h:outputText value="#{operationRecordController.selected.operateTable}" title="#{bundle.ViewOperationRecordTitle_operateTable}"/>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_operator}"/>
+                    <h:outputText value="#{operationRecordController.selected.operator}" title="#{bundle.ViewOperationRecordTitle_operator}"/>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_operateType}"/>
+                    <h:outputText value="#{operationRecordController.selected.operateType}" title="#{bundle.ViewOperationRecordTitle_operateType}"/>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_administratorId}"/>
+                    <h:outputText value="#{operationRecordController.selected.administratorId}" title="#{bundle.ViewOperationRecordTitle_administratorId}"/>
+                    <h:outputText value="#{bundle.ViewOperationRecordLabel_policeId}"/>
+                    <h:outputText value="#{operationRecordController.selected.policeId}" title="#{bundle.ViewOperationRecordTitle_policeId}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{operationRecordController.destroyAndView}" value="#{bundle.ViewOperationRecordDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewOperationRecordEditLink}"/>
+                <br />
+                <h:commandLink action="#{operationRecordController.prepareCreate}" value="#{bundle.ViewOperationRecordCreateLink}" />
+                <br />
+                <h:commandLink action="#{operationRecordController.prepareList}" value="#{bundle.ViewOperationRecordShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewOperationRecordIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
