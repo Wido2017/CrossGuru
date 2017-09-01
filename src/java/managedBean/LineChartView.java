@@ -103,8 +103,8 @@ public class LineChartView implements Serializable {
             selectDanwei = "天";
         }
 
-        if (loginPolice.getAreaId().getCrossingCollection() == null) {
-            line.set(null, null);
+        if (loginPolice.getAreaId().getCrossingCollection().isEmpty()) {
+            line.set("无数据！", null);
             model.addSeries(line);
             return model;
         }

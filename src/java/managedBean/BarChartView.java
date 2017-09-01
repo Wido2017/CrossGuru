@@ -82,6 +82,12 @@ public class BarChartView {
         BarChartModel model = new BarChartModel();
 
         crossings.setLabel("车辆数");
+        if(loginPolice.getAreaId().getCrossingCollection().isEmpty())
+        {
+            crossings.set("无数据！",0);
+            model.addSeries(crossings);
+            return model;
+        }
         List<Crossing> crossingList = (List<Crossing>) loginPolice.getAreaId().getCrossingCollection();
         Iterator iterator = crossingList.iterator();
         long avg = 0;
