@@ -20,39 +20,43 @@
         <p:layout fullPage="true">
             <p:layoutUnit position="north" size="159" resizable="false" gutter="-15" style="overflow: hidden">        
                 <div style="height:121px;margin-bottom: 20px;margin-left:300px">
-                    <h:link outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
-                        <p:graphicImage value="resources/images/lukuang.png" height="70px" width="70px" id="icon1" style="margin-top:25px"/>
-                        <br/>
-                        <h:outputText value="实时路况" style="font-size: 15px"></h:outputText>
-                    </h:link>
-                    <h:link outcome="user/monitor" styleClass="iconbt">
-                        <p:graphicImage value="resources/images/jiankong.png" height="70px" width="70px" style="margin-top:25px"/>
-                        <br/>
-                        <h:outputText value="监控查询调度" style="font-size: 15px"></h:outputText>    
-                    </h:link>
-                    <h:link outcome="user/statictic" styleClass="iconbt">
-                        <p:graphicImage value="resources/images/jilu.png" height="70px" width="70px" style="margin-top:25px"/>
-                        <br/>
-                        <h:outputText value="记录查询" style="font-size: 15px"></h:outputText>
-                    </h:link>
-                    <div style="position: fixed;left:1050px;right:0px" >
-                        <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
-                        <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >交警登录/注册</a>
-                        <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
-                        <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left">                           
-                            <h:outputText value="姓名：孙XX"></h:outputText><br/>
-                            <h:outputText value="管辖片区：昌平区"></h:outputText><br/>
-                            <a href="user/signPolice.xhtml" class="atext" style="text-decoration: none;">注销</a>
-                        </p:overlayPanel>
-                    </div>
+                    <h:form id="homeForm">
+                        <p:growl id="info" showDetail="true" />
+                        <h:link outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
+                            <p:graphicImage value="resources/images/lukuang.png" height="70px" width="70px" id="icon1" style="margin-top:25px"/>
+                            <br/>
+                            <h:outputText value="实时路况" style="font-size: 15px"></h:outputText>
+                        </h:link>
+                        <h:link outcome="user/monitor" styleClass="iconbt">
+                            <p:graphicImage value="resources/images/jiankong.png" height="70px" width="70px" style="margin-top:25px"/>
+                            <br/>
+                            <h:outputText value="监控查询调度" style="font-size: 15px"></h:outputText>    
+                        </h:link>
+                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin}" update="info">
+                            <p:graphicImage value="resources/images/jilu.png" height="70px" width="70px" style="margin-top:25px"/>
+                            <br/>
+                            <h:outputText value="记录查询" style="font-size: 15px"></h:outputText>
+                        </p:commandLink>
+                        <div style="position: fixed;left:1050px;right:0px" >
+                            <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
+                            <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >交警登录/注册</a>
+                            <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                            <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
+                                <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
+                                <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                                <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                                <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.logoutListener}" ></p:commandButton>
+                            </p:overlayPanel>
+                        </div>
+                    </h:form>
                 </div>        
             </p:layoutUnit>
-            <p:layoutUnit position="center" size="100" resizable="true" gutter="-25" style="margin-top:1000px">
+            <p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">
                 <div>
                     <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
                 </div>
             </p:layoutUnit>
-            <p:layoutUnit position="south" size="440"  gutter="0" resizable="true">
+            <p:layoutUnit position="south" size="68%"  gutter="-10">
                 <div style="width:100%;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
             </p:layoutUnit>
 

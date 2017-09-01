@@ -10,6 +10,7 @@ package managedBean;
  * @author 曹锡鹏
  */
 import entity.Crossing;
+import entity.Police;
 import entity.TrafficFlow;
 
 import javax.annotation.PostConstruct;
@@ -57,6 +58,8 @@ public class LineChartView implements Serializable {
     private Date selectDate = (Date) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDate");
     private String selectDanwei = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDanwei");
     private Crossing selectedCrossing = (Crossing) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectCrossing");
+    private Police loginPolice=(Police) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("police");
+    
     private DateFormat dateFormat_month = new SimpleDateFormat("yyyy-MM");
     private DateFormat dateFormat_day = new SimpleDateFormat("yyyy-MM-dd");
     private DateFormat dateFormat_hour = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -100,7 +103,7 @@ public class LineChartView implements Serializable {
             selectDanwei = "天";
         }
 
-        if (crossingFacade.findAll() == null) {
+        if (loginPolice.getAreaId().getCrossingCollection() == null) {
             line.set(null, null);
             model.addSeries(line);
             return model;
@@ -112,7 +115,7 @@ public class LineChartView implements Serializable {
             String startDateString = dateFormat_month.format(selectDate).concat("-01");
             List<String> datesList = collectLocalDates(LocalDate.parse(startDateString), LocalDate.parse(endDateString));
             Iterator datesIterator = datesList.iterator();
-            Crossing c = crossingFacade.findAll().get(0);
+            Crossing c = (Crossing) loginPolice.getAreaId().getCrossingCollection().toArray()[0];
             Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
             boolean setline = false;
             while (datesIterator.hasNext()) {
@@ -153,7 +156,7 @@ public class LineChartView implements Serializable {
                 }
 
                 Iterator hoursIterator = hoursList.iterator();
-                Crossing c = crossingFacade.findAll().get(0);
+                Crossing c = (Crossing) loginPolice.getAreaId().getCrossingCollection().toArray()[0];
                 Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
                 while (hoursIterator.hasNext()) {
                     String hourString = (String) hoursIterator.next();
@@ -200,7 +203,7 @@ public class LineChartView implements Serializable {
                     begin = cal.getTime();
                 }
                 Iterator minuteIterator = minuteList.iterator();
-                Crossing c = crossingFacade.findAll().get(0);
+                Crossing c = (Crossing) loginPolice.getAreaId().getCrossingCollection().toArray()[0];
                 Collection<TrafficFlow> tfs = c.getTrafficFlowCollection();
                 while (minuteIterator.hasNext()) {
                     String minuteString = (String) minuteIterator.next();
