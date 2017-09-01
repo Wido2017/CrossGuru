@@ -6,6 +6,7 @@
 package managedBean;
 
 import entity.Crossing;
+import entity.Police;
 import entity.TrafficFlow;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -43,7 +44,8 @@ public class BarChartView {
     
     private Date selectDate = (Date) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDate");
     private String selectDanwei = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("selectDanwei");
-
+    private Police loginPolice=(Police) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("police");
+    
     private DateFormat dateFormat_month = new SimpleDateFormat("yyyy-MM");
     private DateFormat dateFormat_day = new SimpleDateFormat("yyyy-MM-dd");
     private DateFormat dateFormat_hour = new SimpleDateFormat("yyyy-MM-dd HH");
@@ -80,7 +82,7 @@ public class BarChartView {
         BarChartModel model = new BarChartModel();
 
         crossings.setLabel("车辆数");
-        List<Crossing> crossingList = crossingFacade.findAll();
+        List<Crossing> crossingList = (List<Crossing>) loginPolice.getAreaId().getCrossingCollection();
         Iterator iterator = crossingList.iterator();
         long avg = 0;
         while (iterator.hasNext()) {
