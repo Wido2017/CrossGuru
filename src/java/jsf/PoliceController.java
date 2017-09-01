@@ -237,9 +237,7 @@ public class PoliceController implements Serializable {
     }
 
     public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
+        items = getPagination().createPageDataModel();
         return items;
     }
 
