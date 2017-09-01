@@ -51,13 +51,13 @@ public class TrafficFlow implements Serializable {
     @Column(name = "time")
     @Temporal(TemporalType.DATE)
     private Date time;
-    @Column(name = "crossing-N")
+    @Column(name = "crossing_N")
     private Long crossingN;
-    @Column(name = "crossing-S")
+    @Column(name = "crossing_S")
     private Long crossingS;
-    @Column(name = "crossing-W")
+    @Column(name = "crossing_W")
     private Long crossingW;
-    @Column(name = "crossing-E")
+    @Column(name = "crossing_E")
     private Long crossingE;
     @JoinColumn(name = "crossing_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

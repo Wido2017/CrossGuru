@@ -29,10 +29,10 @@ public class PoliceController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private String selectedareaID;
-    
+
     private String id;
     private String pwd;
-    private String error_="0";
+    private String error_ = "0";
     private String IDresult;
     private String pwdresult;
     private Police loginPolice;
@@ -44,8 +44,6 @@ public class PoliceController implements Serializable {
     public void setSelectedareaID(String selectedareaID) {
         this.selectedareaID = selectedareaID;
     }
-    
-    
 
     public Police getLoginPolice() {
         return loginPolice;
@@ -54,9 +52,8 @@ public class PoliceController implements Serializable {
     public void setLoginPolice(Police loginPolice) {
         this.loginPolice = loginPolice;
     }
-    
-    
-     public void setIDresult(String IDresult) {
+
+    public void setIDresult(String IDresult) {
         this.IDresult = IDresult;
     }
 
@@ -107,6 +104,14 @@ public class PoliceController implements Serializable {
         return current;
     }
 
+    public void setSelected(Police current) {
+        this.current = current;
+    }
+
+    public void setSelectedItemIndex(int selectedItemIndex) {
+        this.selectedItemIndex = selectedItemIndex;
+    }
+
     private PoliceFacade getFacade() {
         return ejbFacade;
     }
@@ -155,9 +160,9 @@ public class PoliceController implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
-    
+
     }
-    
+
     public String prepareEdit() {
         current = (Police) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -174,7 +179,7 @@ public class PoliceController implements Serializable {
             return null;
         }
     }
-    
+
     public String policeUpdate() {
         try {
             getFacade().edit(loginPolice);
@@ -193,7 +198,6 @@ public class PoliceController implements Serializable {
         recreateModel();
         return "List";
     }
-    
 
     public String destroyAndView() {
         performDestroy();
@@ -233,9 +237,7 @@ public class PoliceController implements Serializable {
     }
 
     public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
+        items = getPagination().createPageDataModel();
         return items;
     }
 
@@ -310,24 +312,23 @@ public class PoliceController implements Serializable {
         }
 
     }
-    
+
     public String processLogin() {
-            try {
-                this.IDresult = (String) ejbFacade.FindID(id);   //找到对应的ID
-                this.pwdresult = (String) ejbFacade.FindPassword(id, pwd);  //检测此ID的密码是否等于数据库中的密码，，返回密码；否，返回Null
-                if ((IDresult != null) && (pwdresult != null)) {
-                    loginPolice = ejbFacade.findPoliceById(IDresult);
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("police", loginPolice);
-                    return "success";
-                } else {
-                    this.error_ = "error";
-                    return "failure";
-                }
-            } catch (Exception e) {
+        try {
+            this.IDresult = (String) ejbFacade.FindID(id);   //找到对应的ID
+            this.pwdresult = (String) ejbFacade.FindPassword(id, pwd);  //检测此ID的密码是否等于数据库中的密码，，返回密码；否，返回Null
+            if ((IDresult != null) && (pwdresult != null)) {
+                loginPolice = ejbFacade.findPoliceById(IDresult);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("police", loginPolice);
+                return "success";
+            } else {
                 this.error_ = "error";
                 return "failure";
             }
+        } catch (Exception e) {
+            this.error_ = "error";
+            return "failure";
         }
-    
+    }
 
 }

@@ -26,6 +26,8 @@ public class CameraController implements Serializable {
     private DataModel items = null;
     @EJB
     private sessionBean.CameraFacade ejbFacade;
+    @EJB
+    private sessionBean.CrossingFacade ejbCrossingFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -231,5 +233,10 @@ public class CameraController implements Serializable {
         }
 
     }
+     public Camera getNewCamera(java.lang.String id) {
+        
+        return ejbFacade.find(ejbCrossingFacade.find(id).getCameraidN());
+    }
+
 
 }
