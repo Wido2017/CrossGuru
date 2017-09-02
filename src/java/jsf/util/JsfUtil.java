@@ -26,7 +26,7 @@ public class JsfUtil {
     public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
-            addErrorMessage(msg);
+            addErrorMessage("此ID已注册！");
         } else {
             addErrorMessage(defaultMsg);
         }
