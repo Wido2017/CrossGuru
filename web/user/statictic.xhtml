@@ -17,60 +17,68 @@
 
         <h:body>
 
-            <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="6%" resizable="false" gutter="0">        
-                    <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="home.xhtml"/>   
-                    <h:outputText id="title" class="ui-title" value="以往车流量分析"></h:outputText>           
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <!--<div style="margin-left:30%">-->
-                    <h:form>
-                        <p:growl id="growl" showDetail="true" />
-                        <h:panelGrid id="title" columns="5" cellpadding="20" class="ui-setGrid">
-                            <h:outputLabel class="ui-setLabel" for="danwei" value="请选择时段单位:" />
-                            <p:selectOneMenu id="danwei" value="#{selectManager.selectDanwei}" style="width:125px" effect="fold">
-                                <f:selectItem itemLabel="天" itemValue="天"/>
-                                <f:selectItem itemLabel="小时" itemValue="小时"/>
-                                <f:selectItem itemLabel="分钟" itemValue="分钟"/>
-                                <p:ajax event="itemSelect" listener="#{selectManager.Danwei}" update="lineChart barChart" />
-                            </p:selectOneMenu>
-                            <h:outputLabel class="ui-setLabel" for="riqi" value="选择日期:"/>
-                            <p:calendar id="riqi" value="#{selectManager.selectDate}" showOn="button" effect="fold" maxdate="#{selectManager.currentDate}">
-                                <p:ajax  event="dateSelect" listener="#{selectManager.Date}" update="lineChart barChart" />
-                                <p:ajax  event="change" listener="#{selectManager.Date}" update="lineChart barChart" />
-                            </p:calendar>
+            <!--            <p:layout fullPage="true">
+                            <p:layoutUnit position="north" size="6%" resizable="false" gutter="0">        
+                                <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="../home.xhtml"/>   
+                                <h:outputText id="title" class="ui-title" value="以往车流量分析"></h:outputText>           
+                            </p:layoutUnit>-->
+            <div style="height:70px;margin-top: 0px;margin-left:0px;margin-right:0px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+                <p:button style="margin-left:10px;margin-top:20px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="../home.xhtml"/>   
+                <h:outputText style="margin-left: 500px;margin-top:10px;" id="title" class="ui-title" value="以往车流量分析"></h:outputText>           
+            </div>
+            <div style="margin-left: -10px;margin-right:-8px;background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);"><h:outputLabel style="margin-left:1090px" value="当前位置：" ><a class="atext4" href="../home.xhtml">首页</a>->记录查询</h:outputLabel></div>
+            <div style="margin-top:0px;margin-left:0px;margin-right:0px">
+                <h:form>
+                    <p:growl id="growl" showDetail="true" />
+                    <h:panelGrid style="margin-top:100px" id="title" columns="5" cellpadding="20" class="ui-setGrid">
+                        <h:outputLabel style="margin-left: -100px;" class="ui-setLabel" for="danwei" value="请选择时段单位:" />
+                        <p:selectOneMenu id="danwei" value="#{selectManager.selectDanwei}" style="width:125px" effect="fold">
+                            <f:selectItem itemLabel="天" itemValue="天"/>
+                            <f:selectItem itemLabel="小时" itemValue="小时"/>
+                            <f:selectItem itemLabel="分钟" itemValue="分钟"/>
+                            <p:ajax event="itemSelect" listener="#{selectManager.Danwei}" update="lineChart barChart" />
+                        </p:selectOneMenu>
+                        <h:outputLabel style="margin-left: 100px;" class="ui-setLabel" for="riqi" value="选择日期:"/>
+                        <p:calendar id="riqi" value="#{selectManager.selectDate}" showOn="button" effect="fold" maxdate="#{selectManager.currentDate}">
+                            <p:ajax  event="dateSelect" listener="#{selectManager.Date}" update="lineChart barChart" />
+                            <p:ajax  event="change" listener="#{selectManager.Date}" update="lineChart barChart" />
+                        </p:calendar>
+                    </h:panelGrid>
+                    <h:panelGroup  id="lineChart" class="ui-setGroup1" style="margin-left:2%;;margin-top:4% ">
+                        <!--<div style="position:fixed;left:0px;right:50%;top:15%">-->
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <img src="../resources/images/clock.png" class="ui-setimg"/> 
+                            <h:outputText class="ui-setLabel" value="时刻:"/>                       
                         </h:panelGrid>
-                        <h:panelGroup  id="lineChart" class="ui-setGroup1" style="margin-left:5%;;margin-top:5% ">
-                            <!--<div style="position:fixed;left:0px;right:50%;top:15%">-->
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <img src="../resources/images/clock.png" class="ui-setimg"/> 
-                                <h:outputText class="ui-setLabel" value="时刻:"/>                       
-                            </h:panelGrid>
-                            <p:selectOneMenu id="shiduan" value="#{shiduanManager.selectHour}" rendered="#{shiduanManager.minute}" effect="fold">
-                                <f:selectItems value="#{shiduanManager.hours}"/>
-                                <p:ajax event="itemSelect" listener="#{shiduanManager.selectHourEvent}" update="lineChart" />
-                            </p:selectOneMenu>
-                            <p:chart  type="line" model="#{lineChartView.lineModel}" style="height:450px;width: 650px;" responsive="true"/>
+                        <p:selectOneMenu id="shiduan" value="#{shiduanManager.selectHour}" rendered="#{shiduanManager.minute}" effect="fold">
+                            <f:selectItems value="#{shiduanManager.hours}"/>
+                            <p:ajax event="itemSelect" listener="#{shiduanManager.selectHourEvent}" update="lineChart" />
+                        </p:selectOneMenu>
+                        <p:chart  type="line" model="#{lineChartView.lineModel}" style="height:450px;width: 650px;" responsive="true"/>
 
-                            <!--</div>-->
-                        </h:panelGroup>
-                        <h:panelGroup id="barChart" class="ui-setGroup2" style="margin-left:50%;;margin-top:5%">
-                            <!--<div style="position:fixed;left:50%;right:0%;top:15%">-->
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <img src="../resources/images/location.png" class="ui-setimg"/>
-                                <h:outputText class="ui-setLabel" value="路段:"/>
-                            </h:panelGrid>
-                            <p:chart type="bar" model="#{barChartView.barModel}" style="height:450px;width: 650px;" responsive="true">
-                                <p:ajax event="itemSelect" listener="#{barChartView.itemSelect}" update="growl lineChart" />
-                            </p:chart>
-                            <!--</div>-->
+                        <!--</div>-->
+                    </h:panelGroup>
+                    <h:panelGroup id="barChart" class="ui-setGroup2" style="margin-left:50%;;margin-top:4%">
+                        <!--<div style="position:fixed;left:50%;right:0%;top:15%">-->
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <img src="../resources/images/location.png" class="ui-setimg"/>
+                            <h:outputText class="ui-setLabel" value="路段:"/>
+                        </h:panelGrid>
+                        <p:chart type="bar" model="#{barChartView.barModel}" style="height:450px;width: 650px;" responsive="true">
+                            <p:ajax event="itemSelect" listener="#{barChartView.itemSelect}" update="growl lineChart" />
+                        </p:chart>
+                        <!--</div>-->
 
-                        </h:panelGroup>
-                    </h:form>
-                    <!--</div>-->
-                </p:layoutUnit>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+            <!--<p:layoutUnit position="center">-->
+            <!--<div style="margin-left:30%">-->
 
-            </p:layout>
+            <!--</div>-->
+            <!--</p:layoutUnit>-->
+
+            <!--</p:layout>-->
 
         </h:body>
 

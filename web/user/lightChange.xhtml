@@ -20,13 +20,15 @@
         <h:body>
 
             <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="55" resizable="false" gutter="0">        
-                    <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
-                    <h:outputText id="title" class="ui-title" value="实时红绿灯"></h:outputText>           
+                <p:layoutUnit position="north" size="98" resizable="false" gutter="0">        
+                    <p:button style="margin-left:10px;margin-top:10px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
+                    <h:outputText style="margin-left: 550px;margin-top:10px;" id="title" class="ui-title" value="实时红绿灯"></h:outputText>      
+                    <div style="margin-left: -10px;margin-right:0px;margin-top:23px;background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);"><h:outputLabel style="margin-left:70%" value="当前位置：" ><a class="atext1" href="../home.xhtml">首页</a>-><a class="atext" href="monitor.xhtml">监控调度与查询</a>->实时红绿灯</h:outputLabel></div>
+
                 </p:layoutUnit>
                 <p:layoutUnit position="center">
                     <h:form>
-                        <p:panelGrid style="margin-top: 40px;margin-left: 60px;">
+                        <p:panelGrid style="margin-top: 40px;margin-left: 0px;">
                             <p:row>
                                 <p:column></p:column>
                                 <p:column colspan="3">
@@ -105,7 +107,7 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                    
+
                                 </p:column>
 
                                 <p:column rowspan="2" style="border-right: transparent;">
@@ -115,7 +117,7 @@
                                     <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column>
-                                   
+
                                 </p:column>
 
                             </p:row>
@@ -163,7 +165,7 @@
                                 </p:column>
                                 <p:column style="border-left: transparent;border-bottom: transparent;">
 
-                                    
+
                                 </p:column>
 
 
@@ -206,8 +208,8 @@
                                     <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                                 </p:column>
                                 <p:column style="border-left: transparent;">
-                                    
-                                    
+
+
                                 </p:column>
 
 
@@ -249,5 +251,3 @@
 
     </f:view>
 </html>
-
-

@@ -47,14 +47,9 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>home.xhtml</from-view-id>
+        <from-view-id>/home.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>none</from-outcome>
-            <to-view-id>home.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>yes</from-outcome>
+            <from-outcome>ok</from-outcome>
             <to-view-id>/user/statictic.xhtml</to-view-id>
             <redirect/>
         </navigation-case>

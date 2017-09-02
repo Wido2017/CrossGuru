@@ -7,7 +7,28 @@ and open the template in the editor.
     Created on : 2017-7-24, 10:23:57
     Author     : 曹锡鹏
 */
+.atext1
+{
+    text-decoration: none;
+    color:black;
+}
 
+.atext1:hover
+{
+    text-decoration: none;
+    color:red;
+}
+.atext4
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext4:hover
+{
+    text-decoration: none;
+    color:red;
+}
 .ui-title
 {
     font-weight: bold;
