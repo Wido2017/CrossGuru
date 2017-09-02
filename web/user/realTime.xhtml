@@ -12,6 +12,7 @@
             <link href="../resources/css/realTime.css" rel="stylesheet" type="text/css"/>
             <link rel="stylesheet" href="../resources/css/lightChange.css" />
 
+
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>CrossGuru</title>
@@ -26,20 +27,17 @@
         </h:head>
 
         <h:body>
-            <p:layout fullPage="true">
-                <p:layoutUnit position="north" size="55" resizable="false" gutter="0">        
-                    <p:button id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="../home.xhtml"/>   
-                    <h:outputText id="title" class="ui-title" value="实时路况"></h:outputText>           
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <div>
-                        <input type="text" id="input" placeholder="搜索区域" />
-                        <input type="button" onclick="searchMap();" value="搜索" />
-                    </div>
-                    <div style="width:1323px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
-                </p:layoutUnit>
-
-            </p:layout>
+            <!--<p:layout fullPage="true">-->
+            <div style="height:70px;margin-top: 0px;margin-left:0px;margin-right:0px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+                <p:button style="margin-left:10px;margin-top:20px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="../home.xhtml"/>   
+                <h:outputText style="margin-left: 550px;margin-top:10px;" id="title" class="ui-title" value="实时路况"></h:outputText>           
+            </div>
+            <div style="margin-left: 0px;margin-right:0px;background-image: linear-gradient(-20deg, #616161 0%, #9bc5c3 100%);"><h:outputLabel style="margin-left:1090px" value="当前位置：" ><a class="atext" href="../home.xhtml">首页</a>->实时路况</h:outputLabel></div>
+            <div style="margin-top: 0px;margin-left:0px;margin-right:-5px">
+                <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
+            </div>
+            <div style="margin-top: 0px;margin-left:0px;margin-right:0px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+            <!--</p:layout>-->
 
         </h:body>
         <script type="text/javascript">
