@@ -26,6 +26,7 @@ public class LoginManger implements Serializable {
      * Creates a new instance of LoginManger
      */
     Police loginPolice = (Police) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("police");
+    Administrator loginAdministrator = (Administrator) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("administrator");
 
     public LoginManger() {
     }
@@ -34,12 +35,22 @@ public class LoginManger implements Serializable {
         return loginPolice;
     }
 
+    public Administrator getLoginAdministrator() {
+        return loginAdministrator;
+    }
+    
+   
+
     public void setLoginPolice(Police loginPolice) {
         this.loginPolice = loginPolice;
     }
 
+    public void setLoginAdministrator(Administrator loginAdministrator) {
+        this.loginAdministrator = loginAdministrator;
+    }
+
     public String isLogin() {
-        if (loginPolice == null) {
+        if (loginPolice == null || loginAdministrator == null) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("提示", "请登录后查看记录！"));
             return "none";

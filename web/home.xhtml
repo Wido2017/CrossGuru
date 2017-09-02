@@ -36,8 +36,12 @@
                         </p:commandLink>
                         <div style="position: fixed;left:1050px;right:0px" >
                             <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
-                            <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >交警登录/注册</a>
-                            <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                            <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >
+                                <h:outputText value="交警注册/登录" rendered="#{loginManger.loginPolice==null}"></h:outputText>
+                            </a>
+                            <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">
+                                <h:outputText value="管理员注册/登录" rendered="#{loginManger.loginAdministrator==null}"></h:outputText>
+                            </a>
                             <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
                                 <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
                                 <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>

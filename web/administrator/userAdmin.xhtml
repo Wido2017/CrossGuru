@@ -35,7 +35,7 @@
                     <li class="hidden-xs am-hide-sm-only">
                         <form role="search" class="app-search">
                             <input type="text" placeholder="Search..." class="form-control"/>
-                            <a href=""><img src="../assets/img/search.png"/></a>
+<!--                            <a href=""><img src="../assets/img/search.png"/></a>-->
                         </form>
                     </li>
                     <li>
@@ -56,7 +56,11 @@
                             <img src="../resources/images/鲸鱼.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive"/>
                             <div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
                         </div>
-                        <h5><a href="#">Mat Helme</a> </h5>
+                        <h5><a href="#">
+                                <h:outputText value="ID: #{loginManger.loginAdministrator.id}"></h:outputText>
+                                <br/>
+                                <h:outputText value="姓名: #{loginManger.loginAdministrator.name}"></h:outputText>
+                            </a> </h5>
                         <ul class="list-inline">
                             <li>
                                 <a href="#">
