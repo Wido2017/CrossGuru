@@ -26,11 +26,11 @@
                             <p:graphicImage value="resources/images/lukuang.png" height="100px" width="100px" id="icon1"/>
                             <h:outputText value="实时路况"></h:outputText>
                         </h:link>
-                        <h:link outcome="user/monitor" styleClass="iconbt">
+                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin1}" update="info">
                             <p:graphicImage value="resources/images/jiankong.png" height="100px" width="100px"/>
                             <h:outputText value="监控查询与调度"></h:outputText>
-                        </h:link>
-                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin}" update="info">
+                        </p:commandLink>
+                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin2}" update="info">
                             <p:graphicImage value="resources/images/jilu.png" height="100px" width="100px"/>
                             <h:outputText value="记录查询"></h:outputText>
                         </p:commandLink>
@@ -46,7 +46,7 @@
                                 <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
                                 <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
                                 <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
-                                <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.logoutListener}" ></p:commandButton>
+                                <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
                             </p:overlayPanel>
                         </div>
                     </h:form>

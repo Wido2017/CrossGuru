@@ -38,8 +38,6 @@ public class LoginManger implements Serializable {
     public Administrator getLoginAdministrator() {
         return loginAdministrator;
     }
-    
-   
 
     public void setLoginPolice(Police loginPolice) {
         this.loginPolice = loginPolice;
@@ -49,8 +47,17 @@ public class LoginManger implements Serializable {
         this.loginAdministrator = loginAdministrator;
     }
 
-    public String isLogin() {
-        if (loginPolice == null || loginAdministrator == null) {
+     public String isLogin1() {
+        if (loginPolice == null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("提示", "请登录后查看记录！"));
+            return "none";
+        } else {
+            return "ok_jiankong";
+        }
+    }
+    public String isLogin2() {
+        if (loginPolice == null) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("提示", "请登录后查看记录！"));
             return "none";
@@ -59,9 +66,25 @@ public class LoginManger implements Serializable {
         }
     }
 
-    public void logoutListener() {
+    public String isLogout(){
+        if (loginAdministrator == null) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("提示", "已注销！"));
+            return "logout";
+        } else {
+            return "ok";
+        }
+    }
+    public void policeLogoutListener() {
         loginPolice = null;
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("police", null);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("提示", "已注销！"));
+    }
+
+    public void adminLogoutListener() {
+        loginAdministrator = null;
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("administrator", null);
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("提示", "已注销！"));
     }

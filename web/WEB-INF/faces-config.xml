@@ -53,5 +53,18 @@
             <to-view-id>/user/statictic.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>ok_jiankong</from-outcome>
+            <to-view-id>/user/monitor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+     <navigation-rule>
+        <from-view-id>/administrator/userAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
