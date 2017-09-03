@@ -23,21 +23,11 @@
     <h:body>
         <!-- Begin page -->
         <header class="am-topbar am-topbar-fixed-top">      
-            <div class="am-topbar-left am-hide-sm-only">
-                <a href="index.html" class="logo"><span>Admin<span>to</span></span><i class="zmdi zmdi-layers"></i></a>
-            </div>
-
             <div class="contain2">
                 <ul class="am-nav am-navbar-nav am-navbar-left">
                 </ul>
                 <ul class="am-nav am-navbar-nav am-navbar-right">
-                    <li class="inform"><i class="am-icon-bell-o" aria-hidden="true"></i></li>
-                    <li class="hidden-xs am-hide-sm-only">
-                        <form role="search" class="app-search">
-                            <input type="text" placeholder="Search..." class="form-control"/>
-
-                        </form>
-                    </li>
+                   
                     <li>
                         <p:button value="注销" href="../home.xhtml"></p:button>
                     </li>
@@ -46,11 +36,13 @@
         </header>
         <!-- end page -->
         <div class="admin">
-            <div class="admin-sidebar am-offcanvas  am-padding-0" id="admin-offcanvas">
+            <p:layoutUnit position="left" style="border-right-width: 6px;width:20%;background-color: #E4E4E4" size="200px" resizable="false" gutter="0">
+                <!-- User -->
                 <div class="am-offcanvas-bar admin-offcanvas-bar">
-                    <!-- User -->
                     <div class="user-box am-hide-sm-only">
-                        <div class="user-img">
+                        <a class="logo"><span>Admin<span>to</span></span><i class="zmdi zmdi-layers"></i></a>
+
+                        <div style="width:88px;height:88px;margin-left: 30%">
                             <img src="../resources/images/鲸鱼.jpg" alt="user-img" title="Mat Helme" class="img-circle img-thumbnail img-responsive"/>
                             <div class="user-status offline"><i class="am-icon-dot-circle-o" aria-hidden="true"></i></div>
                         </div>
@@ -74,12 +66,17 @@
                         </ul>
                     </div>
 
+
+
                     <ul class="am-list admin-sidebar-list">
                         <li><a href="userAdmin.xhtml" class="atext">用户管理</a></li>
                         <li><a href="crossAdmin.xhtml" class="atext">路口管理</a></li>
                     </ul>
                 </div>
-            </div>
+
+            </p:layoutUnit>        
+
+
             <!-- Start right Content here -->
             <div class="content-page">
                 <!-- Start content -->

@@ -16,50 +16,57 @@
         </style>
         <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
     </h:head>
-    <h:body>
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="140" resizable="false" gutter="0">        
-                <div style="height:121px;margin-bottom: 20px;margin-left:0px;">
-                    <h:form id="homeForm">
-                        <p:growl id="info" showDetail="true" />
-                        <h:link outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
-                            <p:graphicImage value="resources/images/lukuang.png" height="100px" width="100px" id="icon1"/>
-                            <h:outputText value="实时路况"></h:outputText>
-                        </h:link>
-                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin1}" update="info">
-                            <p:graphicImage value="resources/images/jiankong.png" height="100px" width="100px"/>
-                            <h:outputText value="监控查询与调度"></h:outputText>
-                        </p:commandLink>
-                        <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin2}" update="info">
-                            <p:graphicImage value="resources/images/jilu.png" height="100px" width="100px"/>
-                            <h:outputText value="记录查询"></h:outputText>
-                        </p:commandLink>
-                        <div style="position: fixed;left:1050px;right:0px" >
-                            <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
-                            <a class="atext" href="user/signPolice.xhtml" style="margin-left:0px" >
-                                <h:outputText value="交警注册/登录" rendered="#{loginManger.loginPolice==null}"></h:outputText>
-                            </a>
-                            <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">
-                                <h:outputText value="管理员注册/登录" rendered="#{loginManger.loginAdministrator==null}"></h:outputText>
-                            </a>
-                            <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
-                                <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
-                                <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
-                                <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
-                                <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
-                            </p:overlayPanel>
-                        </div>
-                    </h:form>
-                </div>        
-            </p:layoutUnit>
-            <p:layoutUnit position="center">
-                <div>
-                    <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
-                </div>
-                <div style="width:100%;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
-            </p:layoutUnit>
+    <h:body >
+        <!--<p:layout fullPage="true" >-->
+        <!--<p:layoutUnit position="north" size="159" resizable="false" gutter="0" style="color:blue;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" styleClass="background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);">-->        
+        <div style="height:140px;margin-top: -20px;margin-left:-179px;margin-right:-179px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+            <h:form id="homeForm">
+                <p:growl id="info" showDetail="true" />
 
-        </p:layout>
+                <div style="padding-left:0px">
+                    <p:graphicImage style="padding-top:25px;margin-left:-2000px" height="80px" value="resources/images/crossguru.png"></p:graphicImage>
+                    <h:link style="margin-left:30%" outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
+                        <p:graphicImage value="resources/images/lukuang.png" height="70px" width="70px" id="icon1" style="margin-top:38px;margin-left: 0px"/>
+                        <br/>
+                        <h:outputText value="实时路况" style="font-size: 15px;color: black"></h:outputText>
+                    </h:link>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin1}" update="info">
+                        <p:graphicImage value="resources/images/jiankong.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="监控查询调度" style="font-size: 15px;color: black"></h:outputText>    
+                    </p:commandLink>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin2}" update="info">
+                        <p:graphicImage value="resources/images/jilu.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="记录查询" style="font-size: 15px;color: black"></h:outputText>
+                    </p:commandLink>
+                    <!--<h:outputLabel value="当前位置：首页" ></h:outputLabel>-->
+                </div>
+                <div style="position: fixed;top:5px;left:1050px;right:0px" >
+                    <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
+                    <p:link class="atext" href="user/signPolice.xhtml" style="margin-left:0px" rendered="#{loginManger.loginPolice==null}">交警登录/注册</p:link>
+                    <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                    <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
+                        <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
+                        <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
+                    </p:overlayPanel>
+                </div>
+            </h:form>
+        </div>        
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
+        <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
+            <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
+        </div>
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+        <!--</p:layoutUnit>-->
+
+        <!--</p:layout>-->
 
 
 
@@ -139,4 +146,3 @@
         initMap();//创建和初始化地图
     </script>
 </html>
-
