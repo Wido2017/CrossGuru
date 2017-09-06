@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--主界面-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        <link href="resources/css/home.css" type="text/css" rel="stylesheet"/>
+        <style type="text/css">
+
+            .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+            .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+            .anchorBL{display:none;}
+        </style>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+    </h:head>
+    <h:body >
+        <!--<p:layout fullPage="true" >-->
+        <!--<p:layoutUnit position="north" size="159" resizable="false" gutter="0" style="color:blue;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" styleClass="background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);">-->        
+        <div style="height:140px;margin-top: -20px;margin-left:-179px;margin-right:-179px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+            <h:form id="homeForm">
+                <p:growl id="info" showDetail="true" />
+
+                <div style="padding-left:0px">
+                    <p:graphicImage style="padding-top:25px;margin-left:-2000px" height="80px" value="resources/images/crossguru.png"></p:graphicImage>
+                    <h:link style="margin-left:30%" outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
+                        <p:graphicImage value="resources/images/lukuang.png" height="70px" width="70px" id="icon1" style="margin-top:38px;margin-left: 0px"/>
+                        <br/>
+                        <h:outputText value="实时路况" style="font-size: 15px;color: black"></h:outputText>
+                    </h:link>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin1}" update="info">
+                        <p:graphicImage value="resources/images/jiankong.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="监控查询调度" style="font-size: 15px;color: black"></h:outputText>    
+                    </p:commandLink>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin2}" update="info">
+                        <p:graphicImage value="resources/images/jilu.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="记录查询" style="font-size: 15px;color: black"></h:outputText>
+                    </p:commandLink>
+                    <!--<h:outputLabel value="当前位置：首页" ></h:outputLabel>-->
+                </div>
+                <div style="position: fixed;top:5px;left:1050px;right:0px" >
+                    <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
+                    <p:link class="atext" href="user/signPolice.xhtml" style="margin-left:0px" rendered="#{loginManger.loginPolice==null}">交警登录/注册</p:link>
+                    <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                    <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
+                        <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
+                        <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
+                    </p:overlayPanel>
+                </div>
+            </h:form>
+        </div>        
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
+        <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
+            <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
+        </div>
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+        <!--</p:layoutUnit>-->
+
+        <!--</p:layout>-->
+
+
+
+
+    </h:body>
+    <script type="text/javascript">
+        //创建和初始化地图函数：
+        function changeicon1() {
+            var obj = document.getElementById("icon1");
+
+        }
+
+        function recover1() {
+            var obj = document.getElementById("icon1");
+            obj.src = "resources/images/lukuang.png";
+        }
+
+        function initMap() {
+            createMap(116.395645, 39.929986);//创建地图
+            setMapEvent();//设置地图事件
+            addMapControl();//向地图添加控件
+        }
+        //添加搜索区域框
+        function searchMap() {
+            var area = document.getElementById("input").value; //得到地区
+            var ls = new BMap.LocalSearch(map);
+            ls.setSearchCompleteCallback(function (rs) {
+                if (ls.getStatus() === BMAP_STATUS_SUCCESS) {
+                    var poi = rs.getPoi(0);
+                    if (poi) {
+                        createMap(poi.point.lng, poi.point.lat);//创建地图(经度poi.point.lng,纬度poi.point.lat)
+                        setMapEvent();//设置地图事件
+                        addMapControl();//向地图添加控件
+                    }
+                }
+            });
+
+            ls.search(area);
+        }
+
+
+        //创建搜索后的地图函数：
+        function createMap(x, y) {
+            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+            var point = new BMap.Point(x, y);//定义一个中心点坐标
+            map.centerAndZoom(point, 18);//设定地图的中心点和坐标并将地图显示在地图容器中
+            window.map = map;//
+
+        }
+        //创建初始化的地图
+//        function createNewMap() {
+//            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+//            var point = new BMap.Point(116.395645, 39.929986);
+//            map.centerAndZoom(point, 18);
+//            window.map = map;//将map变量存储在全局
+//        }
+
+        //地图事件设置函数：
+        function setMapEvent() {
+            map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+            map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+            map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+            map.enableKeyboard();//启用键盘上下左右键移动地图
+        }
+
+        //地图控件添加函数：
+        function addMapControl() {
+            //向地图中添加缩放控件
+            var ctrl_nav = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE});
+            map.addControl(ctrl_nav);
+            //向地图中添加比例尺控件
+            var ctrl_sca = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+            map.addControl(ctrl_sca);
+        }
+
+
+        initMap();//创建和初始化地图
+    </script>
+</html>

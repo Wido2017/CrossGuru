@@ -1,0 +1,70 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-7-24, 10:23:57
+    Author     : 曹锡鹏
+*/
+.atext1
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext1:hover
+{
+    text-decoration: none;
+    color:red;
+}
+.atext4
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext4:hover
+{
+    text-decoration: none;
+    color:red;
+}
+.ui-title
+{
+    font-weight: bold;
+    font-size: 150%;
+    position: absolute;
+    margin-left: 35%;
+}
+
+.ui-setlayoutColor1{
+    color: #00cc33;
+    background-color: #00cc33;
+}
+
+.ui-setGrid{
+    position: absolute;
+    left: 25%;
+    top: 0%;
+}
+
+.ui-setGroup1{
+    position: absolute;
+    margin-left: 150px;
+    margin-top: 150px;
+}
+
+.ui-setGroup2{
+    position: absolute;
+    margin-left: 800px;
+    margin-top: 150px;
+}
+
+.ui-setLabel{
+    font-size: 20px
+}
+
+.ui-setimg{
+    display:block;
+    height:20px;
+}

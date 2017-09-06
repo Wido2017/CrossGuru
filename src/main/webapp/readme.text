@@ -1,0 +1,14 @@
+<Administrator>
+signAdmin--登录注册
+userAdmin--用户管理
+crossAdmin--路口管理（分配）
+
+<User>
+signPolice--登录注册
+home--主界面
+realTime--实时路况分析（热点图）
+monitor--监控调度与查询
+lightChange--路口红绿灯状态修改
+statistic--记录查询与分析
+
+？

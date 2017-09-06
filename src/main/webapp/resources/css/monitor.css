@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-7-24, 20:39:01
+    Author     : lenovo
+*/
+.atext2
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext2:hover
+{
+    text-decoration: none;
+    color:red;
+}
+.header1
+{
+/*    display: block;
+    margin-top: 0.1cm;*/
+    text-align: center;
+    font-size: 20px;
+}
+
+.homeicon
+{
+    position: absolute;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+.back
+{
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 10px;
+  
+}
+
+lukou-1
+{
+    position: absolute;
+    padding-top: 100px;
+}
+
+lukou-1r
+{
+    position: relative;
+    right: 100px;
+    padding-top: 100px;
+}
+
+lukou-2
+{
+    position: absolute;
+    padding-top: 400px;
+}
+
+lukou-1
+{
+    position: relative;
+    right: 100px;
+    padding-top: 100px;
+}
+
+
+
+
