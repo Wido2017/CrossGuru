@@ -6,10 +6,12 @@
 package managedBean;
 
 import entity.Administrator;
+import entity.Crossing;
 import entity.Police;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -47,6 +49,9 @@ public class LoginManger implements Serializable {
         this.loginAdministrator = loginAdministrator;
     }
 
+    public List<Crossing> getCrossingList(){
+        return (List<Crossing>)loginPolice.getAreaId().getCrossingCollection();
+    }
      public String isLogin1() {
         if (loginPolice == null) {
             FacesContext context = FacesContext.getCurrentInstance();
