@@ -9,15 +9,25 @@ package managedBean;
  *
  * @author 曹锡鹏
  */
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.Socket;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import org.primefaces.json.JSONObject;
 
 @ManagedBean
 @ViewScoped
 public class CounterView implements Serializable {
-
-   private int Nsecond_Red_Up = 15;
+ 
+    private int Nsecond_Red_Up = 15;
     private int Nsecond_Green_Up = 0;
     private int Wsecond_Red_Up=15;
     private int Wsecond_Green_Up=0;
@@ -35,6 +45,38 @@ public class CounterView implements Serializable {
     private int Ssecond_Green_left=0;
     private String RLight ="red";
 
+    public CounterView() {
+        try {
+            String host = "localhost";
+            int port = 51567;
+
+            Socket client = new Socket(host, port);
+
+            DataOutputStream outputStream = null;
+            outputStream = new DataOutputStream(client.getOutputStream());
+
+            DataInputStream inputStream = null;
+            String strInputStream = "";
+
+            inputStream = new DataInputStream(new BufferedInputStream(client.getInputStream()));
+            byte[] by = new byte[20480];
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            int nbyte;
+            while ((nbyte = inputStream.read(by)) != -1) {
+                baos.write(by, 0, nbyte);
+            }
+            strInputStream = new String(baos.toByteArray());
+
+            JSONObject js = new JSONObject(strInputStream);
+            JSONObject nljson=js.getJSONObject("nl");
+            Nsecond_Red_Up=nljson.getInt("red");
+            System.out.println(js.toString());
+        } catch (IOException ex) {
+            Logger.getLogger(CounterView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
     public int getWsecond_Red_Left() {
         return Wsecond_Red_Left;
     }
