@@ -86,7 +86,7 @@
                         <p:column rowspan="6">
                             <h3>信号灯</h3>
                         </p:column>
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -97,7 +97,7 @@
                         </p:column>
 
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -108,7 +108,7 @@
                         </p:column>
 
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -118,7 +118,7 @@
                             <p:outputLabel id="Wsecond_Red_Up" value="#{counterView.wsecond_Red_Up}"/>
                         </p:column>
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -163,6 +163,9 @@
 
                     </p:row> 
                     <p:row>
+                        <p:column style="border-right: transparent;">
+                            <p:commandButton id="TurnNsToGreen" value="TurnToGreen" action="#{counterView.TurnNSsToGreen()}" update="Nsecond_Red_Up Ssecond_Red_Up Nsecond_Yellow_Up Ssecond_Yellow_Up"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -170,7 +173,9 @@
                             <p:outputLabel id="Nsecond_Green_Up" value="#{counterView.nsecond_Green_Up}"/>
                         </p:column>
 
-
+                        <p:column style="border-right: transparent;">
+                            <p:commandButton id="TurnSsToGreen" value="TurnToGreen" action="#{counterView.TurnNSsToGreen()}" update="Nsecond_Red_Up Ssecond_Red_Up Nsecond_Yellow_Up Ssecond_Yellow_Up"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -178,7 +183,9 @@
                             <p:outputLabel id="Ssecond_Green_Up" value="#{counterView.ssecond_Green_Up}"/>
                         </p:column>
 
-
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnWsToGreen" value="TurnToGreen" action="#{counterView.TurnWEsToGreen()}" update="Wsecond_Red_Up Esecond_Red_Up Wsecond_Yellow_Up Esecond_Yellow_Up"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -186,7 +193,9 @@
                             <p:outputLabel id="Wsecond_Green_Up" value="#{counterView.wsecond_Green_Up}"/>
                         </p:column>
 
-
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnEsToGreen" value="TurnToGreen" action="#{counterView.TurnWEsToGreen()}" update="Wsecond_Red_Up Esecond_Red_Up Wsecond_Yellow_Up Esecond_Yellow_Up"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -196,7 +205,7 @@
 
                     </p:row>
                     <p:row>
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -206,7 +215,7 @@
                             <p:outputLabel id="Nsecond_Red_Left" value="#{counterView.nsecond_Red_Left}"/>
                         </p:column>
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -216,7 +225,7 @@
                             <p:outputLabel id="Ssecond_Red_Left" value="#{counterView.ssecond_Red_Left}"/>
                         </p:column>
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -226,7 +235,7 @@
                             <p:outputLabel id="Wsecond_Red_Left" value="#{counterView.wsecond_Red_Left}"/>
                         </p:column>
 
-                        <p:column rowspan="3" style="border-right: transparent;">
+                        <p:column rowspan="2" style="border-right: transparent;">
                             <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
@@ -268,13 +277,19 @@
 
                     </p:row>
                     <p:row>
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnNlToGreen" value="TurnToGreen" action="#{counterView.TurnNSlToGreen()}" update="Nsecond_Red_Left Ssecond_Red_Left Nsecond_Yellow_Left Ssecond_Yellow_Left"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
                         <p:column style="border-left: transparent;">
                             <p:outputLabel id="Nsecond_Green_Left" value="#{counterView.nsecond_Green_Left}"/>
                         </p:column>
-
+                        
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnSlToGreen" value="TurnToGreen" action="#{counterView.TurnNSlToGreen()}" update="Nsecond_Red_Left Ssecond_Red_Left Nsecond_Yellow_Left Ssecond_Yellow_Left"/>
+                         </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -282,6 +297,9 @@
                             <p:outputLabel id="Ssecond_Green_Left" value="#{counterView.ssecond_Green_Left}"/>
                         </p:column>
 
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnWlToGreen" value="TurnToGreen" action="#{counterView.TurnWElToGreen()}" update="Wsecond_Red_Left Esecond_Red_Left Wsecond_Yellow_Left Esecond_Yellow_Left"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
@@ -289,6 +307,9 @@
                             <p:outputLabel id="Wsecond_Green_Left" value="#{counterView.wsecond_Green_Left}"/>
                         </p:column>
 
+                         <p:column style="border-right: transparent;">
+                             <p:commandButton id="TurnElToGreen" value="TurnToGreen" action="#{counterView.TurnWElToGreen()}" update="Wsecond_Red_Left Esecond_Red_Left Wsecond_Yellow_Left Esecond_Yellow_Left"/>
+                        </p:column>
                         <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
                             <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>

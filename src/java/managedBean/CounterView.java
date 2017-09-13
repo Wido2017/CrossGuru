@@ -49,14 +49,15 @@ public class CounterView implements Serializable {
     private int Ssecond_Red_Left = 0;
     private int Ssecond_Green_Left = 0;
     private int Ssecond_Yellow_Left = 0;
-    private JSONObject nljson;
-    private JSONObject nsjson;
-    private JSONObject sljson;
-    private JSONObject ssjson;
-    private JSONObject wljson;
-    private JSONObject wsjson;
-    private JSONObject eljson;
-    private JSONObject esjson;
+    private JSONObject nljson=new JSONObject();
+    private JSONObject nsjson=new JSONObject();
+    private JSONObject sljson=new JSONObject();
+    private JSONObject ssjson=new JSONObject();
+    private JSONObject wljson=new JSONObject();
+    private JSONObject wsjson=new JSONObject();
+    private JSONObject eljson=new JSONObject();
+    private JSONObject esjson=new JSONObject();
+    private JSONObject outputjs = new JSONObject();
 
     public CounterView() {
         try {
@@ -262,4 +263,83 @@ public class CounterView implements Serializable {
         return Wsecond_Yellow_Up;
     }
 
+    public void TurnNSlToGreen() {
+        Nsecond_Red_Left = 0;
+        Ssecond_Red_Left = 0;
+        Nsecond_Yellow_Left = 1;
+        Ssecond_Yellow_Left = 1;
+        appendValue(nljson, 0, 102);
+        appendValue(sljson, 0, 102);
+        appendValue(nsjson, 34, 68);
+        appendValue(ssjson, 34, 68);
+        appendValue(wljson, 68, 34);
+        appendValue(eljson, 68, 34);
+        appendValue(wsjson, 102, 0);
+        appendValue(esjson, 102, 0);
+        appendObject();
+
+    }
+
+    public void TurnNSsToGreen() {
+        Nsecond_Red_Up = Ssecond_Red_Up = 0;
+        Nsecond_Yellow_Up = Ssecond_Yellow_Up = 1;
+        appendValue(nsjson, 0, 102);
+        appendValue(ssjson, 0, 102);
+        appendValue(nljson, 34, 68);
+        appendValue(sljson, 34, 68);
+        appendValue(wsjson, 68, 34);
+        appendValue(esjson, 68, 34);
+        appendValue(wljson, 102, 0);
+        appendValue(eljson, 102, 0);
+        appendObject();
+
+    }
+
+    public void TurnWElToGreen() {
+        Wsecond_Red_Left = Esecond_Red_Left = 0;
+        Wsecond_Yellow_Left = Esecond_Yellow_Left = 1;
+        appendValue(wljson, 0, 102);
+        appendValue(eljson, 0, 102);
+        appendValue(wsjson, 34, 68);
+        appendValue(esjson, 34, 68);
+        appendValue(nljson, 68, 34);
+        appendValue(sljson, 68, 34);
+        appendValue(nsjson, 102, 0);
+        appendValue(wsjson, 102, 0);
+        appendObject();
+
+    }
+
+    public void TurnWEsToGreen() {
+        Wsecond_Red_Up = Esecond_Red_Up = 0;
+        Wsecond_Yellow_Up = Esecond_Yellow_Up = 1;
+        appendValue(wsjson, 0, 102);
+        appendValue(esjson, 0, 102);
+        appendValue(wljson, 34, 68);
+        appendValue(eljson, 34, 68);
+        appendValue(nsjson, 68, 34);
+        appendValue(ssjson, 68, 34);
+        appendValue(nljson, 102, 0);
+        appendValue(sljson, 102, 0);
+        appendObject();
+
+    }
+
+    private void appendObject() {
+        outputjs.append("nl", nljson);
+        outputjs.append("sl", sljson);
+        outputjs.append("ns", nsjson);
+        outputjs.append("ss", ssjson);
+        outputjs.append("el", eljson);
+        outputjs.append("wl", wljson);
+        outputjs.append("es", esjson);
+        outputjs.append("ws", wsjson);
+    }
+
+    private void appendValue(JSONObject jSONObject, int red, int red1) {
+        jSONObject.put("red", red);
+        jSONObject.put("green", 30);
+        jSONObject.put("yellow", 4);
+        jSONObject.put("red1", red1);
+    }
 }
