@@ -64,6 +64,37 @@ body{
     vertical-align: middle;
 }
 
+.msgicon{
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.msgicondiv{
+    position: relative;
+    z-index: 9999;
+}
+
+.readMsg{
+/*    position: absolute;*/
+    top: 0px;
+    right: 10%;
+    
+/*    visibility: visible;*/
+    z-index: 1007;
+    height: 200px;
+    width: 350px;
+}
+
+
+.sendMsg{
+/*    position: absolute;*/
+    top: 400px;
+    right: 10%;
+    z-index: 1007;
+    width: 350px;
+}
+
+
 .atext
 {
     text-decoration: none;

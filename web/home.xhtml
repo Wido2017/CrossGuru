@@ -4,7 +4,8 @@
 <!--主界面-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
         <link href="resources/css/home.css" type="text/css" rel="stylesheet"/>
@@ -46,7 +47,7 @@
                     <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
                     <p:link class="atext" href="user/signPolice.xhtml" style="margin-left:0px" rendered="#{loginManger.loginPolice==null}">交警登录/注册</p:link>
                     <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
-                    <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left"> 
+                    <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left;"> 
                         <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
                         <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
                         <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
@@ -54,6 +55,32 @@
                     </p:overlayPanel>
                 </div>
             </h:form>
+            
+            <div class="msgicondiv">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <p:commandLink id="jjxt" styleClass="msgicon" rendered="#{loginManger.loginPolice!=null}" >
+                    <p:graphicImage value="resources/images/message.png" height="70px" width="90px" style="margin-top:28%;margin-right:-20%"  />
+                </p:commandLink>
+                <p:overlayPanel class="readMsg" id="msgPanel" for="jjxt" 
+                                showEffect="blind"  showEvent="mousedown" hideEvent="mousedown" dismissable="false" showCloseIcon="true">
+                    <h:panelGrid columns="2" cellpadding="5" >
+                         <p:graphicImage value="resources/images/readMsg.png"/><p:outputLabel value="查看消息："/>
+                        <p:graphicImage value="resources/images/chat2.png"/>
+                        <p:outputLabel value="我是“海淀区蓟门桥”区域的交警，南向路段拥堵，西向畅通，请“西直门”区域交警配合调控。" />
+                        <p:graphicImage value="resources/images/chat1.png"/>
+                        <p:outputLabel value="“西直门”区域交警收到请求。"/>
+                    </h:panelGrid>
+                </p:overlayPanel>
+                <p:overlayPanel class="sendMsg" id="sendPanel" for="jjxt" showEffect="blind" showEvent="mousedown" hideEvent="mousedown" dismissable="false" showCloseIcon="true">
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <p:outputLabel for="msg" value="消息:" />
+                        <p:inputText id="msg" value="#{GrowlView.message}"  required="true" />
+                        <p:commandButton value="发送" actionListener="#{GrowlView.saveMessage}"  update="growl" />
+                    </h:panelGrid>
+                </p:overlayPanel>
+
+            </div>
+
         </div>        
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
@@ -63,7 +90,7 @@
         </div>
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
-        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent" ></div><!--创建地图容器-->
         <!--</p:layoutUnit>-->
 
         <!--</p:layout>-->
