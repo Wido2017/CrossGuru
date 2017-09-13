@@ -9,18 +9,17 @@
         <Node id="user/statictic.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="area/Edit.xhtml" x="400" y="900" zoom="true"/>
         <Node id="operationRecord/View.xhtml" x="150" y="150" zoom="true"/>
-        <Node id="camera/Create.xhtml" x="1400" y="600" zoom="true"/>
         <Node id="operationRecord/Edit.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="camera/Create.xhtml" x="1400" y="600" zoom="true"/>
         <Node id="camera/View.xhtml" x="150" y="900" zoom="true"/>
         <Node id="trafficFlow/Create.xhtml" x="650" y="750" zoom="true"/>
-        <Node id="administrator/Create.xhtml" x="400" y="1050" zoom="true"/>
         <Node id="administrator/View.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="administrator/Create.xhtml" x="400" y="1050" zoom="true"/>
         <Node id="trafficFlow/View.xhtml" x="900" y="450" zoom="true"/>
         <Node id="user/realTime.xhtml" x="900" y="150" zoom="true"/>
         <Node id="user/monitor.xhtml" x="2150" y="150" zoom="true"/>
-        <Node id="operationRecord/Create.xhtml" x="400" y="150" zoom="true"/>
         <Node id="home.xhtml" x="1150" y="300" zoom="true"/>
-        <Node id="template.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="operationRecord/Create.xhtml" x="400" y="150" zoom="true"/>
         <Node id="operationRecord/List.xhtml" x="400" y="600" zoom="true"/>
         <Node id="crossing/Create.xhtml" x="650" y="300" zoom="true"/>
         <Node id="user/lightChange.xhtml" x="900" y="600" zoom="true"/>
@@ -36,15 +35,14 @@
         <Node id="area/View.xhtml" x="150" y="750" zoom="true"/>
         <Node id="trafficlight/List.xhtml" x="650" y="1050" zoom="true"/>
         <Node id="police/View.xhtml" x="150" y="1200" zoom="true"/>
-        <Node id="crossing/List.xhtml" x="1150" y="600" zoom="true"/>
-        <Node id="user/zz.xhtml" x="1150" y="750" zoom="true"/>
         <Node id="crossing/Edit.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="crossing/List.xhtml" x="1150" y="600" zoom="true"/>
         <Node id="police/Create.xhtml" x="400" y="450" zoom="true"/>
         <Node id="trafficlight/Create.xhtml" x="400" y="300" zoom="true"/>
         <Node id="area/List.xhtml" x="1150" y="150" zoom="true"/>
         <Node id="administrator/signAdmin.xhtml" x="900" y="900" zoom="true"/>
-        <Node id="crossing/View.xhtml" x="1650" y="150" zoom="true"/>
         <Node id="police/List.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="crossing/View.xhtml" x="1650" y="150" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

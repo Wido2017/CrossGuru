@@ -64,8 +64,12 @@ public class LoginManger implements Serializable {
         } else {
             return "ok";
         }
+
     }
 
+     public String service(){
+            return "setup";
+        }
     public String isLogout(){
         if (loginAdministrator == null) {
             FacesContext context = FacesContext.getCurrentInstance();

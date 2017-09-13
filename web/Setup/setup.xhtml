@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <link href="../resources/css/setup.css" type="text/css" rel="stylesheet"/>
+    </h:head>
+    <h:body style="background-color:#FAFAFA;">
+        <p:tabView>
+            <p:tab title="硬件支持">
+                <div style="border-bottom: solid">
+                    <h:outputLabel style="font-size:20px">硬件支持</h:outputLabel>
+                    <a class="atext" style="font-size:14px;margin-left:20px" href="../home.xhtml">返回</a>
+                </div>
+                <br/>
+                <p:layout style="min-width:400px;min-height:500px;">
+                    <p:layoutUnit position="west" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>硬件订购</h:outputLabel>
+                        </div>
+                        <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">红绿灯</a>
+                        <br/> <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">对讲机</a>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>硬件说明</h:outputLabel>
+                        </div>
+                        <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">红绿灯使用说明</a>
+                        <br/> <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">对讲机使用说明</a>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>后期维修</h:outputLabel>
+                        </div>
+                        <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">红绿灯检测维修</a>
+                        <br/> <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a1" href="#">对讲机维修退换</a>
+                    </p:layoutUnit>
+                </p:layout>
+
+
+            </p:tab>
+            <p:tab title="软件支持">
+                <div style="border-bottom: solid">
+                    <h:outputLabel style="font-size:20px">软件支持</h:outputLabel>
+                    <a class="atext" style="font-size:14px;margin-left:20px" href="../home.xhtml">返回</a>
+                </div>
+                <br/>
+                <p:layout style="min-width:400px;min-height:500px;">
+                    <p:layoutUnit position="west" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>软件下载及更新</h:outputLabel>
+                        </div>
+                        <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a2" href="#">电脑端</a>
+                        <br/> <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a2" href="#">手机端</a>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="center" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>常见问题</h:outputLabel>
+                        </div>
+                        <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a2" href="#">红绿灯使用说明</a>
+                        <br/> <br/>
+                        <i class="fa fa-first-order" aria-hidden="true"></i>
+                        <a class="a2" href="#">对讲机使用说明</a>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" resizable="true" size="33%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>问题反馈</h:outputLabel>
+                        </div>
+                        <br/>
+                        <h:form>
+                            <p:inputTextarea rows="10" cols="40" placeholder="请在此处写下您的反馈" completeMethod="#{inputTextareaView.completeArea}" queryDelay="750" minQueryLength="4" />
+                            <br/><br/>
+                            <p:commandButton style="margin-left:60%" value="确认" icon="ui-icon-script" actionListener="#{dfView.showMessage}" />
+                        </h:form>
+
+                        <br/><br/>
+                        <h:outputLabel>更多信息反馈，请按以下方式联系我们：</h:outputLabel>
+                        <br/><br/>
+                        <h:outputLabel>电话：XXXXXXXXXXX</h:outputLabel>
+                        <br/><br/>
+                        <h:outputLabel>邮箱：XXX@XXX.com</h:outputLabel>
+                    </p:layoutUnit>
+                </p:layout>
+
+
+            </p:tab>
+            <p:tab title="对外接口">
+                <div style="border-bottom: solid">
+                    <h:outputLabel style="font-size:20px">对外接口</h:outputLabel>
+                    <a class="atext" style="font-size:14px;margin-left:20px" href="../home.xhtml">返回</a>
+                </div>
+                <br/>
+                <p:layout style="min-width300px;min-height:500px;">
+                    <p:layoutUnit position="center" resizable="true" size="50%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>统计数据获取</h:outputLabel>
+                        </div>
+                        <br/>
+                        <div>
+                            <h:outputText style="padding-left:2em;" value="  这里汇聚了我们以往各个路口的车流量的统计数据，现在我们将其开放，以供各位访客使用，无论是团体科研还是个人研究，我们都希望发挥它们的最大价值。" />
+                        </div>
+                        <div>
+                            <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日数据</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日数据</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日数据</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日数据</a>
+                        </div>
+                    </p:layoutUnit>     
+                    <p:layoutUnit position="east" resizable="true" size="50%">
+                        <div style="border-bottom: solid;">
+                            <h:outputLabel>监控记录获取</h:outputLabel>
+                        </div>
+                        <br/>
+                        <div>
+                            <h:outputText style="padding-left:2em;" value="  这里汇聚了我们所监控的各个路口经筛选后的监控，现在我们将其开放，以供各位访客使用，无论是团体科研还是个人研究，我们都希望发挥它们的最大价值。" />
+                        </div>
+                        <div>
+                            <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                            <br/> <br/>
+                            <i class="fa fa-envira" aria-hidden="true"></i>
+                            <a class="a3" href="#">XXXX年XX月XX日监控</a>
+                        </div>
+
+                    </p:layoutUnit>
+                </p:layout>
+
+            </p:tab>
+        </p:tabView>
+    </h:body>
+</html>
+
