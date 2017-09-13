@@ -15,12 +15,17 @@
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
                 <title>PrimeFaces</title>
             </f:facet>
+            <f:metadata>  
+                <f:viewParam name="crossing" value="#{crossingController.selectedCrossingId}"/>   
+                <f:viewAction action="#{crossingController.selectById}"/>
+            </f:metadata> 
         </h:head>
 
         <h:body style="background-color: #dfecf1">
-
+            <p:outputLabel value="#{crossingController.current.location}"/>
             <p:layout fullPage="true" style="background-color: #dfecf1">
-                <p:layoutUnit position="north" size="98" resizable="false" gutter="0" style="background-color: #dfecf1">        
+                <p:layoutUnit position="north" size="98" resizable="false" gutter="0" style="background-color: #dfecf1">    
+                    <p:outputLabel value="#{crossingController.current.location}"/>
                     <p:button style="margin-left:10px;margin-top:10px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
                     <h:outputText style="margin-left: 550px;margin-top:10px;" id="title" class="ui-title" value="实时红绿灯"></h:outputText>      
                     <!--<div style="margin-left: -10px;margin-right:0px;margin-top:23px;background-color: #6a85b6"><h:outputLabel style="margin-left:70%" value="当前位置：" ><a class="atext1" href="../home.xhtml">首页</a>-><a class="atext" href="monitor.xhtml">监控调度与查询</a>->实时红绿灯</h:outputLabel></div>-->

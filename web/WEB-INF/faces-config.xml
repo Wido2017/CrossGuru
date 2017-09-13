@@ -10,6 +10,7 @@
         </resource-bundle>
     </application>
     <navigation-rule>
+        <redirect/>
         <from-view-id>/user/signPolice.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>success</from-outcome>

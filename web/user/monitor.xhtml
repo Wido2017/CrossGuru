@@ -4,7 +4,8 @@
 <!--路口红绿灯状态修改-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>监控查询与调度</title>
         <link rel="stylesheet" href="../resources/css/monitor.css" />
@@ -22,9 +23,10 @@
                     <h:panelGrid rowClasses="2" cellpadding="5">
                         <img src="../resources/images/1.jpg" />
                         <br/>
-                        <a href="lightChange.xhtml">
+                        <h:link outcome="lightChange.xhtml">
+                            <f:param name="crossing" value="#{item.id}"/>
                             <img src="../resources/images/play-48px.png"/>
-                        </a>
+                        </h:link>
                     </h:panelGrid>
                 </p:fieldset>
             </p:dataGrid>

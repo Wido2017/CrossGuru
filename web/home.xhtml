@@ -14,7 +14,7 @@
             .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
             .anchorBL{display:none;}
         </style>
-        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=9QnTscclSODLERsyKWqqtKQuGY3OuUFu"></script>
     </h:head>
     <h:body >
         <!--<p:layout fullPage="true" >-->
@@ -74,6 +74,60 @@
     </h:body>
     <script type="text/javascript">
         //创建和初始化地图函数：
+        var crossingCurrentFlow;
+        var map;
+
+        function getCrossingFlow() {
+            var crossingCurrentArrayStr = '${loginManger.crossingArray}';
+            if (crossingCurrentArrayStr.length !== 0) {
+                crossingCurrentFlow = eval('(' + crossingCurrentArrayStr + ')');
+                var point = new BMap.Point(116.367902, 39.963813);
+                map.centerAndZoom(point, 20);
+                document.write(crossingCurrentFlow[0].id);
+            }
+        }
+
+        function setCrossingList() {
+            // 定义一个控件类,即function
+            function ZoomControl() {
+                // 默认停靠位置和偏移量
+                this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+                this.defaultOffset = new BMap.Size(10, 10);
+            }
+
+            // 通过JavaScript的prototype属性继承于BMap.Control
+            ZoomControl.prototype = new BMap.Control();
+
+            // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+            // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+            ZoomControl.prototype.initialize = function (map) {
+                // 创建一个DOM元素
+                var div = document.createElement('div');
+                var menu=document.createElement('p:selectOneMenu');
+                menu.id="crossingMenu";
+                menu.value=""
+                // 添加文字说明
+                div.appendChild(document.createElement('p:selectOneMenu'));
+                // 设置样式
+                div.style.cursor = "pointer";
+                div.style.border = "1px solid gray";
+                div.style.backgroundColor = "white";
+                // 绑定事件,点击一次放大两级
+                div.onclick = function (e) {
+                    map.setZoom(map.getZoom() + 2);
+                }
+                // 添加DOM元素到地图中
+                map.getContainer().appendChild(div);
+                // 将DOM元素返回
+                return div;
+            }
+
+            // 创建控件
+            var myZoomCtrl = new ZoomControl();
+            // 添加到地图当中
+            map.addControl(myZoomCtrl);
+        }
+
         function changeicon1() {
             var obj = document.getElementById("icon1");
 
@@ -87,7 +141,9 @@
         function initMap() {
             createMap(116.395645, 39.929986);//创建地图
             setMapEvent();//设置地图事件
-            addMapControl();//向地图添加控件
+//            addMapControl();//向地图添加控件
+            getCrossingFlow();
+            setCrossingList();
         }
         //添加搜索区域框
         function searchMap() {
@@ -110,10 +166,10 @@
 
         //创建搜索后的地图函数：
         function createMap(x, y) {
-            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+            map = new BMap.Map("dituContent", {enableMapClick: false});//在百度地图容器中创建一个地图
             var point = new BMap.Point(x, y);//定义一个中心点坐标
             map.centerAndZoom(point, 18);//设定地图的中心点和坐标并将地图显示在地图容器中
-            window.map = map;//
+
 
         }
         //创建初始化的地图

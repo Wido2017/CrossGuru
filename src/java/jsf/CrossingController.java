@@ -21,13 +21,34 @@ import javax.faces.model.SelectItem;
 @Named("crossingController")
 @SessionScoped
 public class CrossingController implements Serializable {
-
+    private String selectedCrossingId;
     private Crossing current;
     private DataModel items = null;
     @EJB
     private sessionBean.CrossingFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+
+    public Crossing getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Crossing current) {
+        this.current = current;
+    }
+
+    public String getSelectedCrossingId() {
+        return selectedCrossingId;
+    }
+
+    public void setSelectedCrossingId(String selectedCrossingId) {
+        this.selectedCrossingId = selectedCrossingId;
+    }
+    
+    public void selectById(){
+        current=(Crossing)ejbFacade.find(selectedCrossingId);
+//        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedact",current);
+    }
 
     public CrossingController() {
     }
