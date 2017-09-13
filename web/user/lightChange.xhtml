@@ -30,9 +30,9 @@
                         <h:panelGroup id="display">
                             <p:panelGrid columns="1">
                                 <p:outputLabel value="建议（请您填写您对红绿灯调控的建议）" for="inputarea" />
-                                <p:inputTextarea id="inputarea"/>
+                                <p:inputTextarea id="inputarea" value="#{feedBackManager.feedbackString}"/>
                             </p:panelGrid>
-                            <p:commandButton value="确认" update="growl" actionListener="#{feedBackManager.buttonListener}"/>
+                            <p:commandButton value="确认" update="growl inputarea" actionListener="#{feedBackManager.buttonListener}" />
                             <p:commandButton value="取消" onclick="feedbackDialog.hide()"/>
                         </h:panelGroup>
                     </h:form>
@@ -92,7 +92,7 @@
                         <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
                             <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
                         </p:column>
-                        <p:column style="border-left: transparent;border-bottom: transparent;">
+                        <p:column>
                             <p:outputLabel id="Nsecond_Red_Up" value="#{counterView.nsecond_Red_Up}"/>    
                         </p:column>
 
