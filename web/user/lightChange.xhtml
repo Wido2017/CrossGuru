@@ -7,8 +7,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    <h:outputStylesheet name="webjars/font-awesome/4.4.0/css/font-awesome.css"/>
-    <link rel="stylesheet" href="../resources/css/lightChange.css" />
+
     <f:view contentType="text/html">
         <h:head>
             <f:facet name="first">
@@ -18,19 +17,20 @@
         </h:head>
 
         <h:body style="background-color: #dfecf1">
-
+            <h:outputStylesheet name="webjars/font-awesome/4.4.0/css/font-awesome.css"/>
+            <link rel="stylesheet" href="../resources/css/lightChange.css" />
             <p:layout fullPage="true" style="background-color: #dfecf1">
                 <p:layoutUnit position="north" size="98" resizable="false" gutter="0" style="background-color: #dfecf1">       
                     <h:form>
                         <p:button style="margin-left:10px;margin-top:10px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>   
                         <h:outputText style="margin-left: 550px;margin-top:10px;" id="title" class="ui-title" value="实时红绿灯"></h:outputText>      
                         <!--<div style="margin-left: -10px;margin-right:0px;margin-top:23px;background-color: #6a85b6"><h:outputLabel style="margin-left:70%" value="当前位置：" ><a class="atext1" href="../home.xhtml">首页</a>-><a class="atext" href="monitor.xhtml">监控调度与查询</a>->实时红绿灯</h:outputLabel></div>-->
-                        
+
                     </h:form>
                 </p:layoutUnit>
                 <p:layoutUnit position="center" style="background-color: #dfecf1">
                     <h:form>
-                        <p:panelGrid style="margin-top: 40px;margin-left: 0px;">
+                        <p:panelGrid style="margin-top: 40px;margin-left: 5%;">
                             <p:row>
                                 <p:column></p:column>
                                 <p:column colspan="3">
