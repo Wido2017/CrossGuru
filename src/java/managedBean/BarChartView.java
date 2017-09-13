@@ -72,7 +72,7 @@ public class BarChartView {
         xAxis.setLabel("路口");
 
         Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("数量(十万辆)");
+        yAxis.setLabel("数量(辆)");
         yAxis.setMin(0);
         yAxis.setMax(200);
     }

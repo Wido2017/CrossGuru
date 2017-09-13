@@ -85,7 +85,7 @@ public class LineChartView implements Serializable {
         lineModel.setShowPointLabels(true);
         lineModel.getAxes().put(AxisType.X, new CategoryAxis("时间段"));
         Axis yAxis = lineModel.getAxis(AxisType.Y);
-        yAxis.setLabel("数量(十万辆)");
+        yAxis.setLabel("数量(辆)");
         yAxis.setMin(0);
         yAxis.setMax(200);
         Axis xAxis = lineModel.getAxis(AxisType.X);
