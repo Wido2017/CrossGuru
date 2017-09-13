@@ -34,12 +34,10 @@ and open the template in the editor.
     font-weight: bold;
     font-size: 150%;
     position: absolute;
-    margin-left: 35%;
 }
 
 .ui-setlayoutColor1{
-    color: #00cc33;
-    background-color: #00cc33;
+    background-color: #dfecf1;
 }
 
 .ui-setGrid{
