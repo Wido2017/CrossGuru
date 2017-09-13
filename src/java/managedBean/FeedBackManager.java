@@ -26,6 +26,15 @@ public class FeedBackManager implements Serializable {
     String feedbackString;
     public FeedBackManager() {
     }
+
+    public void setFeedbackString(String feedbackString) {
+        this.feedbackString = feedbackString;
+    }
+
+    public String getFeedbackString() {
+        return feedbackString;
+    }
+    
     public void buttonListener(){
         addMessage("感谢您提交建议，我们会不断完善我们的系统!");
     }
