@@ -28,7 +28,7 @@ body{
     float: left;
     margin: 0px 50px;
     /*border:solid 1px black;*/
-    
+
     text-align: center;
     text-decoration: none;
 }
@@ -74,25 +74,72 @@ body{
     z-index: 9999;
 }
 
-.readMsg{
-/*    position: absolute;*/
-    top: 0px;
-    right: 10%;
+/*.readMsg{
+    position: fixed;
+    top: 70%;
+    right: 0px;
     
-/*    visibility: visible;*/
+    visibility: visible;
     z-index: 1007;
     height: 200px;
-    width: 350px;
+    width: 200px;
+}*/
+
+.ui-overlaypanel-content1 {
+    /*padding: 0.5em;*/
+    width:200px;
+    height:200px;
+/*    top: 10%;
+    right:-100%;*/
+    /*border:solid;*/
+    position: fixed;
+    border-radius:20px;
+    /*background-image: url(../images/checkbk.jpg);*/
+    /*background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);*/
+     background-repeat:no-repeat; 
+     background-size:100% 100%;
+     -moz-background-size:100% 100%;
 }
 
+.ui-overlaypanel1 {
+    /*visibility: visible;*/
+    /*padding-left: -100px;*/
+    z-index: 1011;
+    width:300px;
+    height:400px;
+    display: block;
+    top: 10%;
+    right:-100%;
+    position: fixed;
 
-.sendMsg{
-/*    position: absolute;*/
-    top: 400px;
-    right: 10%;
+}
+
+.content
+{
+    
+    border:solid;
+    width:300px;
+    height:400px;
+    /*padding-left: px;*/
+}
+/*#j_idt54 {
+    position:fixed;
+    top:10%;
+    left:1000px;
+}
+
+内联样式{
+    left:1000px;
+}*/
+
+
+/*.sendMsg{
+    position: absolute;
+    top: 85%;
+    right: 0px;
     z-index: 1007;
     width: 350px;
-}
+}*/
 
 
 .atext
