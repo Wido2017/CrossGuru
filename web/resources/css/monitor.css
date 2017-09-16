@@ -7,7 +7,17 @@ and open the template in the editor.
     Created on : 2017-7-24, 20:39:01
     Author     : lenovo
 */
+.atext2
+{
+    text-decoration: none;
+    color:black;
+}
 
+.atext2:hover
+{
+    text-decoration: none;
+    color:red;
+}
 .header1
 {
 /*    display: block;

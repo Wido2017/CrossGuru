@@ -10,7 +10,8 @@
         </resource-bundle>
     </application>
     <navigation-rule>
-        <from-view-id>/user/signPolice.xhtml</from-view-id>
+        <redirect/>
+<!--        <from-view-id>/user/signPolice.xhtml</from-view-id>-->
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
@@ -43,6 +44,35 @@
         <navigation-case>
             <from-outcome>Created</from-outcome>
             <to-view-id>/administrator/signAdmin.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/home.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ok</from-outcome>
+            <to-view-id>/user/statictic.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ok_jiankong</from-outcome>
+            <to-view-id>/user/monitor.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/administrator/userAdmin.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-view-id>/home.xhtml</from-view-id>
+            <from-outcome>setup</from-outcome>
+            <to-view-id>/Setup/setup.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>
