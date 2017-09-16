@@ -14,9 +14,14 @@
                 <title>监控查询与调度</title>
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
             </f:facet>
+            <f:metadata>  
+                <f:viewParam name="crossing" value="#{crossingController.selectedCrossingId}"/>   
+                <f:viewAction action="#{crossingController.selectById}"/>
+            </f:metadata> 
         </h:head>
 
         <h:body style="background-color: #dfecf1">
+
             <h:outputStylesheet name="webjars/font-awesome/4.4.0/css/font-awesome.css"/>
             <link rel="stylesheet" href="../resources/css/lightChange.css" />
             <h:form>
@@ -35,6 +40,7 @@
                             <p:commandButton value="确认" update="growl inputarea" actionListener="#{feedBackManager.buttonListener}" />
                             <p:commandButton value="取消" onclick="feedbackDialog.hide()"/>
                         </h:panelGroup>
+
                     </h:form>
                 </p:dialog>
             </h:form>

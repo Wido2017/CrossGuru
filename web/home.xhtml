@@ -15,14 +15,17 @@
             .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
             .anchorBL{display:none;}
         </style>
+
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&amp;ak=9QnTscclSODLERsyKWqqtKQuGY3OuUFu"></script>
+
         <link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
         <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+
     </h:head>
     <h:body>
         <!--<p:layout fullPage="true" >-->
         <!--<p:layoutUnit position="north" size="159" resizable="false" gutter="0" style="color:blue;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" styleClass="background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);">-->        
-        <div style="height:140px;margin-top: -20px;margin-left:-179px;margin-right:-179px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+        <div style="height:140px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
             <h:form id="homeForm">
                 <p:growl id="info" showDetail="true" />
 
@@ -43,11 +46,13 @@
                         <br/>
                         <h:outputText value="记录查询" style="font-size: 15px;color: black"></h:outputText>
                     </p:commandLink>
+
                     <p:commandLink styleClass="iconbt" action="#{loginManger.service}" update="info">
                         <p:graphicImage value="resources/images/set.png" height="70px" width="70px" style="margin-top:38px"/>
                         <br/>
                         <h:outputText value="服务支持" style="font-size: 15px;color: black"></h:outputText>
                     </p:commandLink>
+
                 </div>
                 <a class="atext" href="aboutus.xhtml" style="font-size:15px;margin-left:100px;color:white">关于我们</a>
                 <div style="position: fixed;top:5px;left:1050px;right:0px" >
@@ -58,7 +63,7 @@
                         <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
                         <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
                         <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
-                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
+                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" action="#{loginManger.policeLogoutListener}" onclick="logout()"></p:commandButton>
                     </p:overlayPanel>
                 </div>
             </h:form>
@@ -91,23 +96,110 @@
         </div>        
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
-        <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
-        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
-            <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
+        <div style="float:right;width: 100%;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
+        <div style="width: 100%">
+            <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 90%"/>
+            <p:commandButton value="生命关怀通道" onclick="searchRoute()"></p:commandButton>
         </div>
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
-        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent" ></div><!--创建地图容器-->
+        <div style="height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+
         <!--</p:layoutUnit>-->
 
         <!--</p:layout>-->
 
 
-
+       
 
     </h:body>
     <script type="text/javascript">
+//        <![CDATA[
         //创建和初始化地图函数：
+        var crossingArray;
+        var map;
+        var currentCross;
+        
+        function refresh(){
+            
+            getCrossingFlow();
+            alert(crossingArray[0].location);
+        }
+        
+        function logout(){
+            crossingArray=null;
+            currentCross=null;
+            select=document.getElementById("crossMenu");
+            select.style.display="none";
+        }
+
+        function getCrossingFlow() {
+            var crossingArrayStr = '${loginManger.crossingArray}';
+            if (crossingArrayStr.length !== 0) {
+                crossingArray = eval('(' + crossingArrayStr + ')');   
+            }
+        }
+
+        function setCrossingList() {
+            // 定义一个控件类,即function
+            function ZoomControl() {
+                // 默认停靠位置和偏移量
+                this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+                this.defaultOffset = new BMap.Size(10, 10);
+            }
+
+            // 通过JavaScript的prototype属性继承于BMap.Control
+            ZoomControl.prototype = new BMap.Control();
+
+            // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+            // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+            ZoomControl.prototype.initialize = function (map) {
+                // 创建一个DOM元素
+                var div = document.createElement('div');
+                div.id = "menudiv";
+                var select = document.createElement('select');
+                select.id="crossMenu";
+                var number = crossingArray.length;
+                for (var i = 0; i < number; i++)
+                {
+                    var option = document.createElement('option');
+                    option.text = crossingArray[i].location;
+                    try {
+                        select.add(option);
+//                        alert("成功");
+                    } catch (e) {
+                        select.add(option);
+                    }
+                }
+
+                select.onchange = function () {
+                    var i = select.selectedIndex;
+                    currentCross = crossingArray[i];                   
+                    
+                    map.centerAndZoom(new BMap.Point(currentCross.coordx, currentCross.coordy), 20);
+                };
+                currentCross = crossingArray[0];
+                map.centerAndZoom(new BMap.Point(currentCross.coordx, currentCross.coordy), 20);
+
+                // 添加文字说明
+                div.appendChild(select);
+                // 设置样式
+                div.style.border = "1px solid gray";
+                div.style.backgroundColor = "white";
+                // 绑定事件,点击一次放大两级
+
+                // 添加DOM元素到地图中
+                map.getContainer().appendChild(div);
+                // 将DOM元素返回
+                return div;
+            }
+
+            // 创建控件
+            var myZoomCtrl = new ZoomControl();
+            // 添加到地图当中
+            map.addControl(myZoomCtrl);
+        }
+
         function changeicon1() {
             var obj = document.getElementById("icon1");
 
@@ -121,7 +213,9 @@
         function initMap() {
             createMap(116.395645, 39.929986);//创建地图
             setMapEvent();//设置地图事件
-            addMapControl();//向地图添加控件
+//            addMapControl();//向地图添加控件
+            getCrossingFlow();
+            setCrossingList();
         }
         //添加搜索区域框
         function searchMap() {
@@ -188,10 +282,10 @@
 
         //创建搜索后的地图函数：
         function createMap(x, y) {
-            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+            map = new BMap.Map("dituContent", {enableMapClick: false});//在百度地图容器中创建一个地图
             var point = new BMap.Point(x, y);//定义一个中心点坐标
             map.centerAndZoom(point, 18);//设定地图的中心点和坐标并将地图显示在地图容器中
-            window.map = map;//
+
 
         }
         //创建初始化的地图
@@ -233,5 +327,6 @@
         }
 
         initMap();//创建和初始化地图
+//        ]]>
     </script>
 </html>

@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -35,6 +36,21 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Crossing.findById", query = "SELECT c FROM Crossing c WHERE c.id = :id")
     , @NamedQuery(name = "Crossing.findByLocation", query = "SELECT c FROM Crossing c WHERE c.location = :location")})
 public class Crossing implements Serializable {
+
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "coordx")
+    private BigDecimal coordx;
+    @Column(name = "coordy")
+    private BigDecimal coordy;
+
+    @Column(name = "currentFlow_W")
+    private Integer currentFlowW;
+    @Column(name = "currentFlow_S")
+    private Integer currentFlowS;
+    @Column(name = "currentFlow_N")
+    private Integer currentFlowN;
+    @Column(name = "currentFlow_E")
+    private Integer currentFlowE;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -210,6 +226,54 @@ public class Crossing implements Serializable {
     @Override
     public String toString() {
         return "entity.Crossing[ id=" + id + " ]";
+    }
+
+    public Integer getCurrentFlowW() {
+        return currentFlowW;
+    }
+
+    public void setCurrentFlowW(Integer currentFlowW) {
+        this.currentFlowW = currentFlowW;
+    }
+
+    public Integer getCurrentFlowS() {
+        return currentFlowS;
+    }
+
+    public void setCurrentFlowS(Integer currentFlowS) {
+        this.currentFlowS = currentFlowS;
+    }
+
+    public Integer getCurrentFlowN() {
+        return currentFlowN;
+    }
+
+    public void setCurrentFlowN(Integer currentFlowN) {
+        this.currentFlowN = currentFlowN;
+    }
+
+    public Integer getCurrentFlowE() {
+        return currentFlowE;
+    }
+
+    public void setCurrentFlowE(Integer currentFlowE) {
+        this.currentFlowE = currentFlowE;
+    }
+
+    public BigDecimal getCoordx() {
+        return coordx;
+    }
+
+    public void setCoordx(BigDecimal coordx) {
+        this.coordx = coordx;
+    }
+
+    public BigDecimal getCoordy() {
+        return coordy;
+    }
+
+    public void setCoordy(BigDecimal coordy) {
+        this.coordy = coordy;
     }
     
 }

@@ -10,7 +10,8 @@
         </resource-bundle>
     </application>
     <navigation-rule>
-        <from-view-id>/user/signPolice.xhtml</from-view-id>
+        <redirect/>
+<!--        <from-view-id>/user/signPolice.xhtml</from-view-id>-->
         <navigation-case>
             <from-outcome>success</from-outcome>
             <to-view-id>/home.xhtml</to-view-id>
