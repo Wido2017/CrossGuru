@@ -8,6 +8,7 @@ package managedBean;
 import entity.Crossing;
 import entity.Police;
 import entity.TrafficFlow;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
@@ -18,7 +19,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -34,7 +35,8 @@ import org.primefaces.model.chart.ChartSeries;
  */
 @Named(value = "barChartView")
 @ManagedBean
-public class BarChartView {
+@SessionScoped
+public class BarChartView implements Serializable{
 
     /**
      * Creates a new instance of BarChartView
@@ -72,7 +74,7 @@ public class BarChartView {
         xAxis.setLabel("路口");
 
         Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("数量(十万辆)");
+        yAxis.setLabel("数量(辆)");
         yAxis.setMin(0);
         yAxis.setMax(200);
     }

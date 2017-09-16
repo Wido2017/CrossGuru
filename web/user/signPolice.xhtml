@@ -11,7 +11,7 @@
         <h:head>          
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>PrimeFaces</title>
+                <title>交警登录</title>
             </f:facet>
             <link href="../resources/css/login.css"
                   rel= "stylesheet" type="text/css"></link>  
@@ -42,6 +42,7 @@
                     <p:tabView>
                         <p:tab title="登录">
                             <h:form id="form1">
+                                
                                 <div class="name">
                                     <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
                                     <p:inputText id="name_" style="margin-left:20px" value="#{policeController.ID}" placeholder="输入账号"></p:inputText>
@@ -66,6 +67,7 @@
                         </p:tab>
                         <p:tab title="注册">
                             <h:form id="form2">
+                                <p:growl id="msg" showDetail="true"/>
                                 <h:outputLabel>姓名</h:outputLabel>
                                 <p:inputText id="name" value="#{policeController.selected.name}" style="margin-left: 10px" validatorMessage="请不要超过X字">
                                     <f:validateLength maximum="20"/>
@@ -111,7 +113,7 @@
                                 <p:selectOneMenu id="adminimenu"  required="true" value="#{policeController.selected.administratorId}" style="margin-left: 10px">                               
                                     <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"/>
                                 </p:selectOneMenu><br /><br/>
-                                <p:commandButton value="注册" id="nonAj3ax" action="#{policeController.create}" type="submit" style="margin-top: 20px;" />
+                                <p:commandButton value="注册" id="nonAj3ax" action="#{policeController.create}"  update="msg" type="submit" style="margin-top: 20px;" />
                                 <br/>
                                 <br/>
                                 <a class="about" style="font-size: 13px;font-family:STFangsong;margin-left:100px" href="#">关于</a>

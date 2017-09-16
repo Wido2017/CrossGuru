@@ -1,0 +1,78 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-9-13, 11:33:29
+    Author     : Nicole Yang
+*/
+
+.title
+{
+    border-bottom-color:black;
+    border:solid;
+    color:red;
+}
+.atext
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext:hover
+{
+    text-decoration: none;
+    color:red;
+}
+.a1 
+{
+    color:blue;
+}
+
+.a1:hover
+{
+    color:blue;
+}
+
+.a2 
+{
+    color:blue;
+}
+
+.a2:hover
+{
+    color:blue;
+}
+.a3 
+{
+    color:blue;
+}
+
+.a3:hover
+{
+    color:red;
+}
+
+.ui-widget-content
+{
+    background: #FAFAFA;
+}
+
+:not(.ui-ribbon).ui-tabs .ui-tabs-nav {
+    background-color: #6495ED;
+    margin-left: -10px;
+    margin-right:-10px;
+    margin-top:-10px;
+    height:60px;
+    padding-bottom: 0px;
+    
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+    border-bottom: 0;
+    top: 22px;
+    left: 20px;
+    
+}
+
