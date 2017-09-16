@@ -19,7 +19,7 @@
     <h:body >
         <!--<p:layout fullPage="true" >-->
         <!--<p:layoutUnit position="north" size="159" resizable="false" gutter="0" style="color:blue;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" styleClass="background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);">-->        
-        <div style="height:140px;margin-top: -20px;margin-left:-179px;margin-right:-179px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+        <div style="height:140px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
             <h:form id="homeForm">
                 <p:growl id="info" showDetail="true" />
 
@@ -40,6 +40,7 @@
                         <br/>
                         <h:outputText value="记录查询" style="font-size: 15px;color: black"></h:outputText>
                     </p:commandLink>
+                    <p:commandButton value="刷新" onclick="refresh()" action="${crossingController.doRefresh}"></p:commandButton>
                     <!--<h:outputLabel value="当前位置：首页" ></h:outputLabel>-->
                 </div>
                 <div style="position: fixed;top:5px;left:1050px;right:0px" >
@@ -50,40 +51,53 @@
                         <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
                         <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
                         <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
-                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
+                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" action="#{loginManger.policeLogoutListener}" onclick="logout()"></p:commandButton>
                     </p:overlayPanel>
                 </div>
             </h:form>
         </div>        
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
-        <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
-        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
+        <div style="float:right;width: 100%;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
+        <div style="width: 100%">
             <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 99%"/>
+            <!--<p:commandButton value="生命关怀通道" onclick="searchRoute()"></p:commandButton>-->
         </div>
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
-        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
+        <div style="height:515px;border:#ccc solid 1px;" id="dituContent"></div><!--创建地图容器-->
         <!--</p:layoutUnit>-->
 
         <!--</p:layout>-->
 
 
-
+       
 
     </h:body>
     <script type="text/javascript">
+//        <![CDATA[
         //创建和初始化地图函数：
-        var crossingCurrentFlow;
+        var crossingArray;
         var map;
+        var currentCross;
+        
+        function refresh(){
+            
+            getCrossingFlow();
+            alert(crossingArray[0].location);
+        }
+        
+        function logout(){
+            crossingArray=null;
+            currentCross=null;
+            select=document.getElementById("crossMenu");
+            select.style.display="none";
+        }
 
         function getCrossingFlow() {
-            var crossingCurrentArrayStr = '${loginManger.crossingArray}';
-            if (crossingCurrentArrayStr.length !== 0) {
-                crossingCurrentFlow = eval('(' + crossingCurrentArrayStr + ')');
-                var point = new BMap.Point(116.367902, 39.963813);
-                map.centerAndZoom(point, 20);
-                document.write(crossingCurrentFlow[0].id);
+            var crossingArrayStr = '${loginManger.crossingArray}';
+            if (crossingArrayStr.length !== 0) {
+                crossingArray = eval('(' + crossingArrayStr + ')');   
             }
         }
 
@@ -103,19 +117,38 @@
             ZoomControl.prototype.initialize = function (map) {
                 // 创建一个DOM元素
                 var div = document.createElement('div');
-                var menu=document.createElement('p:selectOneMenu');
-                menu.id="crossingMenu";
-                menu.value=""
+                div.id = "menudiv";
+                var select = document.createElement('select');
+                select.id="crossMenu";
+                var number = crossingArray.length;
+                for (var i = 0; i < number; i++)
+                {
+                    var option = document.createElement('option');
+                    option.text = crossingArray[i].location;
+                    try {
+                        select.add(option);
+//                        alert("成功");
+                    } catch (e) {
+                        select.add(option);
+                    }
+                }
+
+                select.onchange = function () {
+                    var i = select.selectedIndex;
+                    currentCross = crossingArray[i];                   
+                    
+                    map.centerAndZoom(new BMap.Point(currentCross.coordx, currentCross.coordy), 20);
+                };
+                currentCross = crossingArray[0];
+                map.centerAndZoom(new BMap.Point(currentCross.coordx, currentCross.coordy), 20);
+
                 // 添加文字说明
-                div.appendChild(document.createElement('p:selectOneMenu'));
+                div.appendChild(select);
                 // 设置样式
-                div.style.cursor = "pointer";
                 div.style.border = "1px solid gray";
                 div.style.backgroundColor = "white";
                 // 绑定事件,点击一次放大两级
-                div.onclick = function (e) {
-                    map.setZoom(map.getZoom() + 2);
-                }
+
                 // 添加DOM元素到地图中
                 map.getContainer().appendChild(div);
                 // 将DOM元素返回
@@ -200,5 +233,6 @@
 
 
         initMap();//创建和初始化地图
+//        ]]>
     </script>
 </html>

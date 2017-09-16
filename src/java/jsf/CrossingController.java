@@ -6,6 +6,7 @@ import jsf.util.PaginationHelper;
 import sessionBean.CrossingFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -29,6 +30,19 @@ public class CrossingController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
+    public void doRefresh(){
+//        if(loginPolice==null)return;
+//        getCrossingList();
+//        if(crossingList.isEmpty())
+//            return;
+        List<Crossing> crossings=ejbFacade.findAll();
+        current=ejbFacade.find("20170810");
+        ejbFacade.refresh(current);
+        for (Crossing crossing : crossings) {
+             ejbFacade.refresh(crossing);
+        }       
+    }
+    
     public Crossing getCurrent() {
         return current;
     }
