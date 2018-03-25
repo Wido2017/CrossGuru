@@ -38,26 +38,29 @@
                             <p:ajax  event="change" listener="#{selectManager.Date}" update="lineChart barChart" />
                         </p:calendar>
                     </h:panelGrid>
-                    <h:panelGroup  id="lineChart" class="ui-setGroup1" style="margin-left:2%;;margin-top:4% ">
-                        <h:panelGrid columns="2" cellpadding="5">
+                    <h:panelGroup  id="lineChart" class="ui-setGroup1" style="margin-left:1%;;margin-top:4% ">
+                        <h:panelGrid columns="3" cellpadding="5">
                             <img src="../resources/images/clock.png" class="ui-setimg"/> 
-                            <h:outputText class="ui-setLabel" value="时刻:"/>                       
+                            <h:outputText class="ui-setLabel" value="时刻:（实际车流量）"/>   
+                            <h:panelGroup id="shikechoose" style="margin-left:2%;;margin-top:4% ">
+                                <p:selectOneMenu id="shiduan" value="#{shiduanManager.selectHour}" rendered="#{shiduanManager.minute}" effect="fold">
+                                    <f:selectItems value="#{shiduanManager.hours}"/>
+                                    <p:ajax event="itemSelect" listener="#{shiduanManager.selectHourEvent}" update="lineChart" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
                         </h:panelGrid>
-                        <p:selectOneMenu id="shiduan" value="#{shiduanManager.selectHour}" rendered="#{shiduanManager.minute}" effect="fold">
-                            <f:selectItems value="#{shiduanManager.hours}"/>
-                            <p:ajax event="itemSelect" listener="#{shiduanManager.selectHourEvent}" update="lineChart" />
-                        </p:selectOneMenu>
                         <p:chart  type="line" model="#{lineChartView.lineModel}" style="height:450px;width: 650px;" responsive="true"/>
                     </h:panelGroup>
                     <h:panelGroup id="barChart" class="ui-setGroup2" style="margin-left:50%;;margin-top:4%">
                         <h:panelGrid columns="2" cellpadding="5">
                             <img src="../resources/images/location.png" class="ui-setimg"/>
-                            <h:outputText class="ui-setLabel" value="路段:"/>
+                            <h:outputText class="ui-setLabel" value="路段:(平均车流量)"/>
                         </h:panelGrid>
-                        <p:chart type="bar" model="#{barChartView.barModel}" style="height:450px;width: 650px;" responsive="true">
+                        <p:chart type="bar" model="#{barChartView.barModel}" style="height:465px;width: 650px;" responsive="true">
                             <p:ajax event="itemSelect" listener="#{barChartView.itemSelect}" update="growl lineChart" />
                         </p:chart>
                     </h:panelGroup>
+                    
                 </h:form>
             </div>
         </h:body>

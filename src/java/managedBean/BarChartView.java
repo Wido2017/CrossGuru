@@ -76,7 +76,7 @@ public class BarChartView implements Serializable{
         Axis yAxis = barModel.getAxis(AxisType.Y);
         yAxis.setLabel("数量(辆)");
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(2000);
     }
 
     private BarChartModel initBarModel() {

@@ -85,7 +85,7 @@ public class LineChartView implements Serializable {
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setLabel("数量(辆)");
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(2000);
         Axis xAxis = lineModel.getAxis(AxisType.X);
         xAxis.setTickAngle(-30);
     }
