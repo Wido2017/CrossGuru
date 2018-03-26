@@ -1,0 +1,98 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-9-13, 11:33:29
+    Author     : Nicole Yang
+*/
+
+.title
+{
+    border-bottom-color:black;
+    border:solid;
+    color:red;
+}
+.atext
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext:hover
+{
+    text-decoration: none;
+    color:red;
+}
+
+.a1 
+{
+    color:blue;
+}
+
+.a1:hover
+{
+    color:blue;
+}
+
+.a2 
+{
+    color:blue;
+}
+
+.a2:hover
+{
+    color:blue;
+}
+.a3 
+{
+    color:blue;
+}
+
+.a3:hover
+{
+    color:red;
+}
+
+.ui-widget-content
+{
+    /*background: #FAFAFA;*/
+    /*background-image: url(../images/setupbk.png);*/
+    /*background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;*/
+    background-color: rgba(230,230,250,0.6);
+}
+.button{
+    color:rgb(0, 0, 0);font-size:14px;padding-top:5px;padding-bottom:5px;padding-left:13px;padding-right:13px;border-width:2px;border-color:rgb(255, 222, 186);border-style:solid;border-radius:11px;background-color:rgb(246, 147, 34);
+}
+.button:hover
+{color:#ffffff;background-color:#78c300;border-color:#c5e591;
+}
+.ui-widget-content1{
+    /*background-image: url(../images/setupbk.png);*/
+        background-image: url(../images/666.jpg);
+
+    background-color:#56C1B4;;
+    background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+
+}
+
+:not(.ui-ribbon).ui-tabs .ui-tabs-nav {
+    background-color: rgba(223,236,241,0.6);
+    background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+    /*background-image: url(../images/555.jpg);*/
+    margin-left: -10px;
+    margin-right:-10px;
+    margin-top:-10px;
+    height:60px;
+    padding-bottom: 0px;
+
+}
+
+.ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+    border-bottom: 0;
+    top: 22px;
+    left: 20px;
+
+}
+

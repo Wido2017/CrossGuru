@@ -1,0 +1,297 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-7-21, 22:02:58
+    Author     : Nicole Yang
+*/
+/*
+.about .register
+{
+    text-decoration:underline;
+}
+
+
+.about:hover .register:hover
+{
+    text-decoration: underline;
+    color:red;
+}*/
+
+body{
+    background-color: rgb(228,241,245);
+    /*background-image: url(../images/封面2.png);*/
+    /*background-color: red;*/
+}
+a
+{
+    text-decoration:underline;
+}
+
+a:hover
+{
+    text-decoration: underline;
+    color:red;
+}
+
+
+/*.name_icon:before
+{
+    content: url(../images/账号.png);
+    border: solid;
+    z-index: 10;
+
+}
+
+.name_icon
+{
+    display: block;
+    position: absolute;
+    margin: -5px 2px 0px 0px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    text-align: center;
+    border: solid;
+    z-index: 10;
+
+
+}
+
+.pwd_icon
+{
+    display: block;
+    position: absolute;
+    margin: -3px 2px 0px 0px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    text-align: center;
+    border: solid;
+    z-index: 10;
+
+}
+.pwd_icon:before
+{
+    content: url(../images/密码.png);
+    border: solid;
+    z-index: 10;
+}*/
+
+.btn
+{
+    margin-left:70px;
+    margin-top:10px;
+}
+
+.login_box
+{
+    ;
+    display:block;
+    margin-left:30%;
+    margin-top:26%;
+    margin-bottom: 0%;
+    /*position:relative;*/
+    margin-right:9%;
+    /*border:solid;*/
+    background-color: rgb(240,246,247);
+
+
+
+}
+
+.text_
+{
+    ;
+    display:block;
+    margin-left:40%;
+    margin-top:25%;
+    position:absolute;
+    margin-right:6%;
+    /*border:solid;*/
+}
+
+.index_right_form
+{
+    /*    position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        width:50%;*/
+    position:fixed;
+    right:10%;
+    left:60%;
+    top:20%;
+    width:400px;
+    -moz-box-shadow:8px 5px 16px #332A2E; -webkit-box-shadow:8px 5px 16px #332A2E; box-shadow:8px 5px 16px #332A2E;
+    /*border:solid;*/
+}
+
+.index_right
+{
+    position:fixed;
+    right:10%;
+    left:60%;
+    top:15%;
+    width:400px;
+    height:300px;
+}
+.index_left
+{
+    /*    margin-right:50%;
+      ;
+        margin-bottom:0px;
+        display:block;*/
+    position:fixed;
+    left:0;
+    right:50%;
+    /*width:600px;*/
+    /*border:solid;*/
+    /*bottom:0;*/
+    top:0;
+
+
+
+}
+
+.index_bottom
+{
+    position:fixed;
+    left:0;
+    right:0;
+    top:60%;
+    bottom:0;
+    /*border:solid;*/
+    /*position:relative;*/
+    z-index: -1;
+
+}
+
+/*.name
+{
+    margin-right:10px;
+    display:block;
+}
+
+.pwd
+{
+    margin-right:10px;
+}*/
+
+.about
+{
+    margin-left:50%;
+    margin-right:20px;;
+}
+/*
+#zhinenengtiaokong
+{
+    margin-top:10px;
+    margin-left:30px;
+}
+
+#shujushishifankui
+{
+    margin-top:10px;
+    margin-left:30px;
+
+}
+.zhinengtiaokong_icon:before
+{
+    content: url(../images/智能.png);
+    content:"hhh";
+    display: inline-block;
+    border: solid;
+    z-index: 10;
+    background-image: url(../images/智能.png);
+
+}
+
+.zhinengtiaokong_icon
+{
+    display: block;
+    position: absolute;
+    margin: -17px 2px 4px -19px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    text-align: center;
+    border: solid;
+    background-image: url(../images/智能.png);
+    z-index: 10;
+
+}
+.shujushishifankui_icon
+{
+    display: block;
+    position: absolute;
+    margin: -17px 2px 4px -19px;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    text-align: center;
+
+}
+.shujushishifankui_icon:before
+{
+    content: url(../images/数据.png);
+    box-sizing: border-box;
+        width:20px; height:0px; 
+    background: url(../images/数据.png) no-repeat center; 
+
+
+}*/
+
+#new_username {
+
+}
+
+.field_help {
+    overflow: hidden;
+    transition:all .25s ease-in-out 0s;
+    display:block;
+    opacity:0;
+    /*max-height: 0;*/
+
+}
+
+.r_name {
+    clear:both;
+    overflow:visible;
+}
+
+.field_wrapper
+{
+    margin:0;
+    clear:both;
+    position:relative;
+    overflow: visible;
+}
+
+.c-showPassword--showIcon::before {
+    font-family: 'freddicons';
+    speak: none;
+    vertical-align: top;
+    display: inline-block;
+    line-height: unset;
+    font-weight: normal !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    font-size: 20px !important;
+    -webkit-font-smoothing: antialiased;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    content: '\e054';
+    position: absolute;
+    left: 0;
+}
+
+/*
+.watermark
+{
+    font-size: 1px;
+}*/

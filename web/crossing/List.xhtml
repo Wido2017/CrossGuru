@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCrossingTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListCrossingEmpty}" rendered="#{crossingController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{crossingController.items.rowCount > 0}">
+                    <h:outputText value="#{crossingController.pagination.pageFirstItem + 1}..#{crossingController.pagination.pageLastItem + 1}/#{crossingController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{crossingController.previous}" value="#{bundle.Previous} #{crossingController.pagination.pageSize}" rendered="#{crossingController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{crossingController.next}" value="#{bundle.Next} #{crossingController.pagination.pageSize}" rendered="#{crossingController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{crossingController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_id}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_location}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.location}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_areaId}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.areaId}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_cameraidW}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cameraidW}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_cameraidS}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cameraidS}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_cameraidN}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cameraidN}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_cameraidE}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cameraidE}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_trafficLightidW}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.trafficLightidW}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_trafficLightidS}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.trafficLightidS}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_trafficLightidN}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.trafficLightidN}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCrossingTitle_trafficLightidE}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.trafficLightidE}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{crossingController.prepareView}" value="#{bundle.ListCrossingViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{crossingController.prepareEdit}" value="#{bundle.ListCrossingEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{crossingController.destroy}" value="#{bundle.ListCrossingDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{crossingController.prepareCreate}" value="#{bundle.ListCrossingCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListCrossingIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditAdministratorTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditAdministratorLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{administratorController.selected.id}" title="#{bundle.EditAdministratorTitle_id}" required="true" requiredMessage="#{bundle.EditAdministratorRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditAdministratorLabel_password}" for="password" />
+                    <h:inputText id="password" value="#{administratorController.selected.password}" title="#{bundle.EditAdministratorTitle_password}" required="true" requiredMessage="#{bundle.EditAdministratorRequiredMessage_password}"/>
+                    <h:outputLabel value="#{bundle.EditAdministratorLabel_name}" for="name" />
+                    <h:inputText id="name" value="#{administratorController.selected.name}" title="#{bundle.EditAdministratorTitle_name}" required="true" requiredMessage="#{bundle.EditAdministratorRequiredMessage_name}"/>
+                    <h:outputLabel value="#{bundle.EditAdministratorLabel_sex}" for="sex" />
+                    <h:inputText id="sex" value="#{administratorController.selected.sex}" title="#{bundle.EditAdministratorTitle_sex}" required="true" requiredMessage="#{bundle.EditAdministratorRequiredMessage_sex}"/>
+                    <h:outputLabel value="#{bundle.EditAdministratorLabel_tel}" for="tel" />
+                    <h:inputText id="tel" value="#{administratorController.selected.tel}" title="#{bundle.EditAdministratorTitle_tel}" required="true" requiredMessage="#{bundle.EditAdministratorRequiredMessage_tel}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{administratorController.update}" value="#{bundle.EditAdministratorSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditAdministratorViewLink}"/>
+                <br />
+                <h:commandLink action="#{administratorController.prepareList}" value="#{bundle.EditAdministratorShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditAdministratorIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

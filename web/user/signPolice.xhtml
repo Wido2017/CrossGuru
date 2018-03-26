@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!--普通用户（交警）登录注册-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>          
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>交警登录</title>
+            </f:facet>
+            <link href="../resources/css/login.css"
+                  rel= "stylesheet" type="text/css"></link>  
+        </h:head>
+
+        <h:body style="background-image: url(../resources/images/封面.png);background-size:100% 650px;background-repeat: no-repeat;z-index: -3">
+            <div class="index_left">
+                <div class="text_">
+                    <div id="tip">
+                        <h:outputLabel style="font-size: 30px">CrossGuru,</h:outputLabel><br/>
+                        <h:outputLabel style="font-size: 30px">值得您放心的路口专家~</h:outputLabel>
+                    </div>
+                    <div id="zhinenengtiaokong" style="margin-top:20px;margin-left: 50px;">
+                        <!--<i class="zhinengtiaokong_icon"></i>-->
+                        <p:graphicImage value="../resources/images/智能.png" height="40px" width="40px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                        <h:outputLabel style="margin-top:-100px;margin-left: 20px;">智能调控与分析</h:outputLabel>
+                    </div>
+                    <div id="shujushishifankui" style="margin-top:20px;margin-left: 50px;">
+                        <!--<i class="shujushishifankui_icon"></i>-->
+                        <p:graphicImage value="../resources/images/数据.png" height="40px" width="40px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                        <h:outputLabel style="margin-top:-100px;margin-left: 20px;">数据实时反馈</h:outputLabel>
+                    </div>
+                </div>
+
+            </div>
+            <div class="index_right">
+                <div class="index_right_form">
+                    <p:tabView>
+                        <p:tab title="登录">
+                            <h:form id="form1">
+                                
+                                <div class="name">
+                                    <p:graphicImage id="usrlk" value="../resources/images/账号.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                    <p:inputText id="name_" style="margin-left:20px" value="#{policeController.ID}" placeholder="输入账号"></p:inputText>
+
+                                </div>
+                                <br/>
+                                <div class="pwd">
+                                    <p:graphicImage value="../resources/images/密码.png" height="30px" width="30px" styleClass="usricon" style="vertical-align:middle;display: inline-block;"/>
+                                    <p:password id="nonfeedback"  style="margin-left:20px;margin-right: 3px" value="#{policeController.pwd}" placeholder="输入5-20位密码">
+                                    </p:password>
+                                </div>
+                                <h:outputText class="error_output" value="账号密码不一致或无注册记录！" rendered="#{policeController.error_ eq 'error'}"></h:outputText>
+                                <br/>
+                                <p:commandButton value="登录" id="nonAjax" action="#{policeController.processLogin}" ajax="false" style="margin-top: 20px;margin-left:0px" type="submit"/>
+
+                                <br/>
+                                <br/>
+                                <a class="about" href="../aboutus.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left:100px">关于</a>
+                                <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                                <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                            </h:form>
+                        </p:tab>
+                        <p:tab title="注册">
+                            <h:form id="form2">
+                                <p:growl id="msg" showDetail="true"/>
+                                <h:outputLabel>姓名</h:outputLabel>
+                                <p:inputText id="name" value="#{policeController.selected.name}" style="margin-left: 10px" validatorMessage="请不要超过X字">
+                                    <f:validateLength maximum="20"/>
+                                    <p:ajax update="msgname" event="keyup" />
+                                </p:inputText>
+                                <p:watermark for="name" value="支持中英文" /> 
+                                <p:message for="name" id="msgname" display="text" />
+                                <br/>
+                                <h:outputLabel>性别</h:outputLabel>
+                                <h:selectOneMenu id="sexmenu" required="true" value="#{policeController.selected.sex}" style="margin-left: 10px">                               
+                                    <f:selectItem itemValue="男" itemLabel="男" />
+                                    <f:selectItem itemValue="女" itemLabel="女" />
+                                </h:selectOneMenu><br /><br/>
+                                <h:outputLabel>密码</h:outputLabel>
+                                <p:password id="mima" style="margin-left: 10px" value="#{policeController.selected.password}" validatorMessage="密码需为5-20位">
+                                    <f:validateLength minimum="5" maximum="20"/>
+                                    <p:ajax update="msgLastname" event="keyup" />
+                                </p:password>
+                                <p:watermark class="watermark" for="mima" value="5-20位密码" />
+                                <p:message for="mima" id="msgLastname" display="text" />
+                                <br/>
+                                <h:outputLabel>编号</h:outputLabel>
+                                <p:inputText id="id" style="margin-left: 10px" value="#{policeController.selected.id}" validatorMessage="编号需为">
+                                    <f:validateLength minimum="5" maximum="20"/>
+                                    <p:ajax update="msgID" event="keyup" />
+                                </p:inputText>
+                                <p:watermark class="watermark" for="id" value="身份编号" />
+                                <p:message for="id" id="msgID" display="text" />
+                                <br/>
+                                <h:outputLabel>手机号码</h:outputLabel>
+<!--                                <p:inputText class="phone" value="#{policeController.selected.tel}" required="true" style="margin-left: 10px" validatorMessage="请输入正确格式的手机号">
+                                    <f:validateLength minimum="5" maximum="20"/>
+                                    <p:ajax update="msgPhone" event="keyup" />
+                                </p:inputText>
+                                <p:message for="phone" id="msgPhone" display="text" />-->
+                                <p:inputMask id="phone" value="#{policeController.selected.tel}" mask="99999999999"/>
+                                <br/><br/>
+                                <h:outputLabel>管辖片区</h:outputLabel>                            
+                                <p:selectOneMenu id="areamenu" value="#{policeController.selected.areaId}" style="margin-left: 10px">                               
+                                    <f:selectItems value="#{areaController.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu><br /><br/>
+                                <h:outputLabel>管理员</h:outputLabel>
+                                <p:selectOneMenu id="adminimenu"  required="true" value="#{policeController.selected.administratorId}" style="margin-left: 10px">                               
+                                    <f:selectItems value="#{administratorController.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu><br /><br/>
+                                <p:commandButton value="注册" id="nonAj3ax" action="#{policeController.create}"  update="msg" type="submit" style="margin-top: 20px;" />
+                                <br/>
+                                <br/>
+                                <a class="about" href="../aboutus.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left:100px" >关于</a>
+                                <a class="atext" href="../administrator/signAdmin.xhtml" style="font-size: 16px;font-family:STFangsong;margin-left: 10px">管理员登录/注册</a>
+                                <a class="atext" href="../home.xhtml" style="font-size: 13px;font-family:STFangsong;margin-left: 10px">返回首页</a>        
+                            </h:form>
+                        </p:tab>
+
+                    </p:tabView>
+                </div>
+
+            </div>
+            <div class="index_bottom">
+            </div>
+        </h:body>
+
+    </f:view>
+</html>
+

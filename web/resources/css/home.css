@@ -1,0 +1,155 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2017-7-24, 16:08:31
+    Author     : lenovo
+*/
+
+/*.tittlebt{
+    background-image: url(../img/a.png) !important;
+}*/
+
+body{
+    width: 1000px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    text-align: center;
+    background-color: #eee;
+    margin: 20px auto;
+}
+
+.iconbt{
+    display: block;
+    height: 120px;
+    width: 100px;
+    float: left;
+    margin: 0px 50px;
+    /*border:solid 1px black;*/
+
+    text-align: center;
+    text-decoration: none;
+}
+
+.iconbt:hover{
+    background-color: #cccccc;
+}
+
+.iconbt:active{
+    color: -webkit-link;
+}
+
+
+.usrbt{
+    display: block;
+    height: 20px;
+    width: 100px;
+    float:right;
+    text-align: center;
+    text-decoration: none;
+    line-height: 20px;
+    /*border:solid 1px black;*/
+}
+
+
+.usrbt:hover{
+    color: orangered;
+    /*background-color: blue;*/
+}
+
+.usricon{
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.msgicon{
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.msgicondiv{
+    position: relative;
+    z-index: 9999;
+}
+
+/*.readMsg{
+    position: fixed;
+    top: 70%;
+    right: 0px;
+    
+    visibility: visible;
+    z-index: 1007;
+    height: 200px;
+    width: 200px;
+}*/
+
+.ui-overlaypanel-content1 {
+    /*padding: 0.5em;*/
+    width:200px;
+    height:200px;
+/*    top: 10%;
+    right:-100%;*/
+    /*border:solid;*/
+    position: fixed;
+    border-radius:20px;
+    /*background-image: url(../images/checkbk.jpg);*/
+    /*background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);*/
+     background-repeat:no-repeat; 
+     background-size:100% 100%;
+     -moz-background-size:100% 100%;
+}
+
+.ui-overlaypanel1 {
+    /*visibility: visible;*/
+    /*padding-left: -100px;*/
+    z-index: 1011;
+    width:300px;
+    height:400px;
+    display: block;
+    top: 10%;
+    right:-100%;
+    position: fixed;
+
+}
+
+.content
+{
+    
+    border:solid;
+    width:300px;
+    height:400px;
+    /*padding-left: px;*/
+}
+/*#j_idt54 {
+    position:fixed;
+    top:10%;
+    left:1000px;
+}
+
+内联样式{
+    left:1000px;
+}*/
+
+
+/*.sendMsg{
+    position: absolute;
+    top: 85%;
+    right: 0px;
+    z-index: 1007;
+    width: 350px;
+}*/
+
+
+.atext
+{
+    text-decoration: none;
+    color:black;
+}
+
+.atext:hover
+{
+    text-decoration: none;
+    color:red;
+}

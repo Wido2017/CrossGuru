@@ -1,0 +1,260 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--主界面-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>首页</title>
+        <link href="resources/css/home.css" type="text/css" rel="stylesheet"/>
+        <style type="text/css">
+
+            .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+            .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+            .anchorBL{display:none;}
+        </style>
+        <link href="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+        <script type="text/javascript" src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+    </h:head>
+    <h:body>
+        <!--<p:layout fullPage="true" >-->
+        <!--<p:layoutUnit position="north" size="159" resizable="false" gutter="0" style="color:blue;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" styleClass="background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);">-->        
+        <div style="height:140px;margin-top: -20px;margin-left:-179px;margin-right:-179px;background-image:url(resources/images/homebk.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+            <h:form id="homeForm">
+                <p:growl id="info" showDetail="true" />
+
+                <div style="padding-left:0px">
+                    <p:graphicImage style="padding-top:27px;margin-left:-2140px" height="80px" value="resources/images/crossguru.png"></p:graphicImage>
+                    <h:link style="margin-left:27%" outcome="user/realTime" styleClass="iconbt" onmouseover="changeicon1();" onmouseout="recover1();">
+                        <p:graphicImage value="resources/images/lukuang.png" height="70px" width="70px" id="icon1" style="margin-top:38px;margin-left: 0px"/>
+                        <br/>
+                        <h:outputText value="实时路况" style="font-size: 15px;color: black"></h:outputText>
+                    </h:link>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin1}" update="info">
+                        <p:graphicImage value="resources/images/jiankong.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="监控查询调度" style="font-size: 15px;color: black"></h:outputText>    
+                    </p:commandLink>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.isLogin2}" update="info">
+                        <p:graphicImage value="resources/images/jilu.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="记录查询" style="font-size: 15px;color: black"></h:outputText>
+                    </p:commandLink>
+                    <p:commandLink styleClass="iconbt" action="#{loginManger.service}" update="info">
+                        <p:graphicImage value="resources/images/set.png" height="70px" width="70px" style="margin-top:38px"/>
+                        <br/>
+                        <h:outputText value="服务支持" style="font-size: 15px;color: black"></h:outputText>
+                    </p:commandLink>
+                </div>
+                <a class="atext" href="aboutus.xhtml" style="font-size:15px;margin-left:100px;color:white">关于我们</a>
+                <div style="position: fixed;top:5px;left:1050px;right:0px" >
+                    <p:graphicImage id="usrlk1" value="resources/images/user.png" height="20px" width="20px" styleClass="usricon" style="margin-left:0px"/>
+                    <p:link class="atext" href="user/signPolice.xhtml" style="margin-left:0px" rendered="#{loginManger.loginPolice==null}">交警登录/注册</p:link>
+                    <a class="atext" href="administrator/signAdmin.xhtml" style="margin-left:10px;margin-right:0px">管理员注册/登录</a>
+                    <p:overlayPanel for="usrlk1" hideEffect="fade" showEvent="mousedown" hideEvent="mousedown" dynamic="false" style="text-align: left;"> 
+                        <h:outputText value="未登录！" rendered="#{loginManger.loginPolice==null}"></h:outputText>
+                        <h:outputText value="姓名：#{loginManger.loginPolice.name}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <h:outputText value="管辖片区：#{loginManger.loginPolice.areaId.location}" rendered="#{loginManger.loginPolice!=null}"></h:outputText><br/>
+                        <p:commandButton value="注销" rendered="#{loginManger.loginPolice!=null}" update="homeForm info" actionListener="#{loginManger.policeLogoutListener}" ></p:commandButton>
+                    </p:overlayPanel>
+                </div>
+            </h:form>
+
+            <div class="msgicondiv">
+                <p:growl id="growl" showDetail="true" sticky="true" />
+                <p:commandLink id="jjxt" styleClass="msgicon" rendered="#{loginManger.loginPolice!=null}" >
+                    <!--<p:graphicImage value="resources/images/message.png" height="70px" width="90px" style="margin-top:28%;margin-right:-20%"  />-->
+                    <p:graphicImage value="resources/images/message.png" height="70px" width="90px" style="position:fixed; top:88%; right:0px;;"  />
+                </p:commandLink>
+                <p:overlayPanel  id="pnl" class="ui-overlaypanel-content1 ui-overlaypanel1" style="left: 672px; top: 142.88px; position: fixed; z-index: 1003;" for="jjxt" 
+                                 showEffect="blind"  showEvent="mousedown" hideEvent="mousedown" dismissable="false" showCloseIcon="true">
+                    <!--<h:panelGrid class="content"   >-->
+                    <p:scrollPanel mode="native" style="margin-top:10px;width:270px;height:200px;text-align: left">
+                        <h:panelGrid columns="2">
+                            <p:graphicImage value="resources/images/readMsg.png"/><p:outputLabel value="查看消息："/>
+                            <p:graphicImage value="resources/images/chat2.png"/>
+                            <p:outputLabel value="我是“海淀区蓟门桥”区域的交警，南向路段拥堵，西向畅通，请“西直门”区域交警配合调控。" />
+                            <p:graphicImage value="resources/images/chat1.png"/>
+                            <p:outputLabel value="“西直门”区域交警收到请求。"/>
+                            <p:graphicImage value="resources/images/readMsg.png"/><p:outputLabel value="查看消息："/>
+                            <p:graphicImage value="resources/images/chat2.png"/>
+                            <p:outputLabel value="我是“海淀区蓟门桥”区域的交警，南向路段拥堵，西向畅通，请“西直门”区域交警配合调控。" />
+                            <p:graphicImage value="resources/images/chat1.png"/>
+                            <p:outputLabel value="“西直门”区域交警收到请求。"/>
+                            <p:graphicImage value="resources/images/readMsg.png"/><p:outputLabel value="查看消息："/>
+                            <p:graphicImage value="resources/images/chat2.png"/>
+                            <p:outputLabel value="我是“海淀区蓟门桥”区域的交警，南向路段拥堵，西向畅通，请“西直门”区域交警配合调控。" />
+                            <p:graphicImage value="resources/images/chat1.png"/>
+                            <p:outputLabel value="“西直门”区域交警收到请求。"/>
+                        </h:panelGrid>
+                    </p:scrollPanel>
+                    <div style="margin-top:15px;">
+                        <p:inputTextarea rows="8" cols="37" placeholder="发送消息" completeMethod="#{GrowlView.message}" queryDelay="750" minQueryLength="4" />
+                        <p:commandButton style="margin-left:-30px;" value="发送" actionListener="#{GrowlView.saveMessage}"  update="growl" />
+                    </div>
+                    <!--</h:panelGrid>-->
+
+                </p:overlayPanel>
+                <p:draggable for="pnl" />
+
+                <!--                <p:overlayPanel class="sendMsg" id="sendPanel" for="jjxt" showEffect="blind" showEvent="mousedown" hideEvent="mousedown" dismissable="false" showCloseIcon="true">
+                                    <h:panelGrid columns="2" cellpadding="5" >
+                                        <p:outputLabel for="msg" value="消息:" />
+                                        <p:inputText id="msg" value="#{GrowlView.message}"  required="true" />
+                                        <p:commandButton value="发送" actionListener="#{GrowlView.saveMessage}"  update="growl" />
+                                    </h:panelGrid>
+                                </p:overlayPanel>-->
+
+            </div>
+
+        </div>        
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="center" size="10%" resizable="false" style="margin-top:1000px">-->
+        <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
+            <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 90%"/>
+            <p:commandButton value="生命关怀通道" onclick="searchRoute()"></p:commandButton>
+        </div>
+        <!--</p:layoutUnit>-->
+        <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
+        <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px;height:515px;border:#ccc solid 1px;" id="dituContent" ></div><!--创建地图容器-->
+        <!--</p:layoutUnit>-->
+
+        <!--</p:layout>-->
+
+
+
+
+    </h:body>
+    <script type="text/javascript">
+        //创建和初始化地图函数：
+        function changeicon1() {
+            var obj = document.getElementById("icon1");
+
+        }
+
+        function recover1() {
+            var obj = document.getElementById("icon1");
+            obj.src = "resources/images/lukuang.png";
+        }
+
+        function initMap() {
+            createMap(116.395645, 39.929986);//创建地图
+            setMapEvent();//设置地图事件
+            addMapControl();//向地图添加控件
+        }
+        //添加搜索区域框
+        function searchMap() {
+            var area = document.getElementById("input").value; //得到地区
+            var ls = new BMap.LocalSearch(map);
+            ls.setSearchCompleteCallback(function (rs) {
+                if (ls.getStatus() === BMAP_STATUS_SUCCESS) {
+                    var poi = rs.getPoi(0);
+                    if (poi) {
+                        createMap(poi.point.lng, poi.point.lat);//创建地图(经度poi.point.lng,纬度poi.point.lat)
+                        setMapEvent();//设置地图事件
+                        addMapControl();//向地图添加控件
+                    }
+                }
+            });
+
+            ls.search(area);
+        }
+//        //自定义一个控件类，“声明关怀通道”控件
+//        function LoveControl() {
+//            this.defaultAnchor = BMAP_ANCHOR_BOTTOM_RIGHT;
+//            this.defaultOffset = new BMap.size(10, 10);
+//        }
+//        LoveControl.prototype = new BMap.Control();
+//
+//        //创建自定义控件的initialize方法，并且将控件的DOM元素返回
+//        //在本方法中创建一个div元素作为控件的容器，并将其添加到地图容器中
+//        LoveControl.prototype.initialize = function (map) {
+//            //创建一个DOM元素
+//            var love = document.createElement("love");
+//            //添加文字说明
+//            love.appendChild(document.createTextNode("生命关怀通道"));
+//            //设置样式
+//            love.style.cursor = "pointer";
+//            love.style.border = "1px solid gray";
+//            love.style.backgroundColor = "white";
+//            //绑定事件，点击输入起始地点，并反馈路线
+////            var searchInfoWindow = null;
+////            searchInfoWindow = new BMapLib.SearchInfoWindow(map, null, {
+////                title: "生命关怀通道",
+////                width: 110,
+////                height: 110,
+////                panel: "panel", //检索结果面板
+////                enableAutoPan: false,
+////                searchType: [
+////                    BMAPLIB_TAB_FROM_HERE,
+////                    BMAPLIB_TAB_TO_HERE
+////                ]
+////            });
+////            div.addEventListener("click", function (e) {
+////                searchInfoWindow.open(div);
+////            });
+////            div.onclick=function(e){
+////                map.setZoom(map.getZoom()+2);
+////            }
+//
+//            //添加元素到地图中
+//            map.getContainer().appendChild(love);
+//            //将DOM元素返回
+//            return love;
+//        }
+////            var lovectrl = new LoveControl();
+////            map.addControl(lovectrl);
+
+        //创建搜索后的地图函数：
+        function createMap(x, y) {
+            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+            var point = new BMap.Point(x, y);//定义一个中心点坐标
+            map.centerAndZoom(point, 18);//设定地图的中心点和坐标并将地图显示在地图容器中
+            window.map = map;//
+
+        }
+        //创建初始化的地图
+//        function createNewMap() {
+//            var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+//            var point = new BMap.Point(116.395645, 39.929986);
+//            map.centerAndZoom(point, 18);
+//            window.map = map;//将map变量存储在全局
+//        }
+
+        //地图事件设置函数：
+        function setMapEvent() {
+            map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+            map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+            map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+            map.enableKeyboard();//启用键盘上下左右键移动地图
+        }
+
+
+
+        //地图控件添加函数：
+        function addMapControl() {
+            //向地图中添加缩放控件
+            var ctrl_nav = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE});
+            map.addControl(ctrl_nav);
+            //向地图中添加比例尺控件
+            var ctrl_sca = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_LEFT});
+            map.addControl(ctrl_sca);
+            //向地图中添加实时路况的控件
+            var ctrl_condition = new BMapLib.TrafficControl({
+                showPanel: false
+            });
+            map.addControl(ctrl_condition);
+            ctrl_condition.setAnchor(BMAP_ANCHOR_TOP_RIGHT);
+//            //创建控件
+//            var lovectrl = new LoveControl();
+//            map.addControl(lovectrl);
+
+        }
+
+        initMap();//创建和初始化地图
+    </script>
+</html>

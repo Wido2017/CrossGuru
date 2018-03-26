@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--监控调度与查询-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <title>监控查询与调度</title>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+            </f:facet>
+        </h:head>
+
+        <h:body style="background-color: #dfecf1">
+            <h:outputStylesheet name="webjars/font-awesome/4.4.0/css/font-awesome.css"/>
+            <link rel="stylesheet" href="../resources/css/lightChange.css" />
+            <h:form>
+                <p:button style="margin-left:10px;margin-top:10px" id="fanhui" icon="fa fa-reply" value="返回" onclick="javascript:history.go(-1)" href="monitor.xhtml"/>  
+                <h:outputText style="margin-left: 550px;margin-top:10px;" id="title" class="ui-title" value="实时红绿灯"></h:outputText>
+                <p:commandButton style="margin-right:30px;margin-top: 10px;" id="fankui" value="反馈" onclick="PF('feedbackDialog').show()"/>
+                <div style="margin-left: -10px;margin-right:-8px;margin-top:23px;background-color: #6a85b6"><h:outputLabel style="margin-left:70%" value="当前位置：" ><a class="atext1" href="../home.xhtml">首页</a>-><a class="atext" href="monitor.xhtml">监控调度与查询</a>->实时红绿灯</h:outputLabel></div>
+                <p:dialog id="FeedBackDlg" widgetVar="feedbackDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" header="反馈表单">
+                    <h:form id="FeedBackForm">
+                        <p:growl id="growl" showDetail="true" />
+                        <h:panelGroup id="display">
+                            <p:panelGrid columns="1">
+                                <p:outputLabel value="建议（请您填写您对红绿灯调控的建议）" for="inputarea" />
+                                <p:inputTextarea id="inputarea" value="#{feedBackManager.feedbackString}"/>
+                            </p:panelGrid>
+                            <p:commandButton value="确认" update="growl inputarea" actionListener="#{feedBackManager.buttonListener}" />
+          
+                        </h:panelGroup>
+                    </h:form>
+                </p:dialog>
+            </h:form>
+            <p:scrollPanel mode="native" style="margin-left:0px;margin-top: 40px;width:100%;height:90%">
+                <h:form >
+                    <p:panelGrid style="margin-top: 40px">
+                        <p:row>
+                            <p:column></p:column>
+                            <p:column colspan="3">
+                                <h3 style="margin-left: 150px">N</h3>
+                            </p:column>
+                            <p:column colspan="3">
+                                <h3 style="margin-left: 150px">S</h3>
+                            </p:column>
+                            <p:column colspan="3">
+                                <h3 style="margin-left: 150px">W</h3>
+                            </p:column>
+                            <p:column colspan="3">
+                                <h3 style="margin-left: 150px">E</h3>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column rowspan="1">
+                                <h3>摄像头</h3>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:photoCam></p:photoCam>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:photoCam></p:photoCam>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:photoCam></p:photoCam>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:photoCam></p:photoCam>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="13" styleClass="ui-widget-header">
+                                <p:spacer height="1"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:poll interval="1" update="Nsecond_Red_Up Nsecond_Red_Left Nsecond_Green_Up Nsecond_Green_Left Nsecond_Yellow_Up Nsecond_Yellow_Left
+                                    Esecond_Red_Up Esecond_Red_Left Esecond_Green_Up Esecond_Green_Left Esecond_Yellow_Up Esecond_Yellow_Left
+                                    Ssecond_Red_Up Ssecond_Red_Left Ssecond_Green_Up Ssecond_Green_Left Ssecond_Yellow_Up Ssecond_Yellow_Left
+                                    Wsecond_Red_Up Wsecond_Red_Left Wsecond_Green_Up Wsecond_Green_Left Wsecond_Yellow_Up Wsecond_Yellow_Left"/>
+                            <p:column rowspan="6">
+                                <h3>信号灯</h3>
+                            </p:column>
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Nsecond_Red_Up" value="#{counterView.nsecond_Red_Up}"/>    
+                            </p:column>
+
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Red_Up" value="#{counterView.ssecond_Red_Up}"/>
+                            </p:column>
+
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Red_Up" value="#{counterView.wsecond_Red_Up}"/>
+                            </p:column>
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_up.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Red_Up" value="#{counterView.esecond_Red_Up}"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column style="border-left: transparent;">
+                                <p:outputLabel id="Nsecond_Yellow_Up" value="#{counterView.nsecond_Yellow_Up}"/>
+                            </p:column>
+
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Yellow_Up" value="#{counterView.ssecond_Yellow_Up}"/>
+                            </p:column>
+
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Yellow_Up" value="#{counterView.wsecond_Yellow_Up}"/>
+                            </p:column>
+
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Yellow_Up" value="#{counterView.esecond_Yellow_Up}"/>
+                            </p:column>
+
+                        </p:row> 
+                        <p:row>
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnNsToGreen" value="TurnToGreen" action="#{counterView.TurnNSsToGreen()}" update="Nsecond_Red_Up Ssecond_Red_Up Nsecond_Yellow_Up Ssecond_Yellow_Up"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column style="border-left: transparent;">
+                                <p:outputLabel id="Nsecond_Green_Up" value="#{counterView.nsecond_Green_Up}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnSsToGreen" value="TurnToGreen" action="#{counterView.TurnNSsToGreen()}" update="Nsecond_Red_Up Ssecond_Red_Up Nsecond_Yellow_Up Ssecond_Yellow_Up"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Green_Up" value="#{counterView.ssecond_Green_Up}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnWsToGreen" value="TurnToGreen" action="#{counterView.TurnWEsToGreen()}" update="Wsecond_Red_Up Esecond_Red_Up Wsecond_Yellow_Up Esecond_Yellow_Up"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Green_Up" value="#{counterView.wsecond_Green_Up}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnEsToGreen" value="TurnToGreen" action="#{counterView.TurnWEsToGreen()}" update="Wsecond_Red_Up Esecond_Red_Up Wsecond_Yellow_Up Esecond_Yellow_Up"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Green_Up" value="#{counterView.esecond_Green_Up}"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Nsecond_Red_Left" value="#{counterView.nsecond_Red_Left}"/>
+                            </p:column>
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Red_Left" value="#{counterView.ssecond_Red_Left}"/>
+                            </p:column>
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Red_Left" value="#{counterView.wsecond_Red_Left}"/>
+                            </p:column>
+
+                            <p:column rowspan="2" style="border-right: transparent;">
+                                <img src="../resources/images/arrow_left.png" style="height: 70px;"></img>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-bottom: transparent;">
+                                <img src="../resources/images/red.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Red_Left" value="#{counterView.esecond_Red_Left}"/>
+                            </p:column>
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column style="border-left: transparent;">
+                                <p:outputLabel id="Nsecond_Yellow_Left" value="#{counterView.nsecond_Yellow_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Yellow_Left" value="#{counterView.ssecond_Yellow_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Yellow_Left" value="#{counterView.wsecond_Yellow_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/yellow.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Yellow_Left" value="#{counterView.esecond_Yellow_Left}"/>
+                            </p:column> 
+
+                        </p:row>
+                        <p:row>
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnNlToGreen" value="TurnToGreen" action="#{counterView.TurnNSlToGreen()}" update="Nsecond_Red_Left Ssecond_Red_Left Nsecond_Yellow_Left Ssecond_Yellow_Left"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column style="border-left: transparent;">
+                                <p:outputLabel id="Nsecond_Green_Left" value="#{counterView.nsecond_Green_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnSlToGreen" value="TurnToGreen" action="#{counterView.TurnNSlToGreen()}" update="Nsecond_Red_Left Ssecond_Red_Left Nsecond_Yellow_Left Ssecond_Yellow_Left"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Ssecond_Green_Left" value="#{counterView.ssecond_Green_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnWlToGreen" value="TurnToGreen" action="#{counterView.TurnWElToGreen()}" update="Wsecond_Red_Left Esecond_Red_Left Wsecond_Yellow_Left Esecond_Yellow_Left"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Wsecond_Green_Left" value="#{counterView.wsecond_Green_Left}"/>
+                            </p:column>
+
+                            <p:column style="border-right: transparent;">
+                                <p:commandButton id="TurnElToGreen" value="TurnToGreen" action="#{counterView.TurnWElToGreen()}" update="Wsecond_Red_Left Esecond_Red_Left Wsecond_Yellow_Left Esecond_Yellow_Left"/>
+                            </p:column>
+                            <p:column style="border-right: transparent; border-left: transparent; border-top: transparent;">
+                                <img src="../resources/images/green.png" style="height: 50px;margin-left: 100px"></img>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel id="Esecond_Green_Left" value="#{counterView.esecond_Green_Left}"/>
+                            </p:column> 
+
+
+                        </p:row>
+
+                    </p:panelGrid>
+
+                </h:form>
+            </p:scrollPanel>
+
+
+
+
+        </h:body>
+
+    </f:view>
+</html>
