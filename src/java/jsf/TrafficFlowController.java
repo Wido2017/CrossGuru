@@ -65,7 +65,9 @@ public class TrafficFlowController implements Serializable {
     public void setRightTrafficFlows(List<TrafficFlow> rightTrafficFlows){
         this.rightTrafficFlows=rightTrafficFlows;
     }
-    
+    public List<TrafficFlow> getRightTrafficFlows(){
+        return rightTrafficFlows;
+    }
     public void setSelectedTime(Date time){
         this.selectedTime=time;
     }
@@ -74,14 +76,18 @@ public class TrafficFlowController implements Serializable {
         return selectedTime;
     }
     
-    public void onRowSelect(){
-            //selectedTrafficFlow=(TrafficFlow)event.getObject();
+    public void onRowSelect(SelectEvent event){
+            selectedTrafficFlow=(TrafficFlow)event.getObject();
             rightTrafficFlows=new ArrayList<>();
             trafficFlows = ejbFacade.findAll();
+            selectedTime=selectedTrafficFlow.getTime();
             Iterator iterator=trafficFlows.iterator();
             while (iterator.hasNext()) {
             TrafficFlow t = (TrafficFlow) iterator.next();
+            
             if (selectedTime == t.getTime()) {
+                System.out.print(selectedTime);
+                System.out.print(t.getTime());
                 rightTrafficFlows.add(t);
             }
         }
