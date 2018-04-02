@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nicole Yang
+ * @author lenovo
  */
 @Entity
 @Table(name = "administrator")
@@ -164,7 +164,7 @@ public class Administrator implements Serializable {
 
     @Override
     public String toString() {
-        return id;
+        return "entity.Administrator[ id=" + id + " ]";
     }
     
 }

@@ -17,6 +17,10 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import net.sf.json.JSON;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 
 @Named("crossingController")
 @SessionScoped
@@ -230,6 +234,54 @@ public class CrossingController implements Serializable {
             }
         }
 
+    }
+    
+    public String getCrossingListJSON(){
+        getItems();
+        JSONArray jsona=new JSONArray();
+        
+        for(Object item:items){
+            JSONObject jsono =new JSONObject();
+            Crossing crossing=(Crossing)item;
+            /* id */
+            jsono.put("id", crossing.getId());
+            
+            /* location */
+            jsono.put("location", crossing.getLocation());
+            
+            /* coord on BMap */
+            jsono.put("coordx", crossing.getCoordx());
+            jsono.put("coordy", crossing.getCoordy());
+            
+            /* Current traffic flow */
+            jsono.put("currentFlow_E", crossing.getCurrentFlowE());
+            jsono.put("currentFlow_W", crossing.getCurrentFlowW());
+            jsono.put("currentFlow_S", crossing.getCurrentFlowS());
+            jsono.put("currentFlow_N", crossing.getCurrentFlowN());
+            
+            /* Neighbor crossing id */            
+            jsono.put("next_E_id", crossing.getNextEid()!=null?crossing.getNextEid().getId():"");
+            jsono.put("next_W_id", crossing.getNextWid()!=null?crossing.getNextWid().getId():"");
+            jsono.put("next_S_id", crossing.getNextSid()!=null?crossing.getNextSid().getId():"");
+            jsono.put("next_N_id", crossing.getNextNid()!=null?crossing.getNextNid().getId():"");
+            
+            /* Distance to neighbor crossing */
+            jsono.put("next_E_d", crossing.getNextEd());
+            jsono.put("next_W_d", crossing.getNextWd());
+            jsono.put("next_S_d", crossing.getNextSd());
+            jsono.put("next_N_d", crossing.getNextNd());
+            
+            jsona.add(jsono);
+        }
+        return jsona.toString();
+//        for(int i=0;i<items.getRowCount();i++){
+//            JSONObject jsono=new JSONObject();
+//            items.setRowIndex(i);
+//            Crossing c=(Crossing)items.getRowData();
+//            
+//            jsono.put("id", c.getId());
+//        }
+            
     }
 
 }

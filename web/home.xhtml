@@ -116,7 +116,19 @@
         <div style="margin-left: -180px;margin-right:-180px;background-color:#6a85b6"><h:outputLabel style="margin-left:1090px" value="当前位置：首页" ></h:outputLabel></div>
         <div style="margin-top: 0px;margin-left:-179px;margin-right:-179px">
             <p:inputText id="input" onchange="searchMap();" placeholder="搜索" style=" width: 90%"/>
-            <p:commandButton value="生命关怀通道" onclick="searchRoute()"></p:commandButton>
+            <h:inputHidden id="Json_src" value="#{crossingController.crossingListJSON}"/>
+            <p:commandButton value="生命关怀通道" id="route">
+                <p:ajax event="click" update="Json_src"/>
+            </p:commandButton>
+            <p:overlayPanel id="routeParam" for="route" hideEffect="fade" dynamic="true" dismissable="false">
+                <h:outputLabel value="起点: " for="start"/>
+                <p:inputText id="start" style="margin:2px auto" onchange="searchStart()"/>
+                <br/>
+                <h:outputLabel value="终点: " for="end"/>
+                <p:inputText id="end" style="margin:2px auto" onchange="searchEnd()"/>
+                <br/>
+                <p:commandButton value="查询" icon="ui-icon-check" style="float:right" onclick="searchRoute()"/>
+            </p:overlayPanel>
         </div>
         <!--</p:layoutUnit>-->
         <!--<p:layoutUnit position="south" size="68%"  gutter="-10">-->
@@ -124,8 +136,6 @@
         <!--</p:layoutUnit>-->
 
         <!--</p:layout>-->
-
-
 
 
     </h:body>
@@ -256,5 +266,98 @@
         }
 
         initMap();//创建和初始化地图
+
+        var start;
+        function  searchStart() {
+            var key = document.getElementById("start").value;
+            var ls = new BMap.LocalSearch(map, {
+                renderOptions: {
+                    map: map,
+                    autoViewport: true
+                },
+                onInfoHtmlSet: function (poi, html) {
+                    start = poi.point;
+                    document.getElementById("start").value = poi.title + "*";
+                    //html.innerHTML+='<a href="#" onclick="setStart()">设为起点</a>';
+                }
+            });
+            ls.search(key);
+        }
+
+        var end;
+        function  searchEnd() {
+            var key = document.getElementById("end").value;
+            var res = new BMap.LocalSearch(map, {
+                renderOptions: {
+                    map: map,
+                    autoViewport: true
+                },
+                onInfoHtmlSet: function (poi, html) {
+                    start = poi.point;
+                    document.getElementById("end").value = poi.title + "*";
+                    //html.innerHTML+='<a href="#" onclick="setStart()">设为起点</a>';
+                }
+            });
+            res.search(key);
+        }
+        
+        function CrossingMap(){
+            this.id="";
+            this.location="";
+            this.coord=new BMap.Point();
+            this.currentFlow=function (){
+                this.E=0;
+                this.W=0;
+                this.S=0;
+                this.N=0;
+            };
+            this.neighborCrossing=function (){
+                this.E=new CrossingMap();
+                this.W=new CrossingMap();
+                this.S=new CrossingMap();
+                this.N=new CrossingMap();
+            }
+            this.distanceTo=function (){
+                this.E=0;
+                this.W=0;
+                this.S=0;
+                this.N=0;
+            }
+        }
+
+        var crossingListJSON;
+        function searchRoute() {
+            crossingListJSON = document.getElementById("Json_src").value;
+            //alert(crossingListJSON);
+            
+            if (start == '' || end == ''||start==null||end==null||start==undefined||end==undefined) {
+                alert("起点或终点未指定");
+                return;
+            }
+            
+            var virStartCrossing;
+            var minD=map.getDistance(start);
+            for(var crossing in crossingListJSON){
+                if
+            }
+        }
+
+
+
+        function AStar(start, end) {
+
+            var openList = [];//开启列表
+            var closeList = [];//关闭列表
+
+            openList.push(start);
+
+
+//            do {
+//                var curNode = openList.pop();
+//                closeList.push(curNode);
+//
+//
+//            } while (true);
+        }
     </script>
 </html>
