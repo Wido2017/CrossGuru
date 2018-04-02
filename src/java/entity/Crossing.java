@@ -35,8 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Crossing.findAll", query = "SELECT c FROM Crossing c")
     , @NamedQuery(name = "Crossing.findById", query = "SELECT c FROM Crossing c WHERE c.id = :id")
     , @NamedQuery(name = "Crossing.findByLocation", query = "SELECT c FROM Crossing c WHERE c.location = :location")
-    , @NamedQuery(name = "Crossing.findByCoordx", query = "SELECT c FROM Crossing c WHERE c.coordx = :coordx")
-    , @NamedQuery(name = "Crossing.findByCoordy", query = "SELECT c FROM Crossing c WHERE c.coordy = :coordy")
+    , @NamedQuery(name = "Crossing.findByCoordlng", query = "SELECT c FROM Crossing c WHERE c.coordlng = :coordlng")
+    , @NamedQuery(name = "Crossing.findByCoordlat", query = "SELECT c FROM Crossing c WHERE c.coordlat = :coordlat")
     , @NamedQuery(name = "Crossing.findByCurrentFlowE", query = "SELECT c FROM Crossing c WHERE c.currentFlowE = :currentFlowE")
     , @NamedQuery(name = "Crossing.findByCurrentFlowW", query = "SELECT c FROM Crossing c WHERE c.currentFlowW = :currentFlowW")
     , @NamedQuery(name = "Crossing.findByCurrentFlowS", query = "SELECT c FROM Crossing c WHERE c.currentFlowS = :currentFlowS")
@@ -46,9 +46,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Crossing.findByNextSd", query = "SELECT c FROM Crossing c WHERE c.nextSd = :nextSd")
     , @NamedQuery(name = "Crossing.findByNextNd", query = "SELECT c FROM Crossing c WHERE c.nextNd = :nextNd")})
 public class Crossing implements Serializable {
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "crossingId")
-    private Collection<TrafficFlow> trafficFlowCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -63,10 +60,10 @@ public class Crossing implements Serializable {
     @Column(name = "location")
     private String location;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "coordx")
-    private BigDecimal coordx;
-    @Column(name = "coordy")
-    private BigDecimal coordy;
+    @Column(name = "coordlng")
+    private BigDecimal coordlng;
+    @Column(name = "coordlat")
+    private BigDecimal coordlat;
     @Column(name = "currentFlow_E")
     private Integer currentFlowE;
     @Column(name = "currentFlow_W")
@@ -83,35 +80,17 @@ public class Crossing implements Serializable {
     private Integer nextSd;
     @Column(name = "next_N_d")
     private Integer nextNd;
-    @OneToMany(mappedBy = "nextEid")
-    private Collection<Crossing> crossingCollection;
-    @JoinColumn(name = "next_E_id", referencedColumnName = "id")
+    @JoinColumn(name = "trafficLight_id_S", referencedColumnName = "id")
     @ManyToOne
-    private Crossing nextEid;
-    @OneToMany(mappedBy = "nextWid")
-    private Collection<Crossing> crossingCollection1;
-    @JoinColumn(name = "next_W_id", referencedColumnName = "id")
-    @ManyToOne
-    private Crossing nextWid;
-    @OneToMany(mappedBy = "nextSid")
-    private Collection<Crossing> crossingCollection2;
-    @JoinColumn(name = "next_S_id", referencedColumnName = "id")
-    @ManyToOne
-    private Crossing nextSid;
-    @OneToMany(mappedBy = "nextNid")
-    private Collection<Crossing> crossingCollection3;
-    @JoinColumn(name = "next_N_id", referencedColumnName = "id")
-    @ManyToOne
-    private Crossing nextNid;
+    private Trafficlight trafficLightidS;
     @JoinColumn(name = "area_id", referencedColumnName = "id")
     @ManyToOne
     private Area areaId;
-    @JoinColumn(name = "trafficLight_id_E", referencedColumnName = "id")
+    @OneToMany(mappedBy = "nextWid")
+    private Collection<Crossing> crossingCollection;
+    @JoinColumn(name = "next_W_id", referencedColumnName = "id")
     @ManyToOne
-    private Trafficlight trafficLightidE;
-    @JoinColumn(name = "trafficLight_id_N", referencedColumnName = "id")
-    @ManyToOne
-    private Trafficlight trafficLightidN;
+    private Crossing nextWid;
     @JoinColumn(name = "camera_id_W", referencedColumnName = "id")
     @ManyToOne
     private Camera cameraidW;
@@ -127,9 +106,29 @@ public class Crossing implements Serializable {
     @JoinColumn(name = "trafficLight_id_W", referencedColumnName = "id")
     @ManyToOne
     private Trafficlight trafficLightidW;
-    @JoinColumn(name = "trafficLight_id_S", referencedColumnName = "id")
+    @JoinColumn(name = "trafficLight_id_N", referencedColumnName = "id")
     @ManyToOne
-    private Trafficlight trafficLightidS;
+    private Trafficlight trafficLightidN;
+    @JoinColumn(name = "trafficLight_id_E", referencedColumnName = "id")
+    @ManyToOne
+    private Trafficlight trafficLightidE;
+    @OneToMany(mappedBy = "nextSid")
+    private Collection<Crossing> crossingCollection1;
+    @JoinColumn(name = "next_S_id", referencedColumnName = "id")
+    @ManyToOne
+    private Crossing nextSid;
+    @OneToMany(mappedBy = "nextEid")
+    private Collection<Crossing> crossingCollection2;
+    @JoinColumn(name = "next_E_id", referencedColumnName = "id")
+    @ManyToOne
+    private Crossing nextEid;
+    @OneToMany(mappedBy = "nextNid")
+    private Collection<Crossing> crossingCollection3;
+    @JoinColumn(name = "next_N_id", referencedColumnName = "id")
+    @ManyToOne
+    private Crossing nextNid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "crossingId")
+    private Collection<TrafficFlow> trafficFlowCollection;
 
     public Crossing() {
     }
@@ -159,20 +158,20 @@ public class Crossing implements Serializable {
         this.location = location;
     }
 
-    public BigDecimal getCoordx() {
-        return coordx;
+    public BigDecimal getCoordlng() {
+        return coordlng;
     }
 
-    public void setCoordx(BigDecimal coordx) {
-        this.coordx = coordx;
+    public void setCoordlng(BigDecimal coordlng) {
+        this.coordlng = coordlng;
     }
 
-    public BigDecimal getCoordy() {
-        return coordy;
+    public BigDecimal getCoordlat() {
+        return coordlat;
     }
 
-    public void setCoordy(BigDecimal coordy) {
-        this.coordy = coordy;
+    public void setCoordlat(BigDecimal coordlat) {
+        this.coordlat = coordlat;
     }
 
     public Integer getCurrentFlowE() {
@@ -239,72 +238,12 @@ public class Crossing implements Serializable {
         this.nextNd = nextNd;
     }
 
-    @XmlTransient
-    public Collection<Crossing> getCrossingCollection() {
-        return crossingCollection;
+    public Trafficlight getTrafficLightidS() {
+        return trafficLightidS;
     }
 
-    public void setCrossingCollection(Collection<Crossing> crossingCollection) {
-        this.crossingCollection = crossingCollection;
-    }
-
-    public Crossing getNextEid() {
-        return nextEid;
-    }
-
-    public void setNextEid(Crossing nextEid) {
-        this.nextEid = nextEid;
-    }
-
-    @XmlTransient
-    public Collection<Crossing> getCrossingCollection1() {
-        return crossingCollection1;
-    }
-
-    public void setCrossingCollection1(Collection<Crossing> crossingCollection1) {
-        this.crossingCollection1 = crossingCollection1;
-    }
-
-    public Crossing getNextWid() {
-        return nextWid;
-    }
-
-    public void setNextWid(Crossing nextWid) {
-        this.nextWid = nextWid;
-    }
-
-    @XmlTransient
-    public Collection<Crossing> getCrossingCollection2() {
-        return crossingCollection2;
-    }
-
-    public void setCrossingCollection2(Collection<Crossing> crossingCollection2) {
-        this.crossingCollection2 = crossingCollection2;
-    }
-
-    public Crossing getNextSid() {
-        return nextSid;
-    }
-
-    public void setNextSid(Crossing nextSid) {
-        this.nextSid = nextSid;
-    }
-
-    @XmlTransient
-    public Collection<Crossing> getCrossingCollection3() {
-        return crossingCollection3;
-    }
-
-    public void setCrossingCollection3(Collection<Crossing> crossingCollection3) {
-        this.crossingCollection3 = crossingCollection3;
-    }
-
-    public Crossing getNextNid() {
-        return nextNid;
-    }
-
-    public void setNextNid(Crossing nextNid) {
-        this.nextNid = nextNid;
+    public void setTrafficLightidS(Trafficlight trafficLightidS) {
+        this.trafficLightidS = trafficLightidS;
     }
 
     public Area getAreaId() {
@@ -315,20 +254,21 @@ public class Crossing implements Serializable {
         this.areaId = areaId;
     }
 
-    public Trafficlight getTrafficLightidE() {
-        return trafficLightidE;
+    @XmlTransient
+    public Collection<Crossing> getCrossingCollection() {
+        return crossingCollection;
     }
 
-    public void setTrafficLightidE(Trafficlight trafficLightidE) {
-        this.trafficLightidE = trafficLightidE;
+    public void setCrossingCollection(Collection<Crossing> crossingCollection) {
+        this.crossingCollection = crossingCollection;
     }
 
-    public Trafficlight getTrafficLightidN() {
-        return trafficLightidN;
+    public Crossing getNextWid() {
+        return nextWid;
     }
 
-    public void setTrafficLightidN(Trafficlight trafficLightidN) {
-        this.trafficLightidN = trafficLightidN;
+    public void setNextWid(Crossing nextWid) {
+        this.nextWid = nextWid;
     }
 
     public Camera getCameraidW() {
@@ -371,12 +311,80 @@ public class Crossing implements Serializable {
         this.trafficLightidW = trafficLightidW;
     }
 
-    public Trafficlight getTrafficLightidS() {
-        return trafficLightidS;
+    public Trafficlight getTrafficLightidN() {
+        return trafficLightidN;
     }
 
-    public void setTrafficLightidS(Trafficlight trafficLightidS) {
-        this.trafficLightidS = trafficLightidS;
+    public void setTrafficLightidN(Trafficlight trafficLightidN) {
+        this.trafficLightidN = trafficLightidN;
+    }
+
+    public Trafficlight getTrafficLightidE() {
+        return trafficLightidE;
+    }
+
+    public void setTrafficLightidE(Trafficlight trafficLightidE) {
+        this.trafficLightidE = trafficLightidE;
+    }
+
+    @XmlTransient
+    public Collection<Crossing> getCrossingCollection1() {
+        return crossingCollection1;
+    }
+
+    public void setCrossingCollection1(Collection<Crossing> crossingCollection1) {
+        this.crossingCollection1 = crossingCollection1;
+    }
+
+    public Crossing getNextSid() {
+        return nextSid;
+    }
+
+    public void setNextSid(Crossing nextSid) {
+        this.nextSid = nextSid;
+    }
+
+    @XmlTransient
+    public Collection<Crossing> getCrossingCollection2() {
+        return crossingCollection2;
+    }
+
+    public void setCrossingCollection2(Collection<Crossing> crossingCollection2) {
+        this.crossingCollection2 = crossingCollection2;
+    }
+
+    public Crossing getNextEid() {
+        return nextEid;
+    }
+
+    public void setNextEid(Crossing nextEid) {
+        this.nextEid = nextEid;
+    }
+
+    @XmlTransient
+    public Collection<Crossing> getCrossingCollection3() {
+        return crossingCollection3;
+    }
+
+    public void setCrossingCollection3(Collection<Crossing> crossingCollection3) {
+        this.crossingCollection3 = crossingCollection3;
+    }
+
+    public Crossing getNextNid() {
+        return nextNid;
+    }
+
+    public void setNextNid(Crossing nextNid) {
+        this.nextNid = nextNid;
+    }
+
+    @XmlTransient
+    public Collection<TrafficFlow> getTrafficFlowCollection() {
+        return trafficFlowCollection;
+    }
+
+    public void setTrafficFlowCollection(Collection<TrafficFlow> trafficFlowCollection) {
+        this.trafficFlowCollection = trafficFlowCollection;
     }
 
     @Override
@@ -402,15 +410,6 @@ public class Crossing implements Serializable {
     @Override
     public String toString() {
         return "entity.Crossing[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<TrafficFlow> getTrafficFlowCollection() {
-        return trafficFlowCollection;
-    }
-
-    public void setTrafficFlowCollection(Collection<TrafficFlow> trafficFlowCollection) {
-        this.trafficFlowCollection = trafficFlowCollection;
     }
     
 }

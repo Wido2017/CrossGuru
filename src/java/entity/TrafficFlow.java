@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nicole Yang
+ * @author lenovo
  */
 @Entity
 @Table(name = "traffic_flow")
@@ -49,7 +49,7 @@ public class TrafficFlow implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "time")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date time;
     @Column(name = "crossing_N")
     private Long crossingN;

@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Nicole Yang
+ * @author lenovo
  */
 @Entity
 @Table(name = "operation_record")

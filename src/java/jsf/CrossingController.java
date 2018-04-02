@@ -250,8 +250,8 @@ public class CrossingController implements Serializable {
             jsono.put("location", crossing.getLocation());
             
             /* coord on BMap */
-            jsono.put("coordx", crossing.getCoordx());
-            jsono.put("coordy", crossing.getCoordy());
+            jsono.put("coordlng", crossing.getCoordlng());
+            jsono.put("coordlat", crossing.getCoordlat());
             
             /* Current traffic flow */
             jsono.put("currentFlow_E", crossing.getCurrentFlowE());

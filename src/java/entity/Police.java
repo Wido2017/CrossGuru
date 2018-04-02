@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nicole Yang
+ * @author lenovo
  */
 @Entity
 @Table(name = "police")
@@ -176,7 +176,7 @@ public class Police implements Serializable {
 
     @Override
     public String toString() {
-        return  id;
+        return "entity.Police[ id=" + id + " ]";
     }
     
 }

@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Nicole Yang
+ * @author lenovo
  */
 @Entity
 @Table(name = "trafficlight")
@@ -49,9 +49,9 @@ public class Trafficlight implements Serializable {
     @Size(max = 45)
     @Column(name = "type")
     private String type;
-    @OneToMany(mappedBy = "trafficLightidW")
-    private Collection<Crossing> crossingCollection;
     @OneToMany(mappedBy = "trafficLightidS")
+    private Collection<Crossing> crossingCollection;
+    @OneToMany(mappedBy = "trafficLightidW")
     private Collection<Crossing> crossingCollection1;
     @OneToMany(mappedBy = "trafficLightidN")
     private Collection<Crossing> crossingCollection2;

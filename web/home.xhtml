@@ -140,6 +140,7 @@
 
     </h:body>
     <script type="text/javascript">
+        //<![CDATA[
         //创建和初始化地图函数：
         function changeicon1() {
             var obj = document.getElementById("icon1");
@@ -293,71 +294,131 @@
                     autoViewport: true
                 },
                 onInfoHtmlSet: function (poi, html) {
-                    start = poi.point;
+                    end = poi.point;
                     document.getElementById("end").value = poi.title + "*";
                     //html.innerHTML+='<a href="#" onclick="setStart()">设为起点</a>';
                 }
             });
             res.search(key);
         }
-        
-        function CrossingMap(){
-            this.id="";
-            this.location="";
-            this.coord=new BMap.Point();
-            this.currentFlow=function (){
-                this.E=0;
-                this.W=0;
-                this.S=0;
-                this.N=0;
+
+        function CrossingNode() {
+            this.id = "";
+            this.location = "";
+            this.coord = new BMap.Point();
+            this.currentFlow = function () {
+                this.E = 0;
+                this.W = 0;
+                this.S = 0;
+                this.N = 0;
             };
-            this.neighborCrossing=function (){
-                this.E=new CrossingMap();
-                this.W=new CrossingMap();
-                this.S=new CrossingMap();
-                this.N=new CrossingMap();
+            this.neighborCrossing = function () {
+                this.E = new CrossingNode();
+                this.W = new CrossingNode();
+                this.S = new CrossingNode();
+                this.N = new CrossingNode();
             }
-            this.distanceTo=function (){
-                this.E=0;
-                this.W=0;
-                this.S=0;
-                this.N=0;
+            this.distanceTo = function () {
+                this.E = 0;
+                this.W = 0;
+                this.S = 0;
+                this.N = 0;
             }
         }
+        
+        //[0]"E",[1]"W",[2]"S",[3]"N"
+        function Crossing() {
+            this.id = "";
+            this.location = "";
+            this.point = new BMap.Point();
+            this.currentFlow = [];
+            this.neighborCrossing = [];
+            this.distanceTo = [];
+        }
 
-        var crossingListJSON;
+        //var crossingListJSON;
+        var crossingList=[];
         function searchRoute() {
-            crossingListJSON = document.getElementById("Json_src").value;
-            //alert(crossingListJSON);
+            var crossingListJSON = document.getElementById("Json_src").value;
+            var crossingListProto = JSON.parse(crossingListJSON);
             
-            if (start == '' || end == ''||start==null||end==null||start==undefined||end==undefined) {
+            for(var crossingProto in crossingListProto){
+                var crossing=new Crossing();
+                crossing.id=crossingProto.id;
+                crossing.location=crossingProto.location;
+                crossing.point=new BMap.Point(crossingProto.coordlng,crossingProto.coordlat);
+                crossing.currentFlow[0]=crossingProto.currentFlow
+                
+            }
+
+
+            //alert(crossingListJSON);
+
+            //alert("起点"+start.lng+"  "+"终点"+start.lat);
+            if (start == '' || end == '' || start == null || end == null || start == undefined || end == undefined) {
                 alert("起点或终点未指定");
                 return;
             }
-            
-            var virStartCrossing;
-            var minD=map.getDistance(start);
-            for(var crossing in crossingListJSON){
-                if
-            }
+
+
+            AStar(start, end, crossingList);
+
+
         }
 
 
 
-        function AStar(start, end) {
+        function AStar(start, end, crossingList) {
+
+            //找到离终点最近的路口作为图搜索的起点
+            var virEndCrossingId = crossingList[0].id;
+            var minD = map.getDistance(end, new BMap.Point(crossingList[0].coordlng, crossingList[0].coordlat));
+            for (var crossing in crossingList) {
+                var curD = map.getDistance(start, new BMap.Point(crossing.coordlng, crossing.coordlat));
+                if (curD < minD) {
+                    minD = curD;
+                    virStartCrossingId = crossing.id;
+                }
+            }
+
+            alert(minD);
 
             var openList = [];//开启列表
             var closeList = [];//关闭列表
 
-            openList.push(start);
+            openList.push({id: virStartCrossingId, G: minD});
 
+            do {
+                var curNode = openList.pop();
+                closeList.push(curNode);
+                var curCrossing = getCrossingById(curNode.id);
 
-//            do {
-//                var curNode = openList.pop();
-//                closeList.push(curNode);
-//
-//
-//            } while (true);
+                //E
+                if (curCrossing.next_E_id != null && !existList(curCrossing.next_E_id, closeList)) {
+                    var eCrossing = getCrossingById(curCrossing.next_E_id);
+                    var g = curNode.G +
+                            curCrossing.next_E_d ? curCrossing.next_E_d : map.getDistance(
+                                    new BMap.Point(curCrossing.coordlng, curCrossing.coordlat),
+                                    new BMap.Point(eCrossing.coordlng, eCrossing.coordlat));
+                }
+            } while (true);
         }
+
+        function getCrossingById(id) {
+            for (var i = 0; i < crossingList.length; i++) {
+                if (id == crossingList[i].id)
+                    return crossingList[i];
+            }
+            return null;
+        }
+
+        function existList(crossingId, list) {
+            for (var i = 0; i < list.length; i++) {
+                if (crossingId == list[i].id)
+                    return true;
+            }
+            return false;
+        }
+        //]]>
     </script>
 </html>
