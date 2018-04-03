@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<!--管理员对用户进行管理-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>管理</title>
+        <link rel="stylesheet" href="../resources/css/amazeui.css" />
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="../resources/css/core.css" />
+        <link rel="stylesheet" href="../resources/css/menu.css" />
+        <link rel="stylesheet" href="../resources/css/index.css" />
+        <link rel="stylesheet" href="../resources/css/admin.css" />
+        <link rel="stylesheet" href="../resources/css/typography.css" />
+        <link rel="stylesheet" href="../resources/css/form.css" />
+        <f:metadata>
+            <f:viewParam name="time" value="#{trafficFlowController.selectedTime}"/>
+            <f:viewAction action="#{trafficFlowController.onRowSelect}"/>
+        </f:metadata>
+        
+    </h:head>
+    <h:body>
+        <div class="content-page">
+                <!-- Start content -->
+                <div >
+                    <div >
+                        <!-- Row start -->
+                        <div class="am-g">
+
+                            <div >
+                                <h:form id="FlowDTForm">
+                                    <div class="am-btn-toolbar">
+                                        <div margin-left="50%" align="center">
+                                            <h class="page-title"  >流量查看</h>
+                                        </div>
+                                    </div>
+                                    <p:dataTable id="TrafficFlowTable" value="#{trafficFlowController.rightTrafficFlows_}" var="item" widgetVar="TrafficFlowTable"
+                                                 selectionMode="single" selection="#{trafficFlowController.trafficFlows}"
+                                                     rowKey="#{item.id}"
+                                                     rows="10"
+                                                     paginator="true" 
+                                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     >
+                                            <p:column headerText="路口ID" filterBy="#{item.id}" filterMatchMode="contains">
+                                                <h:outputText value="#{item.crossingId}" />
+                                            </p:column>
+                                            <p:column headerText="北口流量" >
+                                                <h:outputText value="#{item.crossingN}" />
+                                            </p:column>
+                                            <p:column headerText="南口流量">
+                                                <h:outputText value="#{item.crossingS}" />
+                                            </p:column>
+                                            <p:column headerText="西口流量">
+                                                <h:outputText value="#{item.crossingW}" />
+                                            </p:column>
+                                            <p:column headerText="东口流量">
+                                                <h:outputText value="#{item.crossingE}" />
+                                            </p:column>
+<!--                                            <p:ajax event="rowSelect" listener="#{trafficFlowController.onRowSelect}" update=":TrafficFlowTable" onsuccess="PF('areaDialog').show()" />-->
+
+                                        </p:dataTable>
+
+                                </h:form>
+
+
+                            </div>
+
+                        </div>  
+
+                    </div>
+
+                    <!-- Row end -->
+                </div>
+            </div>
+
+    </h:body>
+
+</html>

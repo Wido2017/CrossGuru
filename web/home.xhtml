@@ -144,14 +144,14 @@
         //创建和初始化地图函数：
         function changeicon1() {
             var obj = document.getElementById("icon1");
-
+            
         }
-
+        
         function recover1() {
             var obj = document.getElementById("icon1");
             obj.src = "resources/images/lukuang.png";
         }
-
+        
         function initMap() {
             createMap(116.395645, 39.929986);//创建地图
             setMapEvent();//设置地图事件
@@ -171,7 +171,7 @@
                     }
                 }
             });
-
+            
             ls.search(area);
         }
 //        //自定义一个控件类，“声明关怀通道”控件
@@ -219,14 +219,14 @@
 //        }
 ////            var lovectrl = new LoveControl();
 ////            map.addControl(lovectrl);
-
+        
         //创建搜索后的地图函数：
         function createMap(x, y) {
             var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
             var point = new BMap.Point(x, y);//定义一个中心点坐标
             map.centerAndZoom(point, 18);//设定地图的中心点和坐标并将地图显示在地图容器中
             window.map = map;//
-
+            
         }
         //创建初始化的地图
 //        function createNewMap() {
@@ -235,7 +235,7 @@
 //            map.centerAndZoom(point, 18);
 //            window.map = map;//将map变量存储在全局
 //        }
-
+        
         //地图事件设置函数：
         function setMapEvent() {
             map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
@@ -243,9 +243,9 @@
             map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
             map.enableKeyboard();//启用键盘上下左右键移动地图
         }
-
-
-
+        
+        
+        
         //地图控件添加函数：
         function addMapControl() {
             //向地图中添加缩放控件
@@ -263,11 +263,11 @@
 //            //创建控件
 //            var lovectrl = new LoveControl();
 //            map.addControl(lovectrl);
-
+            
         }
-
+        
         initMap();//创建和初始化地图
-
+        
         var start;
         function  searchStart() {
             var key = document.getElementById("start").value;
@@ -282,9 +282,10 @@
                     //html.innerHTML+='<a href="#" onclick="setStart()">设为起点</a>';
                 }
             });
+            map.clearOverlays();
             ls.search(key);
         }
-
+        
         var end;
         function  searchEnd() {
             var key = document.getElementById("end").value;
@@ -299,9 +300,10 @@
                     //html.innerHTML+='<a href="#" onclick="setStart()">设为起点</a>';
                 }
             });
+            map.clearOverlays();
             res.search(key);
         }
-
+        
         function CrossingNode() {
             this.id = "";
             this.location = "";
@@ -332,78 +334,169 @@
             this.location = "";
             this.point = new BMap.Point();
             this.currentFlow = [];
-            this.neighborCrossing = [];
+            this.neighborId = [];
             this.distanceTo = [];
         }
-
+        
         //var crossingListJSON;
-        var crossingList=[];
+        var crossingList = [];
         function searchRoute() {
             var crossingListJSON = document.getElementById("Json_src").value;
             var crossingListProto = JSON.parse(crossingListJSON);
             
-            for(var crossingProto in crossingListProto){
-                var crossing=new Crossing();
-                crossing.id=crossingProto.id;
-                crossing.location=crossingProto.location;
-                crossing.point=new BMap.Point(crossingProto.coordlng,crossingProto.coordlat);
-                crossing.currentFlow[0]=crossingProto.currentFlow
+            for (var i = 0; i < crossingListProto.length; i++) {
+                var crossingProto = crossingListProto[i];
+                var crossing = new Crossing();
+                crossing.id = crossingProto.id;
+                crossing.location = crossingProto.location;
+                crossing.point = new BMap.Point(crossingProto.coordlng, crossingProto.coordlat);
                 
+                crossing.currentFlow[0] = crossingProto.currentFlow_E;
+                crossing.currentFlow[1] = crossingProto.currentFlow_W;
+                crossing.currentFlow[2] = crossingProto.currentFlow_S;
+                crossing.currentFlow[3] = crossingProto.currentFlow_N;
+                
+                crossing.neighborId[0] = crossingProto.next_E_id;
+                crossing.neighborId[1] = crossingProto.next_W_id;
+                crossing.neighborId[2] = crossingProto.next_S_id;
+                crossing.neighborId[3] = crossingProto.next_N_id;
+                
+                crossing.distanceTo[0] = crossingProto.next_E_d;
+                crossing.distanceTo[1] = crossingProto.next_W_d;
+                crossing.distanceTo[2] = crossingProto.next_S_d;
+                crossing.distanceTo[3] = crossingProto.next_N_d;
+                //alert(crossing.id);
+                crossingList.push(crossing);
             }
-
-
-            //alert(crossingListJSON);
-
-            //alert("起点"+start.lng+"  "+"终点"+start.lat);
+            
             if (start == '' || end == '' || start == null || end == null || start == undefined || end == undefined) {
                 alert("起点或终点未指定");
                 return;
             }
-
-
-            AStar(start, end, crossingList);
-
-
+            
+            var result = AStar(start, end, crossingList);
+            
+            var roadPoints = [];
+            for (var i = 0; i < result.length; i++) {
+                //var roadCrossing=getCrossingById(result[i]);
+                roadPoints.push(getCrossingById(result[i]).point);
+            }
+            
+            map.clearOverlays();
+            var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true}});
+            driving.search(start, end, {waypoints: roadPoints});
+            
         }
-
-
-
-        function AStar(start, end, crossingList) {
-
-            //找到离终点最近的路口作为图搜索的起点
-            var virEndCrossingId = crossingList[0].id;
-            var minD = map.getDistance(end, new BMap.Point(crossingList[0].coordlng, crossingList[0].coordlat));
-            for (var crossing in crossingList) {
-                var curD = map.getDistance(start, new BMap.Point(crossing.coordlng, crossing.coordlat));
-                if (curD < minD) {
-                    minD = curD;
+        
+        function AStar(s, e, cl) {
+            
+            //找到离终点最近的路口作为图搜索的假想起点
+            var virEndCrossingId = cl[0].id;
+            var minDE = map.getDistance(e, cl[0].point);
+            for (var i = 0; i < cl.length; i++) {
+                var crossing = cl[i];
+                var curD = map.getDistance(e, cl[i].point);
+                if (curD < minDE) {
+                    minDE = curD;
+                    virEndCrossingId = crossing.id;
+                }
+            }
+            
+            //找到离起点最近的路口作为图搜索的假想终点
+            var virStartCrossingId = cl[0].id;
+            var minDS = map.getDistance(s, cl[0].point);
+            for (var i = 0; i < cl.length; i++) {
+                var crossing = cl[i];
+                var curD = map.getDistance(s, cl[i].point);
+                if (curD < minDS) {
+                    minDS = curD;
                     virStartCrossingId = crossing.id;
                 }
             }
-
-            alert(minD);
-
+            
             var openList = [];//开启列表
             var closeList = [];//关闭列表
-
-            openList.push({id: virStartCrossingId, G: minD});
-
+            var result = [];
+            var resultIndex;
+            
+            openList.push({id: virEndCrossingId, G: minDE/30});
+            
             do {
                 var curNode = openList.pop();
                 closeList.push(curNode);
                 var curCrossing = getCrossingById(curNode.id);
-
-                //E
-                if (curCrossing.next_E_id != null && !existList(curCrossing.next_E_id, closeList)) {
-                    var eCrossing = getCrossingById(curCrossing.next_E_id);
-                    var g = curNode.G +
-                            curCrossing.next_E_d ? curCrossing.next_E_d : map.getDistance(
-                                    new BMap.Point(curCrossing.coordlng, curCrossing.coordlat),
-                                    new BMap.Point(eCrossing.coordlng, eCrossing.coordlat));
+                
+                for (var i = 0; i < curCrossing.neighborId.length; i++) {
+                    if (curCrossing.neighborId[i] != '' && curCrossing.neighborId[i] != null && null == existList(curCrossing.neighborId[i], closeList)) {
+                        var neighborCrossing = getCrossingById(curCrossing.neighborId[i]);
+                        //alert("c:"+JSON.stringify(curCrossing)+"\nn:"+JSON.stringify(neighborCrossing));
+                        //当前走过路程
+                        var v = getSpeed(curCrossing.currentFlow[i]);
+                        var gd=curCrossing.distanceTo[i] != 0 && curCrossing.distanceTo[i] != null ?
+                                curCrossing.distanceTo[i] : map.getDistance(curCrossing.point, neighborCrossing.point);
+                        var g = curNode.G +gd/v;
+                        
+                        if (null == existList(neighborCrossing.id, openList)) {     //不在开启列表中
+                                                                                 
+                            var fd = map.getDistance(neighborCrossing.point, s);
+                            var h =fd/v;
+                            var f = g + h;
+                            openList.push({id: neighborCrossing.id, G: g, H: h, F: f, parent: curNode});
+                        } else {                                                    //存在开启列表中，比较g值大小，选取较段路径
+                            var index = existList(neighborCrossing.id, openList);
+                            if (g < openList[index].G) {
+                                openList[index].G = g;
+                                openList[index].F = g + openList[index].H;
+                                openList[index].parent = curNode;
+                            }
+                        }
+                    }
                 }
-            } while (true);
+                
+                //如果开启列表为空，没有通路
+                if (openList.length == 0) {
+                    return [];
+                }
+                
+                //排序开启列表，便于下次循环取F最小项
+                openList.sort(function (a, b) {
+                    return b.F - a.F;
+                });
+                resultIndex = existList(virStartCrossingId, openList);
+                
+            } while (null == resultIndex);
+            
+            alert(resultIndex);
+            //回溯结果列表
+            if (resultIndex == null) {
+                result = [];
+            } else {
+                var rCurCrossing = openList[resultIndex];
+                do {
+                    result.push(rCurCrossing.id);
+                    rCurCrossing = rCurCrossing.parent;
+                } while (rCurCrossing.id != virEndCrossingId);
+            }
+            
+            
+            return  result;
         }
-
+        
+        function getSpeed(flow) {
+            if (flow >= 100) {
+                return 10000;
+            }else if (flow >= 80) {
+                return 20000;
+            }else if(flow>=60){
+                return 30000;
+            }else if(flow>=40){
+                return 40000;
+            }else{
+                return 50000;
+            }
+            
+        }
+        
         function getCrossingById(id) {
             for (var i = 0; i < crossingList.length; i++) {
                 if (id == crossingList[i].id)
@@ -411,13 +504,14 @@
             }
             return null;
         }
-
+        
+        //判断点是否存在在列表中，是的话返回的是序列号
         function existList(crossingId, list) {
             for (var i = 0; i < list.length; i++) {
                 if (crossingId == list[i].id)
-                    return true;
+                    return i;
             }
-            return false;
+            return null;
         }
         //]]>
     </script>

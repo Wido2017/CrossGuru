@@ -6,6 +6,10 @@ import jsf.util.PaginationHelper;
 import sessionBean.TrafficFlowFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -17,6 +21,7 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.SelectEvent;
 
 @Named("trafficFlowController")
 @SessionScoped
@@ -24,10 +29,67 @@ public class TrafficFlowController implements Serializable {
 
     private TrafficFlow current;
     private DataModel items = null;
+    private DataModel rightTrafficFlows_ = null;
     @EJB
     private sessionBean.TrafficFlowFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<TrafficFlow> rightTrafficFlows;
+    private TrafficFlow selectedTrafficFlow = null;
+    private Date selectedTime;
+    private List<TrafficFlow> trafficFlows;
+
+    public List<TrafficFlow> getTrafficFlows() {
+        return trafficFlows;
+    }
+
+    public List<TrafficFlow> getRightTrafficFlows_() {
+        if (rightTrafficFlows_ == null) {
+            rightTrafficFlows_ = getPagination().createPageDataModel();
+        }
+        Iterator iterator = rightTrafficFlows_.iterator();
+        while (iterator.hasNext()) {
+            TrafficFlow t = (TrafficFlow) iterator.next();
+            if (selectedTime == t.getTime()) {
+                rightTrafficFlows.add(t);
+            }
+        }
+        return rightTrafficFlows;
+
+    }
+
+    public void setRightTrafficFlows(List<TrafficFlow> rightTrafficFlows) {
+        this.rightTrafficFlows = rightTrafficFlows;
+    }
+
+    public List<TrafficFlow> getRightTrafficFlows() {
+        return rightTrafficFlows;
+    }
+
+    public void setSelectedTime(Date time) {
+        this.selectedTime = time;
+    }
+
+    public Date getSelectedTime() {
+        return selectedTime;
+    }
+
+    public void onRowSelect(SelectEvent event) {
+        selectedTrafficFlow = (TrafficFlow) event.getObject();
+        rightTrafficFlows = new ArrayList<>();
+        trafficFlows = ejbFacade.findAll();
+        selectedTime = selectedTrafficFlow.getTime();
+        Iterator iterator = trafficFlows.iterator();
+        while (iterator.hasNext()) {
+            TrafficFlow t = (TrafficFlow) iterator.next();
+
+            if (selectedTime == t.getTime()) {
+                System.out.print(selectedTime);
+                System.out.print(t.getTime());
+                rightTrafficFlows.add(t);
+            }
+        }
+    }
 
     public TrafficFlowController() {
     }
